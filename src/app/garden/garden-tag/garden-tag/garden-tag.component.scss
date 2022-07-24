@@ -1,0 +1,9 @@
+@import "styles";
+
+:host(:hover) {
+    cursor: pointer;
+}
+
+:host(.no-hover:hover) {
+    cursor: default !important;
+}

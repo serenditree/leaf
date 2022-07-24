@@ -1,0 +1,71 @@
+<form [formGroup]="formGroup">
+    <div formGroupName="location">
+        <mat-form-field appearance="standard" class="small">
+            <mat-label>Longitude</mat-label>
+            <input [matTooltip]="isLocationMutable() ?
+                   'please set the location by moving the map' :
+                   'location defined by parent'"
+                   formControlName="lng"
+                   matInput
+                   matTooltipShowDelay="400">
+        </mat-form-field>
+        <mat-form-field appearance="standard" class="small">
+            <mat-label>Latitude</mat-label>
+            <input [matTooltip]="isLocationMutable() ?
+                   'please set the location by moving the map' :
+                   'location defined by parent'"
+                   formControlName="lat"
+                   matInput
+                   matTooltipShowDelay="400">
+        </mat-form-field>
+    </div>
+    <br>
+    <mat-form-field appearance="standard">
+        <mat-label>Title</mat-label>
+        <input class="st-input" formControlName="title" matInput>
+        <mat-error *ngIf="formGroup.hasError('required', ['title'])">required</mat-error>
+        <mat-error *ngIf="formGroup.hasError('html', ['title'])">contains &lt;tag&gt;</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="standard">
+        <mat-label>Text</mat-label>
+        <textarea formControlName="text"
+                  matInput
+                  matTextareaAutosize>
+                      </textarea>
+        <mat-hint align="end">(auto resize)</mat-hint>
+        <mat-error *ngIf="formGroup.hasError('required', ['text'])">required</mat-error>
+        <mat-error *ngIf="formGroup.hasError('html', ['text'])">contains &lt;tag&gt;</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="standard">
+        <mat-label>Tags</mat-label>
+        <input (keyup.enter)="addTag()"
+               [matAutocomplete]="autocomplete"
+               formControlName="tag"
+               inputmode="search"
+               matInput>
+        <mat-icon (click)="addTag()"
+                  fontIcon="fa-plus-circle"
+                  fontSet="fa"
+                  matSuffix>
+        </mat-icon>
+        <mat-error>duplicated or invalid tag</mat-error>
+    </mat-form-field>
+    <mat-autocomplete #autocomplete>
+        <mat-option *ngFor="let result of tags | async"
+                    [innerHTML]="result | highlight:term"
+                    [value]="result">
+        </mat-option>
+    </mat-autocomplete>
+    <ul>
+        <li *ngFor="let tag of tagsArray.controls; index as tagIndex" [@enterSlideVertical]>
+            <a (click)="removeTag(tagIndex)"
+               matTooltip="remove tag"
+               matTooltipShowDelay="700">
+                <mat-icon fontIcon="fa-minus-circle" fontSet="fa"></mat-icon>
+            </a>
+            #{{tag.value}}
+        </li>
+    </ul>
+</form>

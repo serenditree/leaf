@@ -1,0 +1,94 @@
+@import "styles";
+
+.st-menu-top {
+    position: fixed;
+    z-index: $st-menu-z-index - 1;
+    top: 0;
+    width: 100%;
+    height: $st-menu-top-height;
+    background-color: $st-background-color-body;
+    @include st-shadow(bottom);
+}
+
+@include gt-sm {
+    .st-menu-top {
+        height: $st-menu-top-height-gt-sm;
+        @include st-shadow(none)
+    }
+}
+
+$st-menu-top-ref: 30px;
+
+.st-menu-top-home {
+    position: absolute;
+    top: $st-menu-top-height - $st-menu-top-ref;
+    font-size: $st-font-size-h1;
+    font-weight: bold;
+}
+
+.st-menu-top-home > a:hover {
+    color: inherit !important;
+}
+
+@include gt-sm {
+    .st-menu-top-home {
+        top: $st-menu-top-height-gt-sm - $st-menu-top-ref;
+    }
+}
+
+.st-menu-top-nav,
+.st-menu-top-close-btn,
+.st-menu-top-search-input {
+    position: absolute;
+    text-align: right;
+    overflow: hidden;
+    white-space: nowrap
+}
+
+.st-menu-top-nav,
+.st-menu-top-close-btn {
+    top: $st-menu-top-height - $st-menu-top-ref + 3px;
+    right: 0;
+}
+
+.st-menu-top-top {
+    position: absolute;
+    right: 0;
+    top: 10px;
+}
+
+.st-menu-top-top,
+.st-menu-top-nav,
+.st-menu-top-close-btn {
+    display: none;
+}
+
+@include gt-sm {
+    .st-menu-top-nav,
+    .st-menu-top-close-btn {
+        top: $st-menu-top-height-gt-sm - $st-menu-top-ref + 3px;
+    }
+
+    .st-menu-top-top,
+    .st-menu-top-nav,
+    .st-menu-top-close-btn {
+        display: block;
+    }
+}
+
+.st-menu-top-search-input {
+    top: $st-menu-top-height - $st-menu-top-ref - 25px;
+    right: 20px;
+}
+
+@include gt-sm {
+    .st-menu-top-search-input {
+        top: $st-menu-top-height-gt-sm - $st-menu-top-ref - 25px;
+    }
+}
+
+.st-menu-top-icon-margin {
+    margin-left: 9px !important;
+}
+
+

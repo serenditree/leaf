@@ -1,0 +1,13 @@
+<st-menu-sub decentralized="true">
+    <div class="st-seed-actions">
+        <st-nav-container align="right">
+            <st-nav-item [iconClassList]="['st-leaf-green']"
+                         [state]="trailState"
+                         icon="fa-leaf"
+                         routerLink="/seed"
+                         text="Add seed to trail">
+            </st-nav-item>
+        </st-nav-container>
+    </div>
+</st-menu-sub>
+<st-seed-list (onSeedsUpdate)="onSeedsUpdate($event)"></st-seed-list>

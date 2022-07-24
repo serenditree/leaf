@@ -1,0 +1,42 @@
+@import "styles";
+
+.st-menu-sub {
+    position: fixed;
+    z-index: $st-menu-z-index + 1;
+    bottom: 0;
+    width: 100%;
+    height: $st-menu-sub-height;
+    line-height: $st-menu-sub-height;
+    background-color: $st-transparency;
+    @include st-shadow(top);
+}
+
+@include gt-sm {
+    .st-menu-sub {
+        z-index: $st-menu-z-index - 1;
+        top: $st-menu-top-height-gt-sm + $st-map-height;
+        height: $st-menu-sub-height-gt-sm;
+        line-height: $st-menu-sub-height-gt-sm;
+        @include st-shadow(none);
+    }
+}
+
+.st-menu-sub.decentralized {
+    width: $st-content-width;
+}
+
+.st-menu-sub.decentralized > .st-menu {
+    width: 100% !important;
+}
+
+@include gt-sm {
+    .st-menu-sub.decentralized {
+        width: $st-content-width-gt-sm;
+    }
+}
+
+@include gt-lg {
+    .st-menu-sub.decentralized {
+        width: $st-content-width-gt-lg;
+    }
+}

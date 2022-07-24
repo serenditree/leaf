@@ -1,0 +1,12 @@
+<div (click)="toggleFab()" *ngIf="fabToggleActive" [@enterFade] class="fab-backdrop"></div>
+<div [@enterFade] class="fab-container">
+    <button (click)="toggleFab()" class="fab-toggle" mat-mini-fab>
+        <mat-icon *ngIf="!fabToggleActive" class="st-fab-icon" fontIcon="fa-leaf" fontSet="fa"></mat-icon>
+        <mat-icon *ngIf="fabToggleActive" class="st-fab-icon">close</mat-icon>
+    </button>
+    <div (click)="toggleFab()" [@fabToggle]="fabToggleState">
+        <ng-template [ngIf]="fabToggleActive">
+            <ng-content></ng-content>
+        </ng-template>
+    </div>
+</div>

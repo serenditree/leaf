@@ -1,0 +1,26 @@
+@import "styles";
+
+$st-indicator-size: 50px; // div
+$st-indicator-total-size: $st-indicator-size + 2; // div + border * 2
+$st-indicator-offset: -$st-indicator-total-size * .5;
+$st-indicator-radius: 50%;
+
+.st-indicator {
+    display: block;
+    position: absolute;
+    z-index: $st-menu-z-index + 1;
+    top: 50%;
+    left: 50%;
+    width: $st-indicator-size;
+    height: $st-indicator-size;
+    margin-top: $st-indicator-offset;
+    margin-left: $st-indicator-offset;
+    line-height: $st-indicator-size;
+    text-align: center;
+    font-size: $st-font-size-h1;
+    background-color: rgba(255, 255, 255, .3);
+    border: 1px solid rgba(153, 153, 153, .7);
+    @include st-polyfill-property(border-radius, $st-indicator-radius)
+}
+
+@include st-pulse(1.4)

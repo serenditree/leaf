@@ -1,0 +1,47 @@
+/**********************************************************************************************************************
+ * ANGULAR MATERIAL THEME
+ **********************************************************************************************************************/
+@use '~@angular/material' as mat;
+@import '../../../node_modules/@angular/material/theming';
+
+@include mat.core();
+
+$serenditree-accent: (
+    50 : #f2f5ec,
+    100 : #dee6ce,
+    200 : #c8d5ae,
+    300 : #b2c48e,
+    400 : #a2b775,
+    500 : #91aa5d,
+    600 : #89a355,
+    700 : #7e994b,
+    800 : #749041,
+    900 : #627f30,
+    A100 : #eaffc9,
+    A200 : #d6ff96,
+    A400 : #c2ff63,
+    A700 : #b9ff49,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$serenditree-primary: mat.define-palette(mat.$grey-palette);
+$serenditree-accent: mat.define-palette($serenditree-accent);
+$serenditree-warn: mat.define-palette(mat.$grey-palette);
+
+@include mat.all-component-themes(mat.define-light-theme($serenditree-primary, $serenditree-accent, $serenditree-warn));
+@include mat.all-component-typographies(mat.define-typography-config($font-family: 'Quicksand, sans-serif'));

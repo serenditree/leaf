@@ -1,0 +1,9 @@
+<article [id]="garden.id" class="st-seed-list-item">
+    <p>
+        <em *ngIf="active" [@enterSlideHorizontal] class="fa fa-arrow-right st-seed-list-item-pointer">&nbsp;</em>
+        <strong>{{garden.title}}</strong> by {{garden.username}}
+        <span class="st-seed-list-item-badges st-secondary-gray">
+        </span>
+    </p>
+    <p [innerHTML]="garden.text | ellipsis:ST_PREVIEW_LENGTH | html"></p>
+</article>

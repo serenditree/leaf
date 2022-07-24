@@ -1,0 +1,48 @@
+@import "styles";
+
+.st-chart {
+    margin-right: 70px;
+}
+
+.st-chart-canvas {
+    margin-bottom: 20px;
+}
+
+@include gt-xs  {
+    .st-chart-canvas {
+        float: left;
+        margin-bottom: 0;
+    }
+}
+
+.st-chart-canvas.no-data {
+    height: 0 !important;
+    float: none !important;
+}
+
+@include gt-xs {
+    .st-chart-vote {
+        float: right;
+        margin-left: 40px;
+    }
+}
+
+.st-chart-vote.no-data {
+    margin-left: 0 !important;
+    float: none !important;
+}
+
+.st-radio-group,
+.st-chart-legend {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.st-radio-button {
+    margin: 5px 5px 5px 0;
+}
+
+.material-icons.st-radio-label,
+.material-icons.st-chart-label {
+    font-size: 20px !important;
+}

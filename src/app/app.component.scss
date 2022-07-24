@@ -1,0 +1,37 @@
+@import "styles";
+
+header {
+    position: relative;
+}
+
+.st-content,
+.st-content-sub {
+    position: relative;
+    width: $st-content-width;
+    margin: $st-content-start auto 4200px auto; // margin-bottom to enable scrolling on every page
+}
+
+@include gt-sm {
+    .st-content,
+    .st-content-sub {
+        width: $st-content-width-gt-sm;
+        margin-top: $st-content-start-gt-sm;
+    }
+}
+
+@include gt-lg {
+    .st-content,
+    .st-content-sub {
+        width: $st-content-width-gt-lg;
+    }
+}
+
+.st-content-sub {
+    margin-top: $st-content-start-sub;
+}
+
+@include gt-sm {
+    .st-content-sub {
+        margin-top: $st-content-start-sub-gt-sm;
+    }
+}

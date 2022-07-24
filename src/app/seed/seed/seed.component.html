@@ -1,0 +1,133 @@
+<st-menu-sub decentralized="true">
+    <div class="st-seed-actions">
+        <st-nav-container align="right" responsive="row">
+            <st-nav-item (click)="water()"
+                         [disabled]="!waterOrPruneAllowed"
+                         [iconClassList]="['st-tint-blue']"
+                         icon="fa-tint"
+                         text="Water">
+            </st-nav-item>
+            <st-nav-item (click)="nubit()"
+                         [disabled]="!nubitAllowed"
+                         [iconClassList]="['st-tint-green']"
+                         icon="fa-tint"
+                         text="Nub&apos;it">
+            </st-nav-item>
+            <st-nav-item (click)="prune()"
+                         [disabled]="!waterOrPruneAllowed"
+                         [iconClassList]="['st-prune-gray']"
+                         icon="content_cut"
+                         set="material"
+                         text="Prune">
+            </st-nav-item>
+            <st-nav-item (click)="delete()"
+                         *ngIf="isOwner"
+                         [iconClassList]="['st-prune-gray']"
+                         icon="delete"
+                         set="material"
+                         text="Remove">
+            </st-nav-item>
+        </st-nav-container>
+    </div>
+</st-menu-sub>
+<st-menu-fab-dial>
+    <st-nav-item (click)="water()"
+                 [disabled]="!waterOrPruneAllowed"
+                 [fab]="true"
+                 [iconClassList]="['st-tint-blue']"
+                 icon="fa-tint"
+                 text="Water">
+    </st-nav-item>
+    <st-nav-item (click)="nubit()"
+                 [disabled]="!nubitAllowed"
+                 [fab]="true"
+                 [iconClassList]="['st-tint-green']"
+                 icon="fa-tint"
+                 text="Nub&apos;it">
+    </st-nav-item>
+    <st-nav-item (click)="prune()"
+                 [disabled]="!waterOrPruneAllowed"
+                 [fab]="true"
+                 [iconClassList]="['st-prune-gray']"
+                 icon="content_cut"
+                 set="material"
+                 text="Prune">
+    </st-nav-item>
+    <st-nav-item (click)="delete()"
+                 *ngIf="isOwner"
+                 [fab]="true"
+                 [iconClassList]="['st-prune-gray']"
+                 icon="delete"
+                 set="material"
+                 text="Remove">
+    </st-nav-item>
+</st-menu-fab-dial>
+<!----------------------------------------------------------------------------------------------------------------------
+-- Text
+----------------------------------------------------------------------------------------------------------------------->
+<section class="st-seed-text">
+    <article>
+        <h1>{{seed?.title}}</h1>
+        <p [innerHTML]="seed?.text | html"></p>
+        <p class="st-seed-meta">
+            <span *ngIf="seed?.username">{{seed?.username}} on </span>
+            {{seed?.created | date : 'yyyy-MM-dd'}}
+            <br>
+            {{seed?.tags | tags}}
+        </p>
+    </article>
+</section>
+<!----------------------------------------------------------------------------------------------------------------------
+-- Polls
+----------------------------------------------------------------------------------------------------------------------->
+<section *ngIf="seed?.poll">
+    <h2>Polls</h2>
+    <div *ngFor="let poll of seed?.polls">
+        <st-chart [poll]="poll"></st-chart>
+    </div>
+    <div style="clear: both">&nbsp;</div>
+</section>
+<!----------------------------------------------------------------------------------------------------------------------
+-- Root/Garden/Trail
+----------------------------------------------------------------------------------------------------------------------->
+<section *ngIf="seed?.parent || seed?.trail">
+    <h2>Navigation</h2>
+    <st-nav-item *ngIf="seed?.parent && !(seed?.garden === seed?.parent)"
+                 [iconClassList]="['st-leaf-green']"
+                 [routerLink]="'/seeds/' + seed.parent"
+                 [state]="seedState"
+                 icon="fa-leaf"
+                 text="To root">
+    </st-nav-item>
+    <st-nav-item *ngIf="seed?.garden"
+                 [iconClassList]="['st-garden-gray']"
+                 [routerLink]="'/gardens/' + seed.garden"
+                 [state]="seedState"
+                 icon="fa-tag"
+                 style="margin-top: 14px"
+                 text="To garden">
+    </st-nav-item>
+    <st-nav-item *ngIf="seed?.trail"
+                 [iconClassList]="['st-trail-orange']"
+                 [routerLink]="'/trail/' + (seed.parent || seed.id)"
+                 icon="gesture"
+                 set="material"
+                 style="margin-top: 14px"
+                 text="To trail">
+    </st-nav-item>
+</section>
+<!----------------------------------------------------------------------------------------------------------------------
+-- Comments
+----------------------------------------------------------------------------------------------------------------------->
+<section>
+    <h2>Branches</h2>
+    <st-nav-item [active]="true"
+                 [iconClassList]="['st-leaf-green']"
+                 [state]="seedState"
+                 icon="fa-leaf"
+                 routerLink="/seed"
+                 text="Branch it">
+    </st-nav-item>
+    <st-seed-list emptyListMessage="No branches to this seed yet..."></st-seed-list>
+</section>
+

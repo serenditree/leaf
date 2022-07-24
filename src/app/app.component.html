@@ -1,0 +1,13 @@
+<header>
+    <st-menu-top></st-menu-top>
+    <st-map></st-map>
+</header>
+<st-menu-sub *ngIf="showSubmenu(routerOutlet)"></st-menu-sub>
+<main [class]="hasSubmenu(routerOutlet) ? 'st-content-sub' : 'st-content'">
+    <router-outlet #routerOutlet="outlet"></router-outlet>
+    <st-dev *ngIf="!isProduction"></st-dev>
+</main>
+<footer>
+    <st-menu-fab [isElevated]="!showSubmenu(routerOutlet)"></st-menu-fab>
+    <st-menu-fab [isElevated]="false" [isMain]="false" *ngIf="isHomeActive"></st-menu-fab>
+</footer>

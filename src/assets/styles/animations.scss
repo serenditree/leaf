@@ -1,0 +1,25 @@
+@import "utils";
+
+@mixin st-pulse($scale) {
+    .st-pulse {
+        @include st-polyfill-property(animation, "st-pulse 1600ms infinite ease-out")
+    }
+
+    @include st-polyfill-keyframes("st-pulse") {
+        0% {
+            @include st-polyfill-property(transform, scale(1));
+        }
+        50% {
+            @include st-polyfill-property(transform, scale($scale));
+        }
+        100% {
+            @include st-polyfill-property(transform, scale(1));
+        }
+    }
+}
+
+.st-slide {
+    @include st-polyfill-property(transition-property, height);
+    @include st-polyfill-property(transition-duration, 420ms);
+    @include st-polyfill-property(transition-timing-function, 'ease-out');
+}

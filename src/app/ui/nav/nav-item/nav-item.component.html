@@ -1,0 +1,48 @@
+<nav *ngIf="!fab; else fabNavigation" fxFlex>
+    <a *ngIf="text && routerLink && !icon; else iconTextLink"
+       [routerLinkActiveOptions]="routerLinkActiveOptions"
+       [routerLink]="routerLink"
+       routerLinkActive="st-nav-item-active">
+        <span [class.underline]="textUnderline">{{text}}</span>
+    </a>
+    <ng-template #iconTextLink>
+        <span *ngIf="icon && text; else iconLink"
+              [ngClass]="{'st-nav-item-disabled': disabled, 'st-nav-item-animated': true}">
+            <a>
+                <em *ngIf="set === 'fa'" [ngClass]="['fa', icon].concat(iconClassList)"></em>
+                <em *ngIf="set === 'material'" [ngClass]="['material-icons'].concat(iconClassList)">{{icon}}</em>
+                &nbsp;<span [class.underline]="textUnderline">{{text}}</span>
+            </a>
+        </span>
+    </ng-template>
+    <ng-template #iconLink>
+        <a *ngIf="icon; else textLink">
+            <mat-icon [fontIcon]="icon" [fontSet]="set"></mat-icon>
+        </a>
+    </ng-template>
+    <ng-template #textLink>
+        <a *ngIf="text; else ngContent" [ngClass]="{'st-nav-item-active': active}">
+            <span [class.underline]="textUnderline">{{text}}</span>
+        </a>
+    </ng-template>
+    <ng-template #ngContent>
+        <ng-content></ng-content>
+    </ng-template>
+</nav>
+<ng-template #fabNavigation>
+    <div class="st-fab-button-container">
+        <div class="st-fab-button-label">{{text}}</div>
+        <button [disabled]="disabled" color="secondary" mat-mini-fab>
+            <mat-icon *ngIf="set === 'material'; else fabNonMaterial"
+                      [ngClass]="['st-fab-icon'].concat(iconClassList)">
+                {{icon}}
+            </mat-icon>
+            <ng-template #fabNonMaterial>
+                <mat-icon [fontIcon]="icon"
+                          [ngClass]="['st-fab-icon', 'size-adjustment'].concat(iconClassList)"
+                          fontSet="fa">
+                </mat-icon>
+            </ng-template>
+        </button>
+    </div>
+</ng-template>

@@ -1,0 +1,10 @@
+<st-nav-container [align]="align">
+    <ng-content></ng-content>
+    <st-nav-item (click)="onDiscoverClick()"
+                 [active]="isDiscoverActive"
+                 text="Discover">
+    </st-nav-item>
+    <st-nav-item routerLink="/seed" text="Seed"></st-nav-item>
+    <st-nav-item routerLink="/cultivate" text="Cultivate"></st-nav-item>
+    <st-nav-item [routerLinkActiveOptions]="{exact: false}" routerLink="/user" text="Garden"></st-nav-item>
+</st-nav-container>

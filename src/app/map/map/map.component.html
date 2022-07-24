@@ -1,0 +1,23 @@
+<div class="st-map-container">
+    <map #mapContainer id="st-map"></map>
+    <div #mapOverlay class="st-map-container-overlay"></div>
+    <st-indicator [show]="showIndicator" tooltip="the map you shall move"></st-indicator>
+    <div class="st-map-container-overlay right">
+        <div *ngIf="showControl" (click)="locate()" class="st-map-control">
+            <em class="material-icons st-map-control-icon">near_me</em>
+        </div>
+        <div *ngIf="showControl"
+             #tooltip="matTooltip"
+             (click)="tooltip.toggle()"
+             matTooltip="&copy; OpenMapTiles &copy; OpenStreetMap contributors"
+             matTooltipPosition="left"
+             matTooltipTouchGestures="off"
+             class="st-map-control st-map-control-info">
+            <em class="material-icons st-map-control-icon st-flip-vertically">priority_high</em>
+        </div>
+    </div>
+    <div *ngIf="showSearchOverlay" [@enterFade] class="st-map-container-overlay-search"></div>
+    <div *ngIf="showFilterOverlay" [@enterFade] class="st-map-container-overlay-filter">
+        <st-filter></st-filter>
+    </div>
+</div>

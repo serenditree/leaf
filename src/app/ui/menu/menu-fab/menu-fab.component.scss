@@ -1,0 +1,37 @@
+@import "styles";
+
+.st-fab.no-shadow {
+    box-shadow: none !important;
+}
+
+.st-fab {
+    position: fixed;
+    z-index: $st-menu-z-index + 1;
+    right: 20px;
+    bottom: 20px;
+}
+
+.st-fab.filter {
+    background: $st-color-orange-warning;
+    right: 80px !important;
+}
+
+.st-fab.no-filter {
+    background: #fff !important;
+    border: 1px solid $st-color-gray-light;
+}
+
+.st-fab-icon {
+    color: #fff;
+    vertical-align: initial !important;
+}
+
+.st-fab-icon.no-filter {
+    color: $st-color-gray-primary !important;
+}
+
+@include gt-sm {
+    .st-fab {
+        display: none;
+    }
+}

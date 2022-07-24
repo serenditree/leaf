@@ -1,0 +1,23 @@
+<div class="st-dev">
+    <h3>Development Tools</h3>
+    <mat-form-field appearance="outline">
+        <mat-label>Status Code</mat-label>
+        <mat-select [formControl]="statusControl">
+            <mat-option *ngFor="let status of statusCodes" [value]="status.value()">
+                {{status.value()}} {{status.key() | regex:'_':' ':'g' }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Header Key</mat-label>
+        <mat-select [formControl]="headerKeyControl">
+            <mat-option *ngFor="let header of headerKeys" [value]="header">{{header}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Header Value</mat-label>
+        <input [formControl]="headerValueControl" matInput>
+    </mat-form-field>
+    <br>
+    <button (click)="send()" color="accent" mat-button>receive</button>
+</div>

@@ -1,0 +1,33 @@
+<h1>Sign in</h1>
+<form [formGroup]="formGroup">
+    <mat-form-field appearance="standard" class="small small-except-mobile">
+        <mat-label>Username</mat-label>
+        <input autocomplete="username"
+               formControlName="username"
+               id="username"
+               matInput
+               type="text">
+        <mat-error>required</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="standard" class="small small-except-mobile">
+        <mat-label>Password</mat-label>
+        <input #password
+               autocomplete="current-password"
+               formControlName="password"
+               id="password"
+               matInput
+               type="password">
+        <mat-icon (click)="toggleVisibility(password)" matSuffix>{{passwordVisible}}</mat-icon>
+        <mat-error>required</mat-error>
+    </mat-form-field>
+    <br>
+    <br>
+    <button (click)="onSubmit()" [disabled]="submitted" mat-button>Sign in</button>
+    <br>
+    <br>
+    <p>
+        Not yet registered? Please <a routerLink="/sign-up"> <strong>sign up here</strong></a>!
+    </p>
+</form>
+

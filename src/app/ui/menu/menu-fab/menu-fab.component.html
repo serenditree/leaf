@@ -1,0 +1,15 @@
+<button (click)="menuService.toggleBottomSheet(isMain)"
+        [ngClass]="{'st-fab': true, 'filter': !isMain, 'no-filter': !filterService.isModified() && !isMain,
+        'no-shadow': !isElevated}"
+        mat-mini-fab>
+    <mat-icon *ngIf="isMain && !menuService.isMainActive" class="st-fab-icon">menu</mat-icon>
+    <mat-icon *ngIf="!isMain && !menuService.isFilterActive"
+              [ngClass]="{'st-fab-icon': true, 'no-filter': !filterService.isModified()}"
+              fontSet="fa"
+              fontIcon="fa-filter">
+    </mat-icon>
+    <mat-icon *ngIf="isMain && menuService.isMainActive || !isMain && menuService.isFilterActive"
+              [ngClass]="{'st-fab-icon': true, 'no-filter': !filterService.isModified() && !isMain}">
+        close
+    </mat-icon>
+</button>

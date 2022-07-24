@@ -1,0 +1,60 @@
+<form [formGroup]="formGroup">
+    <div formArrayName="polls">
+        <div *ngFor="let poll of pollsArray.controls; index as pollIndex"
+             [@enterSlideVertical]
+             class="poll-container">
+            <h2>Poll {{pollIndex + 1}} &nbsp;
+                <a (click)="removePoll(pollIndex)"
+                   *ngIf="pollsArray.controls.length > 1"
+                   matTooltip="remove poll {{pollIndex + 1}}"
+                   matTooltipShowDelay="700">
+                    <mat-icon fontIcon="fa-minus-circle" fontSet="fa"></mat-icon>
+                </a>
+            </h2>
+            <div [formGroupName]="pollIndex">
+                <mat-form-field appearance="standard">
+                    <mat-label>Title</mat-label>
+                    <input formControlName="title" matInput>
+                    <mat-error>required</mat-error>
+                </mat-form-field>
+                <br>
+
+                <mat-form-field appearance="standard">
+                    <mat-label>Option</mat-label>
+                    <input (keyup.enter)="addOption(pollIndex)" formControlName="optionInput" matInput>
+                    <mat-icon (click)="addOption(pollIndex)"
+                              fontIcon="fa-plus-circle"
+                              fontSet="fa"
+                              matSuffix>
+                    </mat-icon>
+                    <mat-error *ngIf="optionInputInvalid(pollIndex); else optionsMessage">
+                        option already exists
+                    </mat-error>
+                    <ng-template #optionsMessage>
+                        <mat-error *ngIf="optionsInvalid(pollIndex)">
+                            please add at least two options
+                        </mat-error>
+                    </ng-template>
+                </mat-form-field>
+
+                <ul>
+                    <li
+                        *ngFor="let option of pollsArray.at(pollIndex).get('options')['controls']; index as optionIndex"
+                        [@enterSlideVertical]>
+                        <a (click)="removeOption(pollIndex, optionIndex)"
+                           matTooltip="remove option"
+                           matTooltipShowDelay="700">
+                            <mat-icon fontIcon="fa-minus-circle" fontSet="fa"></mat-icon>
+                        </a>
+                        &nbsp;{{option.get('text').value}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <br>
+    <a (click)="addPoll()">
+        <mat-icon fontIcon="fa-plus-circle" fontSet="fa"></mat-icon>
+        Add another poll
+    </a>
+</form>

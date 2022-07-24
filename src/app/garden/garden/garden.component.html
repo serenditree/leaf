@@ -1,0 +1,32 @@
+<st-menu-sub decentralized="true">
+    <div class="st-seed-actions">
+        <st-nav-container align="right">
+            <st-nav-item (click)="delete()"
+                         *ngIf="isOwner"
+                         [iconClassList]="['st-prune-gray']"
+                         icon="delete"
+                         set="material"
+                         text="Remove">
+            </st-nav-item>
+        </st-nav-container>
+    </div>
+</st-menu-sub>
+
+<div class="st-seed-text">
+    <h1>{{garden?.title}}</h1>
+    <st-garden-tag *ngIf="garden" [garden]="garden" [size]="70"></st-garden-tag>
+    <p [innerHTML]="garden?.text | html"></p>
+</div>
+<!----------------------------------------------------------------------------------------------------------------------
+-- Seeds
+----------------------------------------------------------------------------------------------------------------------->
+<div class="st-seed-section">
+    <h2>Seeds</h2>
+    <st-nav-item [iconClassList]="['st-leaf-green']"
+                 [state]="gardenState"
+                 icon="fa-leaf"
+                 routerLink="/seed"
+                 text="Seed in garden">
+    </st-nav-item>
+    <st-seed-list></st-seed-list>
+</div>

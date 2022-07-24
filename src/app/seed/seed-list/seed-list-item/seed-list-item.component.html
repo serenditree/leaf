@@ -1,0 +1,17 @@
+<article [id]="seed.id" class="st-seed-list-item">
+    <p>
+        <em *ngIf="active" [@enterSlideHorizontal] class="fa fa-arrow-right st-seed-list-item-pointer">&nbsp;</em>
+        <strong>{{seed.title}}</strong>
+        <span *ngIf="!seed.anonymous"> by {{seed.username}}</span>
+        <span class="st-seed-list-item-badges st-secondary-gray">
+            <mat-icon *ngIf="seed.trail" matTooltip="trail">gesture</mat-icon>
+            <mat-icon *ngIf="seed.poll" matTooltip="has poll">donut_large</mat-icon>
+            <mat-icon *ngIf="seed.garden"
+                      fontIcon="fa-tag"
+                      fontSet="fa"
+                      matTooltip="in garden">
+            </mat-icon>
+        </span>
+    </p>
+    <p [innerHTML]="seed.text | ellipsis:ST_PREVIEW_LENGTH | html"></p>
+</article>

@@ -1,0 +1,3 @@
+<div cdkDropList cdkDropListOrientation="horizontal" class="st-dnd-list small" (cdkDropListDropped)="drop($event)">
+    <div class="st-dnd-list-item" *ngFor="let word of words" cdkDrag>{{word}}</div>
+</div>

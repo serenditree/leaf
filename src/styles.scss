@@ -1,0 +1,384 @@
+/**********************************************************************************************************************
+ * MEDIA QUERIES
+ **********************************************************************************************************************/
+@import "assets/styles/media";
+/**********************************************************************************************************************
+ * UTILITIES
+ **********************************************************************************************************************/
+@import "assets/styles/utils";
+/**********************************************************************************************************************
+ * ANIMATIONS
+ **********************************************************************************************************************/
+@import "assets/styles/animations";
+
+/**********************************************************************************************************************
+ * GLOBAL DEFAULTS
+ **********************************************************************************************************************/
+$st-font-family: 'Quicksand', sans-serif;
+$st-font-size-h1: 18px;
+$st-font-size-h2: 16px;
+$st-font-size-p: 14px;
+
+$st-background-color-body: #fff;
+$st-background-color-accent: #f8f9f7;
+
+$st-color-gray-primary: #666;
+$st-color-gray-secondary: #999;
+$st-color-gray-light: #ccc;
+$st-color-blue-accent: #343d46;
+$st-color-orange-trail: #cc7832;
+$st-color-blue-tint: #add8e6;
+$st-color-green-leaf: #91aa5d;
+$st-color-yellow-warning: #daa520;
+$st-color-orange-warning: $st-color-orange-trail;
+
+$st-menu-top-height: 60px;
+$st-menu-top-height-gt-sm: 100px;
+$st-menu-sub-height: 80px;
+$st-menu-sub-height-gt-sm: 40px;
+$st-menu-z-index: 1000; // mat-bottom-sheet reference
+
+$st-map-height: 280px;
+$st-map-search-width: 320px;
+
+$st-content-start: $st-menu-top-height + $st-map-height + 20px;
+$st-content-start-gt-sm: $st-menu-top-height-gt-sm + $st-map-height + $st-menu-sub-height-gt-sm;
+$st-content-start-sub: $st-content-start;
+$st-content-start-sub-gt-sm: $st-content-start-gt-sm + $st-menu-sub-height-gt-sm;
+$st-content-width: 95%;
+$st-content-width-gt-sm: 70%;
+$st-content-width-gt-lg: 50%;
+$st-content-margin: 0;
+$st-content-margin-gt-sm: (100% - $st-content-width-gt-sm) * 0.5;
+$st-content-margin-gt-lg: (100% - $st-content-width-gt-lg) * 0.5;
+
+$st-input-width: 100%;
+$st-input-width-gt-sm: 400px;
+
+/**********************************************************************************************************************
+ * GLOBAL EFFECTS/DECORATIONS
+ **********************************************************************************************************************/
+@mixin st-shadow($display) {
+    @if $display == top {
+        @include st-polyfill-property(box-shadow, 0 -1px 8px 0 rgba(0, 0, 0, 0.2));
+    } @else if $display == bottom {
+        @include st-polyfill-property(box-shadow, 0 1px 8px 0 rgba(0, 0, 0, 0.2));
+    } @else {
+        @include st-polyfill-property(box-shadow, none);
+    }
+}
+
+$st-transparency: rgba(255, 255, 255, .9);
+$st-line: 1px dotted $st-color-gray-light;
+
+.underline {
+    border-bottom: 1px dotted $st-color-gray-primary !important;
+}
+
+.underline:hover {
+    color: inherit !important;
+    border-bottom: 1px solid $st-color-gray-secondary !important;
+}
+
+.st-match {
+    color: $st-color-green-leaf;
+    font-weight: bold;
+}
+
+.st-ellipsis {
+    color: $st-color-gray-light;
+    font-weight: bold;
+}
+
+.st-flipped-horizontally {
+    @include st-polyfill-property(transform, scaleX(-1));
+}
+
+.st-flip-vertically {
+    @include st-polyfill-property(transform, scaleY(-1));
+}
+
+/**********************************************************************************************************************
+ * GLOBAL ELEMENTS
+ **********************************************************************************************************************/
+body {
+    overflow-y: scroll;
+    font-family: $st-font-family;
+    color: $st-color-gray-primary;
+    font-size: $st-font-size-p;
+    // PWA
+    -webkit-tap-highlight-color: transparent;
+}
+
+h1 {
+    font-size: $st-font-size-h1;
+}
+
+h2 {
+    font-size: $st-font-size-h2;
+}
+
+h3 {
+    font-size: $st-font-size-p;
+    font-weight: bold;
+}
+
+a,
+a:active,
+a:focus,
+a:hover {
+    color: inherit !important;
+    outline: none !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+}
+
+a:hover {
+    color: $st-color-green-leaf !important;
+}
+
+/**********************************************************************************************************************
+ * MATERIAL OVERRIDE
+ **********************************************************************************************************************/
+
+/**********************************************************************************************************************
+ * INPUT
+ **********************************************************************************************************************/
+
+mat-form-field mat-icon {
+    font-size: $st-font-size-p;
+    text-align: right;
+    cursor: pointer;
+}
+
+mat-form-field mat-icon:hover {
+    color: $st-color-green-leaf;
+}
+
+.mat-form-field {
+    width: $st-input-width;
+}
+
+.mat-form-field:not(.small-except-mobile).small {
+    width: $st-input-width * 0.5 !important;
+}
+
+@include gt-xs {
+    .mat-form-field {
+        width: $st-input-width-gt-sm;
+    }
+
+    .mat-form-field.small {
+        width: $st-input-width-gt-sm * 0.5 !important;
+    }
+}
+
+.mat-input-element {
+    color: $st-color-gray-primary !important;
+}
+
+.st-menu-top-search-input .mat-form-field-underline,
+.st-menu-top-search-input .mat-form-field-ripple {
+    display: none !important;
+}
+
+.mat-form-field-underline .mat-form-field-ripple {
+    //height: 1px !important;
+    //background-color: #000 !important;
+}
+
+.mat-error {
+    color: $st-color-yellow-warning !important;
+}
+
+/**********************************************************************************************************************
+ * TOGGLE
+ **********************************************************************************************************************/
+//.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+//    background-color: $st-color-green-leaf !important;
+//}
+
+/**********************************************************************************************************************
+ * BUTTON
+ **********************************************************************************************************************/
+.mat-button {
+    background-color: $st-background-color-accent !important;
+}
+
+.mat-mini-fab.mat-button-disabled {
+    background-color: rgba(0, 0, 0, .42);
+}
+
+/**********************************************************************************************************************
+ * ICON
+ **********************************************************************************************************************/
+.material-icons:not(.st-fab-icon) {
+    vertical-align: middle !important;
+    font-size: inherit !important;
+}
+
+/**********************************************************************************************************************
+ * AUTOCOMPLETE
+ **********************************************************************************************************************/
+.mat-autocomplete-panel.flat {
+    box-shadow: none !important;
+}
+
+.mat-autocomplete-panel {
+    background-color: $st-transparency;
+}
+
+.mat-autocomplete-panel.transparent {
+    background: none !important;
+}
+
+.mat-option {
+    font-size: 14px !important;
+    color: $st-color-gray-primary !important;
+    line-height: 24px !important;
+    height: 24px !important;
+}
+
+.mat-option.flat {
+    padding: 0 0 !important;
+}
+
+.mat-option:hover:not(.mat-option-disabled),
+.mat-option:focus:not(.mat-option-disabled),
+.mat-option.mat-active,
+.mat-option.mat-selected {
+    background: none !important;
+    font-weight: bold;
+}
+
+.mat-optgroup-label {
+    font-size: inherit !important;
+    font-weight: bold;
+    line-height: 24px !important;
+    height: 24px !important;
+    padding: 10px 0 0 0 !important;
+}
+
+.no-label {
+    .mat-optgroup-label {
+        display: none;
+    }
+
+    .mat-option.flat:first-of-type {
+        margin-top: 10px;
+    }
+}
+
+/**********************************************************************************************************************
+ * SNACK BAR
+ **********************************************************************************************************************/
+.mat-snack-bar {
+    background-color: $st-color-green-leaf !important;
+}
+
+.mat-snack-bar-error {
+    background-color: $st-color-orange-warning !important;
+}
+
+.mat-snack-bar simple-snack-bar,
+.mat-snack-bar-error simple-snack-bar {
+    display: block !important;
+    text-align: center !important;
+    font-weight: bold !important;
+    line-height: 42px !important;
+}
+
+@include lt-sm {
+    .mat-snack-bar-container {
+        @include st-polyfill-property(border-radius, 0 !important);
+    }
+
+    .mat-snack-bar,
+    .mat-snack-bar-error {
+        margin: 0 !important;
+    }
+
+    .mat-snack-bar {
+        background-color: rgba(145, 170, 93, .9) !important;
+    }
+
+    .mat-snack-bar-error {
+        background-color: rgba(203, 120, 50, .9) !important;
+    }
+
+    .mat-snack-bar simple-snack-bar,
+    .mat-snack-bar-error simple-snack-bar {
+        // st-menu-top-height - vertical padding of mat-snack-bar-container
+        line-height: $st-menu-top-height - 2 * 14px !important;
+    }
+}
+
+/**********************************************************************************************************************
+ * BOTTOM SHEET
+ **********************************************************************************************************************/
+.mat-bottom-sheet-container {
+    background: $st-transparency;
+    padding-top: 16px !important;
+    padding-bottom: $st-menu-sub-height + 40px !important;
+    @include st-polyfill-property(border-radius, 20px 20px 0 0);
+}
+
+/**********************************************************************************************************************
+ * FONT COLOR CUSTOMIZATION
+ **********************************************************************************************************************/
+.st-leaf-green,
+.st-tint-green {
+    color: $st-color-green-leaf !important;
+}
+
+.st-tint-blue {
+    color: $st-color-blue-tint !important;
+}
+
+.st-garden-gray,
+.st-prune-gray,
+.st-secondary-gray {
+    color: $st-color-gray-secondary !important;
+}
+
+.st-trail-orange, .st-warning-orange {
+    color: $st-color-orange-trail !important;
+}
+
+.st-light-gray {
+    color: $st-color-gray-light !important;
+}
+
+.st-accent-blue {
+    color: $st-color-blue-accent !important;
+}
+
+/**********************************************************************************************************************
+ * BACKGROUND COLOR CUSTOMIZATION
+ **********************************************************************************************************************/
+.st-bg-leaf-green,
+.st-bg-tint-green {
+    background-color: $st-color-green-leaf !important;
+}
+
+.st-bg-tint-blue {
+    background-color: $st-color-blue-tint !important;
+}
+
+.st-bg-garden-gray,
+.st-bg-prune-gray,
+.st-bg-secondary-gray {
+    background-color: $st-color-gray-secondary !important;
+}
+
+.st-bg-trail-orange {
+    background-color: $st-color-orange-trail !important;
+}
+
+.st-bg-light-gray {
+    background-color: $st-color-gray-light !important;
+}
+
+.st-bg-accent-blue {
+    background-color: $st-color-blue-accent !important;
+}

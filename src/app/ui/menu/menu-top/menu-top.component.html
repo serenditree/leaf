@@ -1,0 +1,61 @@
+<st-menu class="st-menu-top">
+    <div class="st-menu-top-home">
+        <a routerLink="/">Serenditree
+            <mat-icon class="st-leaf-green" fontIcon="fa-leaf " fontSet="fa"></mat-icon>
+        </a>
+    </div>
+
+    <div class="st-menu-top-top">
+        <st-nav-container align="right">
+            <st-nav-item routerLink="/about" text="About"></st-nav-item>
+            <st-nav-item (click)="fenceService.signInRedirect()"
+                         *ngIf="!fenceService.isAuthenticated()"
+                         class="st-menu-top-icon-margin"
+                         icon="fa-toggle-off"
+                         matTooltip="sign in"
+                         matTooltipPosition="below"
+                         matTooltipShowDelay="1000">
+            </st-nav-item>
+            <st-nav-item (click)="fenceService.signOut()"
+                         *ngIf="fenceService.isAuthenticated()"
+                         class="st-menu-top-icon-margin st-leaf-green"
+                         icon="fa-toggle-on"
+                         matTooltip="sign out"
+                         matTooltipPosition="below"
+                         matTooltipShowDelay="1000">
+            </st-nav-item>
+        </st-nav-container>
+    </div>
+
+    <div *ngIf="!showSearch"
+         [@enterFade]
+         class="st-menu-top-nav">
+        <st-nav-container align="right">
+            <st-menu-main align="right"></st-menu-main>
+            <st-nav-item (click)="toggleSearch($event)"
+                         class="st-menu-top-icon-margin"
+                         icon="fa-search"
+                         matTooltip="search"
+                         matTooltipPosition="above"
+                         matTooltipShowDelay="1000">
+            </st-nav-item>
+        </st-nav-container>
+    </div>
+
+    <div *ngIf="showSearch"
+         [@enterFade]
+         class="st-menu-top-search-input">
+        <st-search></st-search>
+    </div>
+
+    <div *ngIf="showSearch"
+         [@enterFade]
+         class="st-menu-top-close-btn">
+        <a (click)="toggleSearch($event)">
+            <st-nav-item icon="fa-close"></st-nav-item>
+        </a>
+    </div>
+</st-menu>
+
+
+

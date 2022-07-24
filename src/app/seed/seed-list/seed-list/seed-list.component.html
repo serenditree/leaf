@@ -1,0 +1,12 @@
+<p *ngIf="seeds.length === 0; else seedList">
+    {{emptyListMessage}}
+</p>
+<ng-template #seedList>
+    <st-seed-list-item *ngFor="let seed of seeds"
+                       [active]="activeItemId === seed.id"
+                       [id]="seed.id"
+                       [seed]="seed"
+                       class="st-seed-list-item">
+    </st-seed-list-item>
+</ng-template>
+

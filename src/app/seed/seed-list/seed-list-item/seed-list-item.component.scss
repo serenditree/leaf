@@ -1,0 +1,21 @@
+@import "styles";
+
+.st-seed-list-item {
+    margin-top: 40px;
+    //border-top: $st-line;
+    cursor: pointer;
+}
+
+.st-seed-list-item-pointer {
+    color: $st-color-green-leaf;
+    overflow: hidden;
+    vertical-align: -10%
+}
+
+.st-seed-list-item-badges {
+    float: right;
+}
+
+mat-icon {
+    vertical-align: middle !important;;
+}

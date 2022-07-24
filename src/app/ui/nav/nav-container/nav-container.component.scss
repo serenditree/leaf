@@ -1,0 +1,25 @@
+@import "styles";
+
+.st-nav-item-container-left st-nav-item {
+    text-align: left;
+    margin-right: 20px;
+}
+
+.st-nav-item-container-right st-nav-item {
+    text-align: right;
+    margin-left: 20px;
+}
+
+@include lt-md {
+    st-nav-item {
+        line-height: 40px !important;
+    }
+
+    st-nav-bottom st-nav-item {
+        margin: 0 !important;
+        border-bottom: 1px solid $st-color-gray-secondary;
+    }
+    st-nav-bottom st-nav-item:last-of-type {
+        border-bottom: none;
+    }
+}

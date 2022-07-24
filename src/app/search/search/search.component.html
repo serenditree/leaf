@@ -1,0 +1,30 @@
+<mat-form-field [appearance]="isMobile ? 'outline': 'standard'">
+    <mat-label *ngIf="isMobile">Search</mat-label>
+    <input (focus)="onFocus($event)"
+           [formControl]="formControl"
+           [matAutocomplete]="autocomplete"
+           [placeholder]="isMobile ? '' : 'Search'"
+           [stFocus]="isSearchFocused"
+           id="st-search-input"
+           inputmode="search"
+           matInput>
+</mat-form-field>
+
+<mat-autocomplete #autocomplete autoActiveFirstOption class="flat transparent">
+    <mat-optgroup *ngIf="isUserSearch" [ngClass]="{'no-label': !isTagSearch}" label="Users">
+        <mat-option (onSelectionChange)="onUserSelectionChange($event)"
+                    *ngFor="let user of users"
+                    [innerHTML]="user.username | highlight:term"
+                    [value]="user"
+                    class="flat">
+        </mat-option>
+    </mat-optgroup>
+    <mat-optgroup *ngIf="isTagSearch" [ngClass]="{'no-label': !isUserSearch}" label="Tags">
+        <mat-option (onSelectionChange)="onTagSelectionChange($event)"
+                    *ngFor="let tag of tags"
+                    [innerHTML]="tag | highlight:term"
+                    [value]="tag"
+                    class="flat">
+        </mat-option>
+    </mat-optgroup>
+</mat-autocomplete>

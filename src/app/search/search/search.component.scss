@@ -1,0 +1,11 @@
+@import "src/styles";
+
+.mat-form-field {
+    width: 100%;
+}
+
+@include gt-sm {
+    .mat-form-field {
+        width: $st-map-search-width - 20px - 10px;
+    }
+}

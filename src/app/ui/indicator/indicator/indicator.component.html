@@ -1,0 +1,7 @@
+<div *ngIf="show || progressActive"
+     [matTooltipDisabled]="progressActive"
+     [matTooltip]="tooltip"
+     [ngClass]="{'st-indicator': true, 'st-pulse': progressActive}"
+     matTooltipPosition="above">
+    <em [class]="isGardenView ? 'fa fa-tag st-garden-gray' : 'fa fa-leaf st-leaf-green'"></em>
+</div>

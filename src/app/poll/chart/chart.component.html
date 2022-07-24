@@ -1,0 +1,39 @@
+<div class="st-chart">
+    <h3>{{poll.title}}</h3>
+    <div *ngIf="totalVotes === 0">
+        <p>No data yet. Be the first to vote!</p>
+    </div>
+    <div [ngClass]="{'no-data': totalVotes === 0}" class="st-chart-canvas">
+        <canvas #chartCanvas width="120" height="120"></canvas>
+    </div>
+    <div [ngClass]="{'no-data': totalVotes === 0}" class="st-chart-vote">
+        <div *ngIf="isVotingAllowed; else pollClosed">
+            <mat-radio-group [(ngModel)]="selectedOption" class="st-radio-group">
+                <mat-radio-button *ngFor="let option of poll.options; let i = index;"
+                                  [value]="option"
+                                  [disabled]="!isVotingAllowed"
+                                  class="st-radio-button">
+                    <em class="material-icons st-radio-label" [style.color]="legendColor(i)">label</em>
+                    {{option.text}}
+                </mat-radio-button>
+            </mat-radio-group>
+            <br>
+            <br>
+            <button (click)="vote()" [disabled]="!selectedOption || !isVotingAllowed" mat-button>
+                Vote
+            </button>
+        </div>
+        <ng-template #pollClosed>
+            <div class="st-chart-legend">
+                <div *ngFor="let option of poll.options; let i = index;">
+                    <em class="material-icons st-chart-label" [style.color]="legendColor(i)">label</em>
+                    {{option.text}}
+                </div>
+            </div>
+            <p *ngIf="isAuthenticated; else signIn">Thank you for your vote.</p>
+            <ng-template #signIn>
+                <p>Please sign in for voting!</p>
+            </ng-template>
+        </ng-template>
+    </div>
+</div>

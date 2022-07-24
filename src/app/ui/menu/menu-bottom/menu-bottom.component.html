@@ -1,0 +1,23 @@
+<st-search></st-search>
+<st-menu-main *ngIf="menuService.isMainActive; else filter"
+              (click)="close()"
+              [@fade]="fadeState"
+              align="right">
+    <div *ngIf="isSearchFocused" class="no-click"></div>
+    <st-nav-item routerLink="/about" text="About"></st-nav-item>
+    <st-nav-item (click)="fenceService.signInRedirect()"
+                 *ngIf="!fenceService.isAuthenticated(); else signOut"
+                 text="Sign in">
+    </st-nav-item>
+    <ng-template #signOut>
+        <st-nav-item (click)="fenceService.signOut()"
+                     text="Sign out">
+        </st-nav-item>
+    </ng-template>
+</st-menu-main>
+<ng-template #filter>
+    <div style="position: relative">
+        <div *ngIf="isSearchFocused" class="no-click"></div>
+        <st-filter [@fade]="fadeState"></st-filter>
+    </div>
+</ng-template>

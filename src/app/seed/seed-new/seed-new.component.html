@@ -1,0 +1,54 @@
+<h1 *ngIf="!isChild; else childInGarden">Seed</h1>
+<ng-template #childInGarden>
+    <h1 *ngIf="isInGarden; else branchOfSeed">Seed in garden "{{parent.title}}"</h1>
+</ng-template>
+<ng-template #branchOfSeed>
+    <h1 *ngIf="!isTrail; else ofTrail">Branch of seed "{{parent.title}}"</h1>
+</ng-template>
+<ng-template #ofTrail>
+    <h1>Seed of trail "{{parent.title}}"</h1>
+</ng-template>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+    <div class="container">
+        <div fxFlex
+             fxLayout="row"
+             fxLayoutGap="40px"
+             fxLayout.lt-md="column"
+             fxLayoutGap.lt-md="0">
+            <div fxFlex="none">
+                <st-seed-new-base [formGroup]="formGroup" [parent]="parent"></st-seed-new-base>
+                <br>
+                <br>
+                <st-toggle (onToggle)="onPollToggle($event)" name="Add polls">
+                    <br>
+                    <st-poll-new [formGroup]="formGroup"></st-poll-new>
+                    <br>
+                </st-toggle>
+            </div>
+            <div fxFlex>
+                <div *ngIf="!isChild">
+                    <mat-slide-toggle (change)="onWeakLocalAlignmentToggle($event)">
+                        Weak local alignment
+                    </mat-slide-toggle>
+                    <br>
+                    <mat-slide-toggle (change)="onStartsTrailToggle($event)">
+                        Starts trail
+                    </mat-slide-toggle>
+                    <br>
+                    <mat-slide-toggle disabled>
+                        Private
+                    </mat-slide-toggle>
+                    <br>
+                </div>
+                <mat-slide-toggle (change)="onAnonymousToggle($event)" disabled>
+                    Anonymous
+                </mat-slide-toggle>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <button [disabled]="submitted" color="accent" mat-button>Seed</button>
+</form>
+

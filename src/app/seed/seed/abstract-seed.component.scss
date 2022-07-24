@@ -1,0 +1,42 @@
+@import "styles";
+
+st-menu-sub {
+    display: none;
+}
+
+@include gt-sm {
+    st-menu-fab-dial {
+        display: none;
+    }
+
+    st-menu-sub {
+        display: block;
+    }
+}
+
+.st-seed-actions {
+    position: absolute;
+    right: 0;
+}
+
+.st-seed-meta {
+    opacity: .5;
+}
+
+.st-seed-text {
+    width: 100%;
+}
+
+section {
+    width: 100%;
+    margin-top: 20px;
+
+    h2 {
+        padding-bottom: 5px;
+        border-bottom: $st-line;
+    }
+}
+
+st-chart {
+    float: left;
+}

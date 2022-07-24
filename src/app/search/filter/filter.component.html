@@ -1,0 +1,64 @@
+<div class="container">
+    <div fxFlex
+         fxLayout="row"
+         fxLayoutGap="20px"
+         fxLayout.lt-sm="column"
+         fxLayoutGap.lt-sm="0">
+        <div fxFlex>
+            <h3>Filter</h3>
+            <mat-slide-toggle (change)="setStrongLocalAlignment($event)" disabled>
+                Strong local alignment
+            </mat-slide-toggle>
+            <br>
+            <mat-slide-toggle [checked]="filter.poll" (change)="setIsPoll($event)">
+                Is poll
+            </mat-slide-toggle>
+            <br>
+            <mat-slide-toggle [checked]="filter.trail" (change)="setIsTrail($event)">
+                Is part of a trail
+            </mat-slide-toggle>
+            <div *ngIf="showIsOwnerFilter">
+                <mat-slide-toggle [checked]="isOwnerFilterActive" (change)="setIsOwner($event)">
+                    My seeds only
+                </mat-slide-toggle>
+            </div>
+            <div *ngIf="showUserFilter" [@enterSlideVertical]>
+                <mat-slide-toggle
+                    checked
+                    (change)="resetUser()">
+                    &#47;{{filter.username}}
+                </mat-slide-toggle>
+            </div>
+            <div *ngIf="filter.tags" [@enterSlideVertical]>
+                <mat-slide-toggle
+                    checked
+                    (change)="resetTags()">
+                    {{filter.tags | tags}}
+                </mat-slide-toggle>
+            </div>
+        </div>
+        <div fxFlex>
+            <h3>Sort</h3>
+            <mat-radio-group (change)="onSortChange($event)">
+                <mat-radio-button [value]="byWater" [checked]="filter.sort === byWater">
+                    Water
+                </mat-radio-button>
+                <br>
+                <mat-radio-button [value]="byNubits" [checked]="filter.sort == byNubits" disabled>
+                    Nubits
+                </mat-radio-button>
+                <br>
+                <mat-radio-button [value]="byDate" [checked]="filter.sort == byDate">
+                    Date
+                </mat-radio-button>
+                <br>
+                <mat-radio-button [value]="byChance" [checked]="filter.sort == byChance">
+                    Chance
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+</div>
+<br>
+<button (click)="apply()" color="accent" mat-button>Apply</button>
+<a (click)="reset()" class="underline st-reset">Reset</a>

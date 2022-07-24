@@ -1,0 +1,19 @@
+@import "styles";
+
+.st-menu {
+    position: relative;
+    width: $st-content-width;
+    margin: auto;
+}
+
+@include gt-sm {
+    .st-menu {
+        width: $st-content-width-gt-sm;
+    }
+}
+
+@include gt-lg {
+    .st-menu {
+        width: $st-content-width-gt-lg;
+    }
+}
