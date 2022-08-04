@@ -5,6 +5,7 @@ import {FenceService} from '../../fence/service/fence.service';
 import {FenceType} from '../../fence/model/fence-type.enum';
 import {MapService} from '../../map/service/map.service';
 import {MatDialog} from '@angular/material/dialog';
+import {MessageService} from '../../ui/message/service/message.service';
 import {OnDestroy} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {PollService} from '../../poll/service/poll.service';
@@ -13,7 +14,6 @@ import {SeedService} from '../service/seed.service';
 import {SeedType} from '../model/seed-type.enum';
 import {Seed} from '../model/seed';
 import {Subscription} from 'rxjs';
-import {MessageService} from '../../ui/message/service/message.service';
 
 @Component(
     {
