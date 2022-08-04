@@ -13,6 +13,7 @@ import {SeedService} from '../service/seed.service';
 import {SeedType} from '../model/seed-type.enum';
 import {Seed} from '../model/seed';
 import {Subscription} from 'rxjs';
+import {MessageService} from '../../ui/message/service/message.service';
 
 @Component(
     {
@@ -32,7 +33,8 @@ export class SeedComponent extends AbstractSeedComponent<Seed> implements OnInit
                 protected _seedService: SeedService,
                 protected _fenceService: FenceService,
                 protected _confirmDialog: MatDialog,
-                private _pollService: PollService) {
+                private _pollService: PollService,
+                private _messageService: MessageService) {
         super(_route, _mapService, _seedService, _fenceService, _confirmDialog, SeedType.SEED);
     }
 
@@ -72,6 +74,11 @@ export class SeedComponent extends AbstractSeedComponent<Seed> implements OnInit
         if (this.waterOrPruneAllowed) {
             this._seedService.water(this._seed.id).subscribe((success) => {
                 this._waterOrPruneAllowed = !success;
+                if (success) {
+                    this._messageService.info('Watered')
+                } else {
+                    this._messageService.error('Could not water Seed')
+                }
             });
         }
     }
@@ -85,7 +92,14 @@ export class SeedComponent extends AbstractSeedComponent<Seed> implements OnInit
 
     public prune(): void {
         if (this.waterOrPruneAllowed) {
-            this._waterOrPruneAllowed = false;
+            this._seedService.prune(this._seed.id).subscribe((success) => {
+                this._waterOrPruneAllowed = !success;
+                if (success) {
+                    this._messageService.info('Pruned')
+                } else {
+                    this._messageService.error('Could not prune Seed')
+                }
+            });
         }
     }
 

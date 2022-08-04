@@ -167,23 +167,11 @@ export class AbstractSeedService<T extends AbstractSeed> {
     }
 
     public water(id: string): Observable<boolean> {
+        return this.waterOrPrune(id, 'water');
+    }
 
-        return new Observable((observer) => {
-            this._http
-                .get<void>(StMaple.joinUrl(this._api, 'water', id), {observe: 'response'})
-                .subscribe(
-                    () => {
-                        console.log(`Successfully watered ${this._type} ${id}`);
-                        observer.next(true);
-                        observer.complete();
-                    },
-                    (error) => {
-                        console.error(`Could not water ${this._type} ${id}`, error);
-                        observer.next(false);
-                        observer.complete();
-                    }
-                );
-        });
+    public prune(id: string): Observable<boolean> {
+        return this.waterOrPrune(id, 'prune');
     }
 
     public delete(id: string): void {
@@ -204,5 +192,24 @@ export class AbstractSeedService<T extends AbstractSeed> {
                     console.error(`Could not remove ${this._type} ${id}`, error);
                 }
             );
+    }
+
+    private waterOrPrune(id: string, waterOrPrune: 'water' | 'prune'): Observable<boolean> {
+        return new Observable((observer) => {
+            this._http
+                .get<void>(StMaple.joinUrl(this._api, waterOrPrune, id), {observe: 'response'})
+                .subscribe(
+                    () => {
+                        console.log(`Successfully ${waterOrPrune}ed ${this._type} ${id}`);
+                        observer.next(true);
+                        observer.complete();
+                    },
+                    (error) => {
+                        console.error(`Could not ${waterOrPrune} ${this._type} ${id}`, error);
+                        observer.next(false);
+                        observer.complete();
+                    }
+                );
+        });
     }
 }
