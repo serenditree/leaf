@@ -13,5 +13,5 @@
             </mat-icon>
         </span>
     </p>
-    <p [innerHTML]="seed.text | ellipsis:ST_PREVIEW_LENGTH | html"></p>
+    <p [innerHTML]="seed.text | ellipsis:maxWords:maxLines | html"></p>
 </article>

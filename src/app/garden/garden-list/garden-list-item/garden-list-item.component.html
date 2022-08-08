@@ -5,5 +5,5 @@
         <span class="st-seed-list-item-badges st-secondary-gray">
         </span>
     </p>
-    <p [innerHTML]="garden.text | ellipsis:ST_PREVIEW_LENGTH | html"></p>
+    <p [innerHTML]="garden.text | ellipsis:maxWords:maxLines | html"></p>
 </article>

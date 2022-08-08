@@ -4,6 +4,7 @@ import {Garden} from '../../model/garden';
 import {Input} from '@angular/core';
 import {ListEventService} from '../../../ui/list/service/list-event.service';
 import {StAnimations} from '../../../utils/st-animations';
+import {LayoutService} from '../../../ui/layout/service/layout.service';
 
 @Component(
     {
@@ -17,8 +18,9 @@ import {StAnimations} from '../../../utils/st-animations';
 )
 export class GardenListItemComponent extends AbstractListItem<Garden> {
 
-    constructor(protected _listEventService: ListEventService) {
-        super(_listEventService);
+    constructor(protected _layoutService: LayoutService,
+                protected _listEventService: ListEventService) {
+        super(_layoutService, _listEventService);
     }
 
     get garden(): Garden {

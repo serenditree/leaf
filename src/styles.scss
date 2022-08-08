@@ -85,11 +85,6 @@ $st-line: 1px dotted $st-color-gray-light;
     font-weight: bold;
 }
 
-.st-ellipsis {
-    color: $st-color-gray-light;
-    font-weight: bold;
-}
-
 .st-flipped-horizontally {
     @include st-polyfill-property(transform, scaleX(-1));
 }
