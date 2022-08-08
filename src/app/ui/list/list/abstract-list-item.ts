@@ -2,9 +2,9 @@ import {AbstractSeed} from '../../../seed/model/abstract-seed';
 import {Directive} from '@angular/core';
 import {HostListener} from '@angular/core';
 import {Input} from '@angular/core';
+import {LayoutService} from '../../layout/service/layout.service';
 import {ListEventService} from '../service/list-event.service';
 import {ListItemEvent} from '../model/list-item-event';
-import {LayoutService} from '../../layout/service/layout.service';
 
 @Directive({selector: 'listItem'}) // no need to use it in a directive manner
 // eslint-disable-next-line @angular-eslint/directive-class-suffix

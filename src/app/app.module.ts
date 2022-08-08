@@ -26,6 +26,7 @@ import {SeedModule} from './seed/seed.module';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {ToggleModule} from './ui/toggle/toggle.module';
 import {UserModule} from './user/user.module';
+import {WorkerModule} from './worker/worker.module';
 import {environment} from '../environments/environment';
 
 @NgModule(
@@ -56,6 +57,7 @@ import {environment} from '../environments/environment';
             SeedModule,
             ToggleModule,
             UserModule,
+            WorkerModule,
             ServiceWorkerModule.register(
                 'ngsw-worker.js',
                 {

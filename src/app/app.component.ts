@@ -16,6 +16,7 @@ import {Router} from '@angular/router';
 import {SearchService} from './search/service/search.service';
 import {StLogging} from './utils/aspects/st-logging';
 import {Subscription} from 'rxjs';
+import {UpdateService} from './worker/service/update.service';
 import {ViewChild} from '@angular/core';
 import {environment} from '../environments/environment';
 import {filter} from 'rxjs/operators';
@@ -41,6 +42,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
     constructor(private _router: Router,
                 private _matIconRegistry: MatIconRegistry,
+                private _updateService: UpdateService,
                 private _bottomSheet: MatBottomSheet,
                 private _layoutService: LayoutService,
                 private _searchService: SearchService,

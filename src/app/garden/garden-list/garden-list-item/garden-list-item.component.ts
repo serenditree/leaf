@@ -2,9 +2,9 @@ import {AbstractListItem} from '../../../ui/list/list/abstract-list-item';
 import {Component} from '@angular/core';
 import {Garden} from '../../model/garden';
 import {Input} from '@angular/core';
+import {LayoutService} from '../../../ui/layout/service/layout.service';
 import {ListEventService} from '../../../ui/list/service/list-event.service';
 import {StAnimations} from '../../../utils/st-animations';
-import {LayoutService} from '../../../ui/layout/service/layout.service';
 
 @Component(
     {

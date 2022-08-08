@@ -1,10 +1,10 @@
 import {AbstractListItem} from '../../../ui/list/list/abstract-list-item';
 import {Component} from '@angular/core';
 import {Input} from '@angular/core';
+import {LayoutService} from '../../../ui/layout/service/layout.service';
 import {ListEventService} from '../../../ui/list/service/list-event.service';
 import {Seed} from '../../model/seed';
 import {StAnimations} from '../../../utils/st-animations';
-import {LayoutService} from '../../../ui/layout/service/layout.service';
 
 @Component(
     {
