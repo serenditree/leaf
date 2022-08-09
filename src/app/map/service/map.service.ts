@@ -339,7 +339,6 @@ export class MapService implements OnDestroy {
     private _updateMarkers(timeout: boolean = true): void {
         this._updateMarkersTimeout = setTimeout(
             () => {
-                console.log('Update...');
                 this._mapComponent.clearMarkers();
 
                 if (this._markerContext.type === MarkerType.SEED || this._markerContext.type === MarkerType.GARDEN) {
