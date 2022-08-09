@@ -13,7 +13,7 @@ export class UpdateService {
             this._update.available.subscribe(() => {
                 const dialogRef = this._confirmDialog.open(ConfirmComponent, {
                     data: {
-                        text: 'Update available',
+                        text: 'New version available!',
                         ok: 'load',
                         cancel: 'skip'
                     }
