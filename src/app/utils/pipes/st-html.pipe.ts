@@ -18,7 +18,8 @@ export class StHtmlPipe implements PipeTransform {
                 .replace(
                     /((https?:)|(www.))(\S+)/g,
                     (match: string, g0: string, g1: string, g2: string, g3: string) =>
-                        `<a class="underline" target="_blank" href="${g1 || 'https://'}${g2 || ''}${g3}">${match}</a>`
+                        `<a class="st-underline" target="_blank" href="${g1 || 'https://'}${g2 ||
+                                                                                            ''}${g3}">${match}</a>`
                 );
         } else {
             text = '';

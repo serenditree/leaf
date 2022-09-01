@@ -3,7 +3,7 @@
        [routerLinkActiveOptions]="routerLinkActiveOptions"
        [routerLink]="routerLink"
        routerLinkActive="st-nav-item-active">
-        <span [class.underline]="textUnderline">{{text}}</span>
+        <span [class.st-underline]="textUnderline">{{text}}</span>
     </a>
     <ng-template #iconTextLink>
         <span *ngIf="icon && text; else iconLink"
@@ -11,7 +11,7 @@
             <a>
                 <em *ngIf="set === 'fa'" [ngClass]="['fa', icon].concat(iconClassList)"></em>
                 <em *ngIf="set === 'material'" [ngClass]="['material-icons'].concat(iconClassList)">{{icon}}</em>
-                &nbsp;<span [class.underline]="textUnderline">{{text}}</span>
+                &nbsp;<span [class.st-underline]="textUnderline">{{text}}</span>
             </a>
         </span>
     </ng-template>
@@ -22,7 +22,7 @@
     </ng-template>
     <ng-template #textLink>
         <a *ngIf="text; else ngContent" [ngClass]="{'st-nav-item-active': active}">
-            <span [class.underline]="textUnderline">{{text}}</span>
+            <span [class.st-underline]="textUnderline">{{text}}</span>
         </a>
     </ng-template>
     <ng-template #ngContent>

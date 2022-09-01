@@ -71,13 +71,19 @@ $st-input-width-gt-sm: 400px;
 $st-transparency: rgba(255, 255, 255, .9);
 $st-line: 1px dotted $st-color-gray-light;
 
-.underline {
+.st-underline {
     border-bottom: 1px dotted $st-color-gray-primary !important;
 }
 
-.underline:hover {
+.st-underline:hover {
     color: inherit !important;
     border-bottom: 1px solid $st-color-gray-secondary !important;
+}
+
+.st-phonetic {
+    font-size: small;
+    font-weight: normal !important;
+    font-style: italic;
 }
 
 .st-match {
