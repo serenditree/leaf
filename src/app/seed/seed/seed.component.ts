@@ -72,7 +72,7 @@ export class SeedComponent extends AbstractSeedComponent<Seed> implements OnInit
 
     public water(): void {
         if (this.waterOrPruneAllowed) {
-            this._seedService.water(this._seed.id).subscribe((success) => {
+            this._seedService.water(this._seed).subscribe((success) => {
                 this._waterOrPruneAllowed = !success;
                 if (success) {
                     this._messageService.info('Watered')
@@ -92,7 +92,7 @@ export class SeedComponent extends AbstractSeedComponent<Seed> implements OnInit
 
     public prune(): void {
         if (this.waterOrPruneAllowed) {
-            this._seedService.prune(this._seed.id).subscribe((success) => {
+            this._seedService.prune(this._seed).subscribe((success) => {
                 this._waterOrPruneAllowed = !success;
                 if (success) {
                     this._messageService.info('Pruned')

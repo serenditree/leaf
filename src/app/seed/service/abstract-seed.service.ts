@@ -2,6 +2,7 @@ import {HTTP_STATUS} from '../../utils/st-const';
 import {AbstractSeed} from '../model/abstract-seed';
 import {FilterService} from '../../search/service/filter.service';
 import {HttpClient} from '@angular/common/http';
+import {HttpParams} from '@angular/common/http';
 import {IndicatorService} from '../../ui/indicator/service/indicator.service';
 import {LngLatBounds} from 'mapbox-gl';
 import {MessageService} from '../../ui/message/service/message.service';
@@ -9,6 +10,7 @@ import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {SeedFilter} from '../model/seed-filter';
 import {SeedType} from '../model/seed-type.enum';
+import {Seed} from '../model/seed';
 import {StMaple} from '../../utils/st-maple';
 import {Subject} from 'rxjs';
 import {environment} from '../../../environments/environment';
@@ -166,12 +168,13 @@ export class AbstractSeedService<T extends AbstractSeed> {
         });
     }
 
-    public water(id: string): Observable<boolean> {
-        return this.waterOrPrune(id, 'water');
+    public water(seed: Seed): Observable<boolean> {
+
+        return this.waterOrPrune(seed, 'water');
     }
 
-    public prune(id: string): Observable<boolean> {
-        return this.waterOrPrune(id, 'prune');
+    public prune(seed: Seed): Observable<boolean> {
+        return this.waterOrPrune(seed, 'prune');
     }
 
     public delete(id: string): void {
@@ -194,18 +197,23 @@ export class AbstractSeedService<T extends AbstractSeed> {
             );
     }
 
-    private waterOrPrune(id: string, waterOrPrune: 'water' | 'prune'): Observable<boolean> {
+    private waterOrPrune(seed: Seed, waterOrPrune: 'water' | 'prune'): Observable<boolean> {
+        let params = null
+        if (seed.garden) {
+            params = new HttpParams().append("garden", seed.garden);
+        }
+
         return new Observable((observer) => {
             this._http
-                .get<void>(StMaple.joinUrl(this._api, waterOrPrune, id), {observe: 'response'})
+                .get<void>(StMaple.joinUrl(this._api, waterOrPrune, seed.id), {observe: 'response', params: params})
                 .subscribe(
                     () => {
-                        console.log(`Successfully ${waterOrPrune}ed ${this._type} ${id}`);
+                        console.log(`Successfully ${waterOrPrune}ed ${this._type} ${seed.id}`);
                         observer.next(true);
                         observer.complete();
                     },
                     (error) => {
-                        console.error(`Could not ${waterOrPrune} ${this._type} ${id}`, error);
+                        console.error(`Could not ${waterOrPrune} ${this._type} ${seed.id}`, error);
                         observer.next(false);
                         observer.complete();
                     }
