@@ -32,8 +32,8 @@ export abstract class AbstractSeedComponent<T extends AbstractSeed> {
 
     public share(): void {
         navigator.clipboard.writeText(location.href).then(
-            () => this._messageService.info("Link copied to clipboard."),
-            () => this._messageService.error("Could not copy link.")
+            () => this._messageService.info("Link copied to clipboard"),
+            () => this._messageService.error("Could not copy link")
         )
     }
 
