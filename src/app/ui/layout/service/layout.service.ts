@@ -10,7 +10,7 @@ import {environment} from '../../../../environments/environment';
 export class LayoutService implements OnDestroy {
 
     public static readonly MOBILE = BREAKPOINTS.LT_MD;
-    public static readonly STANDALONE = 'display-mode: standalone'
+    public static readonly STANDALONE = '(display-mode: standalone)'
 
     private readonly _breakpointSubscription: Subscription;
 
