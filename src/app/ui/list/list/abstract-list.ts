@@ -78,7 +78,7 @@ export abstract class AbstractList<T extends AbstractSeed> {
 
     @HostListener('window:scroll', ['$event.target.scrollingElement'])
     private _onScroll(event: HTMLElement): void {
-        if (this._layoutService.isMobile() && !this._scrollingToItem) {
+        if (this._layoutService.isStandalone() && this._layoutService.isMobile() && !this._scrollingToItem) {
             const top = event.scrollTop < 0 ? 0 : event.scrollTop;
             const delta = this._lastScrollTop - top; // + up / - down
             this._lastScrollTop = top;
