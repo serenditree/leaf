@@ -6,6 +6,7 @@ import {FenceService} from '../../fence/service/fence.service';
 import {MapService} from '../../map/service/map.service';
 import {MarkerType} from '../../map/model/marker-type.enum';
 import {MatDialog} from '@angular/material/dialog';
+import {MessageService} from '../../ui/message/service/message.service';
 import {SeedType} from '../model/seed-type.enum';
 import {Subscription} from 'rxjs';
 
@@ -21,11 +22,19 @@ export abstract class AbstractSeedComponent<T extends AbstractSeed> {
                           protected _seedService: AbstractSeedService<T>,
                           protected _fenceService: FenceService,
                           protected _confirmDialog: MatDialog,
+                          protected _messageService: MessageService,
                           protected _type: SeedType) {
     }
 
     get isOwner(): boolean {
         return this._seed && this._seed.userId === this._fenceService.getUserId();
+    }
+
+    public share(): void {
+        navigator.clipboard.writeText(location.href).then(
+            () => this._messageService.info("Link copied to clipboard."),
+            () => this._messageService.error("Could not copy link.")
+        )
     }
 
     public delete(): void {

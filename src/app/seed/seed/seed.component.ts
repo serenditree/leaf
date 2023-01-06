@@ -33,9 +33,10 @@ export class SeedComponent extends AbstractSeedComponent<Seed> implements OnInit
                 protected _seedService: SeedService,
                 protected _fenceService: FenceService,
                 protected _confirmDialog: MatDialog,
-                private _pollService: PollService,
-                private _messageService: MessageService) {
-        super(_route, _mapService, _seedService, _fenceService, _confirmDialog, SeedType.SEED);
+                protected _messageService: MessageService,
+                private _pollService: PollService
+                ) {
+        super(_route, _mapService, _seedService, _fenceService, _confirmDialog, _messageService, SeedType.SEED);
     }
 
     get seed(): Seed {

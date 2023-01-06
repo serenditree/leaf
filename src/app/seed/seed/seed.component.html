@@ -53,6 +53,13 @@
                  set="material"
                  text="Prune">
     </st-nav-item>
+    <st-nav-item (click)="share()"
+                 [fab]="true"
+                 [iconClassList]="['st-prune-gray']"
+                 icon="share"
+                 set="material"
+                 text="Share">
+    </st-nav-item>
     <st-nav-item (click)="delete()"
                  *ngIf="isOwner"
                  [fab]="true"

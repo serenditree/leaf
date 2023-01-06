@@ -6,6 +6,7 @@ import {GardenService} from '../service/garden.service';
 import {Garden} from '../model/garden';
 import {MapService} from '../../map/service/map.service';
 import {MatDialog} from '@angular/material/dialog';
+import {MessageService} from '../../ui/message/service/message.service';
 import {OnDestroy} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {SeedFilter} from '../../seed/model/seed-filter';
@@ -26,8 +27,9 @@ export class GardenComponent extends AbstractSeedComponent<Garden> implements On
                 protected _gardenService: GardenService,
                 protected _fenceService: FenceService,
                 protected _confirmDialog: MatDialog,
+                protected _messageService: MessageService,
                 private _childService: SeedService) {
-        super(_route, _mapService, _gardenService, _fenceService, _confirmDialog, SeedType.GARDEN);
+        super(_route, _mapService, _gardenService, _fenceService, _confirmDialog, _messageService, SeedType.GARDEN);
     }
 
     get garden(): Garden {
