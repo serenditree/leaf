@@ -3,7 +3,7 @@
     <st-map></st-map>
 </header>
 <st-menu-sub *ngIf="showSubmenu(routerOutlet)"></st-menu-sub>
-<main [class]="hasSubmenu(routerOutlet) ? 'st-content-sub' : 'st-content'">
+<main [class]="contentClass(routerOutlet)">
     <router-outlet #routerOutlet="outlet"></router-outlet>
     <st-dev *ngIf="!isProduction"></st-dev>
 </main>

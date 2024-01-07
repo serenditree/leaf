@@ -43,8 +43,13 @@ $st-map-search-width: 320px;
 
 $st-content-start: $st-menu-top-height + $st-map-height + 20px;
 $st-content-start-gt-sm: $st-menu-top-height-gt-sm + $st-map-height + $st-menu-sub-height-gt-sm;
+
 $st-content-start-sub: $st-content-start;
 $st-content-start-sub-gt-sm: $st-content-start-gt-sm + $st-menu-sub-height-gt-sm;
+
+$st-content-start-no-map: $st-menu-top-height + 20px;
+$st-content-start-no-map-gt-sm: $st-menu-top-height-gt-sm + $st-menu-sub-height-gt-sm;
+
 $st-content-width: 95%;
 $st-content-width-gt-sm: 70%;
 $st-content-width-gt-lg: 50%;

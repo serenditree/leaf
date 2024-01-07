@@ -5,6 +5,7 @@ import {ElementRef} from '@angular/core';
 import {HostListener} from '@angular/core';
 import {LayoutService} from './ui/layout/service/layout.service';
 import {ListEventService} from './ui/list/service/list-event.service';
+import {ListEvent} from './ui/list/model/list-event';
 import {MapComponent} from './map/map/map.component';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {MatIconRegistry} from '@angular/material/icon';
@@ -87,13 +88,31 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         this._listEventSubscription.unsubscribe();
     }
 
-    public hasSubmenu(routerState: RouterOutlet): boolean {
-        return !!routerState.activatedRouteData['submenu'];
+    public contentClass(routerState: RouterOutlet): string {
+        let stContent = 'st-content';
+        if (this.hasSubmenu(routerState)) {
+            stContent = 'st-content-sub';
+        } else if (this._layoutService.isMobile()) {
+            if (routerState.activatedRouteData['nomap']) {
+                stContent = 'st-content-no-map';
+                this._map.nativeElement.firstChild.style.height = '0px';
+                //TODO remove hack to show/hide map-controls
+                this._listEventService.fireListEvent(new ListEvent(1, 1));
+            } else {
+                this._listEventService.fireListEvent(new ListEvent(0, 0));
+            }
+        }
+
+        return stContent;
     }
 
     public showSubmenu(routerState: RouterOutlet): boolean {
         return !!routerState.activatedRouteData['submenu'] &&
                !routerState.activatedRouteData['decentralized'];
+    }
+
+    private hasSubmenu(routerState: RouterOutlet): boolean {
+        return !!routerState.activatedRouteData['submenu'];
     }
 
     private _registerGlobalRouterActions(): void {

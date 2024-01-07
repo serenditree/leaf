@@ -29,7 +29,10 @@ const routes: Routes = [
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     {
         path: 'about',
-        component: AboutComponent
+        component: AboutComponent,
+        data: {
+            nomap: true
+        }
     },
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // SEED
@@ -124,11 +127,17 @@ const routes: Routes = [
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     {
         path: 'sign-up',
-        component: SignUpComponent
+        component: SignUpComponent,
+        data: {
+            nomap: true
+        }
     },
     {
         path: 'sign-in',
-        component: SignInComponent
+        component: SignInComponent,
+        data: {
+            nomap: true
+        }
     }
 ];
 

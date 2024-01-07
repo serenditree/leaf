@@ -5,7 +5,8 @@ header {
 }
 
 .st-content,
-.st-content-sub {
+.st-content-sub,
+.st-content-no-map {
     position: relative;
     width: $st-content-width;
     margin: $st-content-start auto 4200px auto; // margin-bottom to enable scrolling on every page
@@ -13,7 +14,8 @@ header {
 
 @include gt-sm {
     .st-content,
-    .st-content-sub {
+    .st-content-sub,
+    .st-content-no-map {
         width: $st-content-width-gt-sm;
         margin-top: $st-content-start-gt-sm;
     }
@@ -21,7 +23,8 @@ header {
 
 @include gt-lg {
     .st-content,
-    .st-content-sub {
+    .st-content-sub,
+    .st-content-no-map {
         width: $st-content-width-gt-lg;
     }
 }
@@ -33,5 +36,15 @@ header {
 @include gt-sm {
     .st-content-sub {
         margin-top: $st-content-start-sub-gt-sm;
+    }
+}
+
+.st-content-no-map {
+    margin-top: $st-content-start-no-map;
+}
+
+@include gt-sm {
+    .st-content-no-map {
+        margin-top: $st-content-start-no-map-gt-sm;
     }
 }
