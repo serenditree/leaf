@@ -1,3 +1,4 @@
+import {EXACT_MATCH_FALSE} from '../../utils/st-const';
 import {EXACT_MATCH_TRUE} from '../../utils/st-const';
 import * as GeoViewport from '@mapbox/geo-viewport';
 import {AfterViewInit} from '@angular/core';
@@ -92,12 +93,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     get showIndicator(): boolean {
-        return this._router.isActive('seed', EXACT_MATCH_TRUE)
-               || this._router.isActive('cultivate', EXACT_MATCH_TRUE);
+        return this._router.isActive('seed', EXACT_MATCH_TRUE) ||
+               this._router.isActive('cultivate', EXACT_MATCH_TRUE);
     }
 
     get showControl(): boolean {
-        return this._showControl;
+        return this._showControl &&
+               ! this._router.isActive('about', EXACT_MATCH_TRUE) &&
+               ! this._router.isActive('sign-in', EXACT_MATCH_FALSE) &&
+               ! this._router.isActive('sign-up', EXACT_MATCH_FALSE);
     }
 
     ngOnInit(): void {

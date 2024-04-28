@@ -5,7 +5,6 @@ import {ElementRef} from '@angular/core';
 import {HostListener} from '@angular/core';
 import {LayoutService} from './ui/layout/service/layout.service';
 import {ListEventService} from './ui/list/service/list-event.service';
-import {ListEvent} from './ui/list/model/list-event';
 import {MapComponent} from './map/map/map.component';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {MatIconRegistry} from '@angular/material/icon';
@@ -96,10 +95,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
             if (routerState.activatedRouteData['nomap']) {
                 stContent = 'st-content-no-map';
                 this._map.nativeElement.firstChild.style.height = '0px';
-                //TODO remove hack to show/hide map-controls
-                this._listEventService.fireListEvent(new ListEvent(1, 1));
-            } else {
-                this._listEventService.fireListEvent(new ListEvent(0, 0));
             }
         }
 
