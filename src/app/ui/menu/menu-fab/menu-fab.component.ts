@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FilterService} from '../../../search/service/filter.service';
 import {Input} from '@angular/core';
+import {Location} from '@angular/common';
 import {MenuService} from '../service/menu.service';
 
 @Component(
@@ -12,11 +13,17 @@ import {MenuService} from '../service/menu.service';
 )
 export class MenuFabComponent {
 
-    private _isMain = true;
+    private _isMain = false;
+    private _isBack = false;
     private _isElevated = true;
 
     constructor(private _menuService: MenuService,
-                private _filterService: FilterService) {
+                private _filterService: FilterService,
+                private _location: Location) {
+    }
+
+    goBack(): void {
+        this._location.back()
     }
 
     get menuService(): MenuService {
@@ -38,6 +45,15 @@ export class MenuFabComponent {
     @Input()
     set isMain(value: boolean) {
         this._isMain = value;
+    }
+
+    get isBack(): boolean {
+        return this._isBack;
+    }
+
+    @Input()
+    set isBack(value: boolean) {
+        this._isBack = value;
     }
 
     get isElevated(): boolean {

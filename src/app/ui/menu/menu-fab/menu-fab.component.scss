@@ -11,15 +11,19 @@
     bottom: 20px;
 }
 
+.st-fab.filter, .st-fab.back {
+    right: 80px !important;
+}
+
 .st-fab.filter {
     background: $st-color-orange-warning;
-    right: 80px !important;
 }
 
 .st-fab.no-filter {
     background: #fff !important;
     border: 1px solid $st-color-gray-light;
 }
+
 
 .st-fab-icon {
     color: #fff;
