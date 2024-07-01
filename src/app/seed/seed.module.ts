@@ -1,7 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {FenceModule} from '../fence/fence.module';
 import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
 import {MatLegacyAutocompleteModule as MatAutocompleteModule} from '@angular/material/legacy-autocomplete';
 import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
@@ -24,49 +23,45 @@ import {SeedService} from './service/seed.service';
 import {SeedTrailComponent} from './seed-trail/seed-trail.component';
 import {StPipesModule} from '../utils/pipes/st-pipes.module';
 import {ToggleModule} from '../ui/toggle/toggle.module';
+import {provideHttpClient} from '@angular/common/http';
+import {withInterceptorsFromDi} from '@angular/common/http';
 
 @NgModule(
-    {
-        imports: [
-            CommonModule,
-            FenceModule,
-            FormsModule,
-            HttpClientModule,
-            MatAutocompleteModule,
-            MatButtonModule,
-            MatIconModule,
-            MatInputModule,
-            MatSlideToggleModule,
-            MatSnackBarModule,
-            MatTooltipModule,
-            MenuModule,
-            NavModule,
-            PollModule,
-            ReactiveFormsModule,
-            RouterModule,
-            StPipesModule,
-            ToggleModule
-        ],
-        declarations: [
-            SeedComponent,
-            SeedListComponent,
-            SeedListItemComponent,
-            SeedNewBaseComponent,
-            SeedNewComponent,
-            SeedTrailComponent
-        ],
-        exports: [
-            SeedComponent,
-            SeedListComponent,
-            SeedListItemComponent,
-            SeedNewBaseComponent,
-            SeedNewComponent,
-            SeedTrailComponent
-        ],
-        providers: [
-            SeedService
-        ]
-    }
+    { declarations: [
+        SeedComponent,
+        SeedListComponent,
+        SeedListItemComponent,
+        SeedNewBaseComponent,
+        SeedNewComponent,
+        SeedTrailComponent
+    ],
+    exports: [
+        SeedComponent,
+        SeedListComponent,
+        SeedListItemComponent,
+        SeedNewBaseComponent,
+        SeedNewComponent,
+        SeedTrailComponent
+    ], imports: [CommonModule,
+        FenceModule,
+        FormsModule,
+        MatAutocompleteModule,
+        MatButtonModule,
+        MatIconModule,
+        MatInputModule,
+        MatSlideToggleModule,
+        MatSnackBarModule,
+        MatTooltipModule,
+        MenuModule,
+        NavModule,
+        PollModule,
+        ReactiveFormsModule,
+        RouterModule,
+        StPipesModule,
+        ToggleModule], providers: [
+        SeedService,
+        provideHttpClient(withInterceptorsFromDi())
+    ] }
 )
 export class SeedModule {
 }

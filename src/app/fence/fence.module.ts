@@ -5,7 +5,6 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {FenceInterceptor} from './feature/fence.interceptor';
 import {FenceService} from './service/fence.service';
 import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
 import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
 import {MatLegacyCheckboxModule as MatCheckboxModule} from '@angular/material/legacy-checkbox';
@@ -16,27 +15,22 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {SignInComponent} from './sign-in/sign-in.component';
 import {SignUpComponent} from './sign-up/sign-up.component';
+import {provideHttpClient} from '@angular/common/http';
+import {withInterceptorsFromDi} from '@angular/common/http';
 
 @NgModule(
-    {
-        imports: [
-            CommonModule,
-            FormsModule,
-            HttpClientModule,
-            MatButtonModule,
-            MatIconModule,
-            MatInputModule,
-            MatSnackBarModule,
-            ReactiveFormsModule,
-            RouterModule,
-            DragDropModule,
-            MatCheckboxModule,
-            AboutModule
-        ],
-        declarations: [SignInComponent, SignUpComponent, BotDndComponent],
-        providers: [FenceService, FenceInterceptor],
-        exports: [SignInComponent, SignUpComponent, BotDndComponent]
-    }
+    { declarations: [SignInComponent, SignUpComponent, BotDndComponent],
+    exports: [SignInComponent, SignUpComponent, BotDndComponent], imports: [CommonModule,
+        FormsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatInputModule,
+        MatSnackBarModule,
+        ReactiveFormsModule,
+        RouterModule,
+        DragDropModule,
+        MatCheckboxModule,
+        AboutModule], providers: [FenceService, FenceInterceptor, provideHttpClient(withInterceptorsFromDi())] }
 )
 export class FenceModule {
 }
