@@ -5,23 +5,24 @@
     ],
     "compileOnSave": false,
     "compilerOptions": {
-        "baseUrl": "./src",
-        "declaration": false,
-        "downlevelIteration": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "importHelpers": true,
-        "lib": [
-            "es2018",
-            "dom"
-        ],
-        "module": "es2020",
-        "moduleResolution": "node",
-        "outDir": "./dist/out-tsc",
-        "sourceMap": true,
-        "target": "es2020",
-        "typeRoots": [
-            "./node_modules/@types"
-        ]
+      "baseUrl": "./src",
+      "declaration": false,
+      "downlevelIteration": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "importHelpers": true,
+      "lib": [
+        "es2018",
+        "dom"
+      ],
+      "module": "es2020",
+      "moduleResolution": "node",
+      "outDir": "./dist/out-tsc",
+      "sourceMap": true,
+      "target": "ES2022",
+      "typeRoots": [
+        "./node_modules/@types"
+      ],
+      "useDefineForClassFields": false
     }
 }
