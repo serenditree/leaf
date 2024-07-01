@@ -1,6 +1,5 @@
 import {CommonModule} from '@angular/common';
 import {FenceModule} from '../fence/fence.module';
-import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
 import {GardenComponent} from './garden/garden.component';
 import {GardenListComponent} from './garden-list/garden-list/garden-list.component';
@@ -28,7 +27,6 @@ import {StPipesModule} from '../utils/pipes/st-pipes.module';
         imports: [
             CommonModule,
             FenceModule,
-            FlexLayoutModule,
             FormsModule,
             MatButtonModule,
             MatDialogModule,

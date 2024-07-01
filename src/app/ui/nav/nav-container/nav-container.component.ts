@@ -12,15 +12,15 @@ import {ViewEncapsulation} from '@angular/core';
 )
 export class NavContainerComponent {
 
-    private _responsive = 'column';
+    private _responsive = true;
     private _align: string;
 
-    get responsive(): string {
+    get responsive(): boolean {
         return this._responsive;
     }
 
     @Input()
-    set responsive(value: string) {
+    set responsive(value: boolean) {
         this._responsive = value;
     }
 

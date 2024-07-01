@@ -1,6 +1,6 @@
 <st-menu-sub decentralized="true">
     <div class="st-seed-actions">
-        <st-nav-container align="right" responsive="row">
+        <st-nav-container align="right" [responsive]="false">
             <st-nav-item (click)="water()"
                          [disabled]="!waterOrPruneAllowed"
                          [iconClassList]="['st-tint-blue']"

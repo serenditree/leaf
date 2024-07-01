@@ -59,7 +59,7 @@ export class MenuSubComponent {
     }
 
     public isActive(component: string): boolean {
-        let active;
+        let active: boolean;
 
         if (component === 'discover') {
             active = this._router.isActive('/seeds', EXACT_MATCH_TRUE)

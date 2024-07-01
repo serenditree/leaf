@@ -1,5 +1,19 @@
 @import "styles";
 
+.flex-row {
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+}
+
+@include lt-sm {
+    .flex-row {
+        gap: 0;
+        flex-grow: 1;
+        flex-direction: column;
+    }
+}
+
 mat-radio-button {
     line-height: 22px !important;
 }

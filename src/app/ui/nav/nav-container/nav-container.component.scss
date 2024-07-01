@@ -1,5 +1,23 @@
 @import "styles";
 
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+@include lt-sm {
+    .flex-row {
+        gap: 0;
+        flex-grow: 1;
+        flex-direction: column;
+    }
+}
+
+.flex-row-static {
+    display: flex;
+    flex-direction: row;
+}
+
 .st-nav-item-container-left st-nav-item {
     text-align: left;
     margin-right: 20px;

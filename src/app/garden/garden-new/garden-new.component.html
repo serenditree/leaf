@@ -1,20 +1,14 @@
 <h1>Cultivate</h1>
 
 <form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
-    <div class="container">
-        <div fxFlex
-             fxLayout="row"
-             fxLayoutGap="40px"
-             fxLayout.lt-md="column"
-             fxLayoutGap.lt-md="0">
-            <div fxFlex="none">
-                <st-seed-new-base [formGroup]="formGroup" [parent]="parent"></st-seed-new-base>
-            </div>
-            <div fxFlex>
-                <mat-slide-toggle disabled>
-                    Private
-                </mat-slide-toggle>
-            </div>
+    <div class="flex-row">
+        <div>
+            <st-seed-new-base [formGroup]="formGroup" [parent]="parent"></st-seed-new-base>
+        </div>
+        <div>
+            <mat-slide-toggle disabled>
+                Private
+            </mat-slide-toggle>
         </div>
     </div>
     <br>

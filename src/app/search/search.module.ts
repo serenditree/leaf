@@ -1,6 +1,5 @@
 import {CommonModule} from '@angular/common';
 import {FilterComponent} from './filter/filter.component';
-import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatButtonModule} from '@angular/material/button';
@@ -25,7 +24,6 @@ import {StPipesModule} from '../utils/pipes/st-pipes.module';
             StDirectivesModule,
             StPipesModule,
             MatSlideToggleModule,
-            FlexLayoutModule,
             MatRadioModule,
             MatButtonModule
         ],

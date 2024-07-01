@@ -1,73 +1,66 @@
 <h1>Sign up</h1>
 <form [formGroup]="formGroup">
-    <div class="container">
-        <div fxFlex="none"
-             fxLayout="row"
-             fxLayoutGap="20px"
-             fxFlex.lt-sm="grow"
-             fxLayout.lt-sm="column"
-             fxLayoutGap.lt-sm="0">
-            <div fxFlex>
-                <mat-form-field appearance="standard" class="small small-except-mobile">
-                    <mat-label>Username</mat-label>
-                    <input autocomplete="username"
-                           formControlName="username"
-                           id="username"
-                           matInput
-                           type="text">
-                    <mat-error *ngIf="formGroup.hasError('required', ['username'])">required</mat-error>
-                    <mat-error *ngIf="formGroup.hasError('usernameExists', ['username'])">
-                        sorry, this username already exists
-                    </mat-error>
-                </mat-form-field>
-                <br>
-                <mat-form-field appearance="standard" class="small small-except-mobile">
-                    <mat-label>Email</mat-label>
-                    <input autocomplete="email"
-                           formControlName="email"
-                           id="email"
-                           inputmode="email"
-                           matInput
-                           type="email">
-                    <mat-error *ngIf="formGroup.hasError('email', ['email']) && formGroup.get('email').value !== ''">
-                        invalid email
-                    </mat-error>
-                    <mat-hint align="end">(optional)</mat-hint>
-                </mat-form-field>
-            </div>
-            <div fxFlex>
-                <mat-form-field appearance="standard" class="small small-except-mobile">
-                    <mat-label>Password</mat-label>
-                    <input #password
-                           autocomplete="new-password"
-                           formControlName="password"
-                           id="password"
-                           matInput
-                           type="password">
-                    <mat-icon (click)="toggleVisibility(password, passwordConfirm)" matSuffix>
-                        {{passwordVisible}}
-                    </mat-icon>
-                    <mat-error *ngIf="formGroup.hasError('required', ['password'])">required</mat-error>
-                    <mat-error *ngIf="formGroup.hasError('entropy', ['password'])">too weak</mat-error>
-                </mat-form-field>
-                <br>
-                <mat-form-field appearance="standard" class="small small-except-mobile">
-                    <mat-label>Confirm Password</mat-label>
-                    <input #passwordConfirm
-                           autocomplete="new-password"
-                           formControlName="passwordConfirm"
-                           id="password-confirm"
-                           matInput
-                           type="password">
-                    <mat-icon (click)="toggleVisibility(password, passwordConfirm)" matSuffix>
-                        {{passwordVisible}}
-                    </mat-icon>
-                    <mat-error *ngIf="formGroup.hasError('identical', ['passwordConfirm'])">
-                        passwords not identical
-                    </mat-error>
-                    <mat-error *ngIf="formGroup.hasError('required', ['passwordConfirm'])">required</mat-error>
-                </mat-form-field>
-            </div>
+    <div class="flex-row">
+        <div>
+            <mat-form-field appearance="standard" class="small small-except-mobile">
+                <mat-label>Username</mat-label>
+                <input autocomplete="username"
+                       formControlName="username"
+                       id="username"
+                       matInput
+                       type="text">
+                <mat-error *ngIf="formGroup.hasError('required', ['username'])">required</mat-error>
+                <mat-error *ngIf="formGroup.hasError('usernameExists', ['username'])">
+                    sorry, this username already exists
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="standard" class="small small-except-mobile">
+                <mat-label>Email</mat-label>
+                <input autocomplete="email"
+                       formControlName="email"
+                       id="email"
+                       inputmode="email"
+                       matInput
+                       type="email">
+                <mat-error *ngIf="formGroup.hasError('email', ['email']) && formGroup.get('email').value !== ''">
+                    invalid email
+                </mat-error>
+                <mat-hint align="end">(optional)</mat-hint>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="standard" class="small small-except-mobile">
+                <mat-label>Password</mat-label>
+                <input #password
+                       autocomplete="new-password"
+                       formControlName="password"
+                       id="password"
+                       matInput
+                       type="password">
+                <mat-icon (click)="toggleVisibility(password, passwordConfirm)" matSuffix>
+                    {{ passwordVisible }}
+                </mat-icon>
+                <mat-error *ngIf="formGroup.hasError('required', ['password'])">required</mat-error>
+                <mat-error *ngIf="formGroup.hasError('entropy', ['password'])">too weak</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="standard" class="small small-except-mobile">
+                <mat-label>Confirm Password</mat-label>
+                <input #passwordConfirm
+                       autocomplete="new-password"
+                       formControlName="passwordConfirm"
+                       id="password-confirm"
+                       matInput
+                       type="password">
+                <mat-icon (click)="toggleVisibility(password, passwordConfirm)" matSuffix>
+                    {{ passwordVisible }}
+                </mat-icon>
+                <mat-error *ngIf="formGroup.hasError('identical', ['passwordConfirm'])">
+                    passwords not identical
+                </mat-error>
+                <mat-error *ngIf="formGroup.hasError('required', ['passwordConfirm'])">required</mat-error>
+            </mat-form-field>
         </div>
     </div>
     <br>

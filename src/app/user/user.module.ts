@@ -1,5 +1,4 @@
 import {CommonModule} from '@angular/common';
-import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -14,7 +13,6 @@ import {UserComponent} from './user/user.component';
     {
         imports: [
             CommonModule,
-            FlexLayoutModule,
             FormsModule,
             MatButtonModule,
             MatInputModule,

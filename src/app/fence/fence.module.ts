@@ -5,7 +5,6 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {FenceGuard} from './feature/fence.guard';
 import {FenceInterceptor} from './feature/fence.interceptor';
 import {FenceService} from './service/fence.service';
-import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {MatButtonModule} from '@angular/material/button';
@@ -23,7 +22,6 @@ import {SignUpComponent} from './sign-up/sign-up.component';
     {
         imports: [
             CommonModule,
-            FlexLayoutModule,
             FormsModule,
             HttpClientModule,
             MatButtonModule,

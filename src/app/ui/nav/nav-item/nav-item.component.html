@@ -1,4 +1,4 @@
-<nav *ngIf="!fab; else fabNavigation" fxFlex>
+<nav *ngIf="!fab; else fabNavigation">
     <a *ngIf="text && routerLink && !icon; else iconTextLink"
        [routerLinkActiveOptions]="routerLinkActiveOptions"
        [routerLink]="routerLink"

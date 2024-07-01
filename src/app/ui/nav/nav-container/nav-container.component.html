@@ -1,8 +1,8 @@
-<nav class="container">
-    <div [class]="align === 'left' ? 'st-nav-item-container-left' : 'st-nav-item-container-right'"
-         [fxLayout.lt-md]="responsive"
-         fxFlex
-         fxLayout="row">
-        <ng-content></ng-content>
-    </div>
-</nav>
+<div [ngClass]="{
+    'st-nav-item-container-left': align === 'left',
+    'st-nav-item-container-right': align === 'right',
+    'flex-row': responsive,
+    'flex-row-static': !responsive
+    }">
+    <ng-content></ng-content>
+</div>

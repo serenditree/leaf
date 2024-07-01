@@ -1,2 +1,16 @@
 @import "styles";
 @import "assets/styles/list";
+
+.flex-row {
+    display: flex;
+    gap: 40px;
+    flex-direction: row;
+}
+
+@include lt-md {
+    .flex-row {
+        gap: 0;
+        flex-grow: 1;
+        flex-direction: column;
+    }
+}

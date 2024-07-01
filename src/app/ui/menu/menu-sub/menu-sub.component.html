@@ -1,5 +1,5 @@
 <st-menu [ngClass]="{'st-menu-sub': true, 'decentralized': decentralized}">
-    <st-nav-container *ngIf="!decentralized && isActive('discover'); else user" align="left" responsive="row">
+    <st-nav-container *ngIf="!decentralized && isActive('discover'); else user" align="left" [responsive]="false">
         <st-nav-item [routerLinkActiveOptions]="{exact: true}"
                      routerLink="/seeds"
                      text="Seeds">
@@ -15,7 +15,7 @@
         </st-nav-item>
     </st-nav-container>
     <ng-template #user>
-        <st-nav-container *ngIf="!decentralized && isActive('user'); else ngContent" align="left" responsive="row">
+        <st-nav-container *ngIf="!decentralized && isActive('user'); else ngContent" align="left" [responsive]="false">
             <st-nav-item [routerLinkActiveOptions]="{exact: true}"
                          routerLink="/user/garden"
                          text="Garden">

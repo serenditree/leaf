@@ -1,6 +1,5 @@
 import {CommonModule} from '@angular/common';
 import {FenceModule} from '../fence/fence.module';
-import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -31,7 +30,6 @@ import {ToggleModule} from '../ui/toggle/toggle.module';
         imports: [
             CommonModule,
             FenceModule,
-            FlexLayoutModule,
             FormsModule,
             HttpClientModule,
             MatAutocompleteModule,

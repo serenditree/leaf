@@ -1,1 +1,15 @@
 @import "src/app/fence/abstract/abstract-fence.component";
+
+.flex-row {
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+}
+
+@include lt-sm {
+    .flex-row {
+        gap: 0;
+        flex-grow: 1;
+        flex-direction: column;
+    }
+}
