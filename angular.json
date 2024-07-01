@@ -107,18 +107,18 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "serenditree:build"
+                      "buildTarget": "serenditree:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "serenditree:build:production"
+                          "buildTarget": "serenditree:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "serenditree:build"
+                      "buildTarget": "serenditree:build"
                     }
                 },
                 "lint": {
