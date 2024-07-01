@@ -1,7 +1,7 @@
 import {AbstractSeedNewComponent} from './abstract-seed-new.component';
 import {Component} from '@angular/core';
-import {FormArray} from '@angular/forms';
-import {FormBuilder} from '@angular/forms';
+import {UntypedFormArray} from '@angular/forms';
+import {UntypedFormBuilder} from '@angular/forms';
 import {IndicatorService} from '../../ui/indicator/service/indicator.service';
 import {Location} from '@angular/common';
 import {MapService} from '../../map/service/map.service';
@@ -29,7 +29,7 @@ export class SeedNewComponent extends AbstractSeedNewComponent<Seed> implements 
     constructor(protected _location: Location,
                 protected _mapService: MapService,
                 private _indicator: IndicatorService,
-                private _formBuilder: FormBuilder,
+                private _formBuilder: UntypedFormBuilder,
                 private _seedService: SeedService) {
         super(_location, _mapService);
     }
@@ -132,7 +132,7 @@ export class SeedNewComponent extends AbstractSeedNewComponent<Seed> implements 
     }
 
     private _toggleHelperValidation(enable: boolean): void {
-        const pollsArray = this._formGroup.get('polls') as FormArray;
+        const pollsArray = this._formGroup.get('polls') as UntypedFormArray;
         for (let i = 0; i < pollsArray.length; i++) {
             if (enable) {
                 pollsArray.at(i).get('optionInput').enable();

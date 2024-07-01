@@ -1,7 +1,7 @@
 import {AbstractFenceComponent} from '../abstract/abstract-fence.component';
 import {Component} from '@angular/core';
 import {FenceService} from '../service/fence.service';
-import {FormBuilder} from '@angular/forms';
+import {UntypedFormBuilder} from '@angular/forms';
 import {IndicatorService} from '../../ui/indicator/service/indicator.service';
 import {MessageService} from '../../ui/message/service/message.service';
 import {OnInit} from '@angular/core';
@@ -21,7 +21,7 @@ export class SignInComponent extends AbstractFenceComponent implements OnInit {
 
     constructor(private _fenceService: FenceService,
                 private _messageService: MessageService,
-                private _formBuilder: FormBuilder,
+                private _formBuilder: UntypedFormBuilder,
                 private _indicator: IndicatorService) {
         super();
     }

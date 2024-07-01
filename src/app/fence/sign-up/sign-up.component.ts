@@ -3,7 +3,7 @@ import {AbstractControl} from '@angular/forms';
 import {AbstractFenceComponent} from '../abstract/abstract-fence.component';
 import {Component} from '@angular/core';
 import {FenceService} from '../service/fence.service';
-import {FormBuilder} from '@angular/forms';
+import {UntypedFormBuilder} from '@angular/forms';
 import {IndicatorService} from '../../ui/indicator/service/indicator.service';
 import {MatCheckboxChange} from '@angular/material/checkbox';
 import {MessageService} from '../../ui/message/service/message.service';
@@ -35,7 +35,7 @@ export class SignUpComponent extends AbstractFenceComponent implements OnInit {
 
     constructor(private _fenceService: FenceService,
                 private _userService: UserService,
-                private _formBuilder: FormBuilder,
+                private _formBuilder: UntypedFormBuilder,
                 private _indicator: IndicatorService,
                 private _messageService: MessageService) {
         super();

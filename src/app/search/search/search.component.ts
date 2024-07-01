@@ -1,6 +1,6 @@
 import {ChangeDetectorRef} from '@angular/core';
 import {Component} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {UntypedFormControl} from '@angular/forms';
 import {HostListener} from '@angular/core';
 import {LayoutService} from '../../ui/layout/service/layout.service';
 import {MatOptionSelectionChange} from '@angular/material/core';
@@ -21,7 +21,7 @@ import {tap} from 'rxjs/operators';
 )
 export class SearchComponent implements OnInit, OnDestroy {
 
-    private _formControl = new FormControl();
+    private _formControl = new UntypedFormControl();
     private _term = '';
     private _users: User[];
     private _isUserSearch = false;
@@ -40,7 +40,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         return this._layoutService.isMobile();
     }
 
-    get formControl(): FormControl {
+    get formControl(): UntypedFormControl {
         return this._formControl;
     }
 

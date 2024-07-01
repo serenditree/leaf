@@ -2,7 +2,7 @@ import {HTTP_HEADERS} from '../../st-const';
 import {HTTP_STATUS} from '../../st-const';
 import {Component} from '@angular/core';
 import {DevService} from '../service/dev.service';
-import {FormControl} from '@angular/forms';
+import {UntypedFormControl} from '@angular/forms';
 import {Pair} from '../../model/pair';
 import {Validators} from '@angular/forms';
 
@@ -19,9 +19,9 @@ export class DevComponent {
 
     private static readonly HEADER_KEYS: string[] = Object.values(HTTP_HEADERS);
 
-    public statusControl = new FormControl('', Validators.required);
-    public headerKeyControl = new FormControl('', Validators.required);
-    public headerValueControl = new FormControl('', Validators.required);
+    public statusControl = new UntypedFormControl('', Validators.required);
+    public headerKeyControl = new UntypedFormControl('', Validators.required);
+    public headerValueControl = new UntypedFormControl('', Validators.required);
 
     constructor(private _devService: DevService) {
     }

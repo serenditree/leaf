@@ -1,8 +1,8 @@
 import {AbstractSeed} from '../model/abstract-seed';
 import {Component} from '@angular/core';
-import {FormArray} from '@angular/forms';
-import {FormBuilder} from '@angular/forms';
-import {FormGroup} from '@angular/forms';
+import {UntypedFormArray} from '@angular/forms';
+import {UntypedFormBuilder} from '@angular/forms';
+import {UntypedFormGroup} from '@angular/forms';
 import {Input} from '@angular/core';
 import {MapService} from '../../map/service/map.service';
 import {Observable} from 'rxjs';
@@ -27,7 +27,7 @@ import {debounceTime} from 'rxjs/operators';
 )
 export class SeedNewBaseComponent implements OnInit, OnDestroy {
 
-    private _parentFormGroup: FormGroup;
+    private _parentFormGroup: UntypedFormGroup;
     private _parent: AbstractSeed;
     private _term = '';
     private _tags: Observable<string[]>;
@@ -36,15 +36,15 @@ export class SeedNewBaseComponent implements OnInit, OnDestroy {
 
     constructor(private _mapService: MapService,
                 private _searchService: SearchService,
-                private _formBuilder: FormBuilder) {
+                private _formBuilder: UntypedFormBuilder) {
     }
 
-    get formGroup(): FormGroup {
+    get formGroup(): UntypedFormGroup {
         return this._parentFormGroup;
     }
 
     @Input()
-    set formGroup(value: FormGroup) {
+    set formGroup(value: UntypedFormGroup) {
         this._parentFormGroup = value;
     }
 
@@ -61,8 +61,8 @@ export class SeedNewBaseComponent implements OnInit, OnDestroy {
         return this._tags;
     }
 
-    get tagsArray(): FormArray {
-        return this._parentFormGroup.get('tags') as FormArray;
+    get tagsArray(): UntypedFormArray {
+        return this._parentFormGroup.get('tags') as UntypedFormArray;
     }
 
     ngOnInit(): void {
@@ -119,7 +119,7 @@ export class SeedNewBaseComponent implements OnInit, OnDestroy {
         const tagControl = this.formGroup.get('tag');
         // eslint-disable-next-line no-extra-parens
         const tag = (tagControl.value as string).replace(/[^A-Za-z1-9\-+_]/g, '');
-        const tagsArray = this._parentFormGroup.get('tags') as FormArray;
+        const tagsArray = this._parentFormGroup.get('tags') as UntypedFormArray;
 
         if (tag.length > 0 && !tagsArray.getRawValue().includes(tag)) {
             tagsArray.push(this._formBuilder.control(tag));
@@ -132,7 +132,7 @@ export class SeedNewBaseComponent implements OnInit, OnDestroy {
 
     public removeTag(index: number): void {
         // eslint-disable-next-line no-extra-parens
-        (this._parentFormGroup.get('tags') as FormArray).removeAt(index);
+        (this._parentFormGroup.get('tags') as UntypedFormArray).removeAt(index);
     }
 
     public isLocationMutable(): boolean {

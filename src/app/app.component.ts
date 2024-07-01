@@ -14,7 +14,6 @@ import {OnDestroy} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {Router} from '@angular/router';
 import {SearchService} from './search/service/search.service';
-import {StLogging} from './utils/aspects/st-logging';
 import {Subscription} from 'rxjs';
 import {UpdateService} from './worker/service/update.service';
 import {ViewChild} from '@angular/core';
@@ -29,8 +28,6 @@ import {filter} from 'rxjs/operators';
     }
 )
 export class AppComponent implements AfterViewInit, OnDestroy {
-
-    private static readonly ST_LOGGING_ASPECT = new StLogging();
 
     @ViewChild(MenuTopComponent, {read: ElementRef})
     private _menuTop: ElementRef;

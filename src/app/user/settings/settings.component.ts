@@ -2,7 +2,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Component} from '@angular/core';
 import {ConfirmComponent} from '../../ui/confirm/confirm/confirm.component';
 import {FenceService} from '../../fence/service/fence.service';
-import {FormControl} from '@angular/forms';
+import {UntypedFormControl} from '@angular/forms';
 import {Issuer} from '../model/issuer';
 import {MatDialog} from '@angular/material/dialog';
 import {OnDestroy} from '@angular/core';
@@ -23,7 +23,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     private _queryParamsSubscription: Subscription;
 
-    public countryControl = new FormControl('AT', Validators.required);
+    public countryControl = new UntypedFormControl('AT', Validators.required);
     public countries: Issuer[] = [
         {code: 'at', enabled: !environment.production},
         {code: 'de', enabled: !environment.production},

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {FormArray} from '@angular/forms';
-import {FormBuilder} from '@angular/forms';
-import {FormGroup} from '@angular/forms';
+import {UntypedFormArray} from '@angular/forms';
+import {UntypedFormBuilder} from '@angular/forms';
+import {UntypedFormGroup} from '@angular/forms';
 import {Input} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {StAnimations} from '../../utils/st-animations';
@@ -19,27 +19,27 @@ import {Validators} from '@angular/forms';
 )
 export class PollNewComponent implements OnInit {
 
-    private _parentFormGroup: FormGroup;
-    private _pollsArray: FormArray;
+    private _parentFormGroup: UntypedFormGroup;
+    private _pollsArray: UntypedFormArray;
 
-    constructor(private _formBuilder: FormBuilder) {
+    constructor(private _formBuilder: UntypedFormBuilder) {
     }
 
-    get formGroup(): FormGroup {
+    get formGroup(): UntypedFormGroup {
         return this._parentFormGroup;
     }
 
     @Input()
-    set formGroup(value: FormGroup) {
+    set formGroup(value: UntypedFormGroup) {
         this._parentFormGroup = value;
     }
 
-    get pollsArray(): FormArray {
+    get pollsArray(): UntypedFormArray {
         return this._pollsArray;
     }
 
     ngOnInit(): void {
-        this._pollsArray = this._parentFormGroup.get('polls') as FormArray;
+        this._pollsArray = this._parentFormGroup.get('polls') as UntypedFormArray;
         this.addPoll();
     }
 
@@ -54,7 +54,7 @@ export class PollNewComponent implements OnInit {
     public addOption(pollIndex: number): void {
         const pollControls = this._pollsArray.at(pollIndex);
         const optionInput = pollControls.get('optionInput');
-        const optionsArray = pollControls.get('options') as FormArray;
+        const optionsArray = pollControls.get('options') as UntypedFormArray;
 
         const duplicate = optionsArray.controls.findIndex((item) => {
             return item.get('text').value.trim() === optionInput.value.trim();
@@ -71,7 +71,7 @@ export class PollNewComponent implements OnInit {
 
     public removeOption(pollIndex: number, optionIndex: number): void {
         // eslint-disable-next-line no-extra-parens
-        (this._pollsArray.at(pollIndex).get('options') as FormArray).removeAt(optionIndex);
+        (this._pollsArray.at(pollIndex).get('options') as UntypedFormArray).removeAt(optionIndex);
     }
 
     public optionsInvalid(pollIndex: number): boolean {
@@ -85,7 +85,7 @@ export class PollNewComponent implements OnInit {
         return this._pollsArray.at(pollIndex).get('optionInput').hasError('duplicated');
     }
 
-    private _initPoll(): FormGroup {
+    private _initPoll(): UntypedFormGroup {
         return this._formBuilder.group(
             {
                 title: ['', Validators.required],
@@ -99,7 +99,7 @@ export class PollNewComponent implements OnInit {
         );
     }
 
-    private _initOption(text: string): FormGroup {
+    private _initOption(text: string): UntypedFormGroup {
         return this._formBuilder.group(
             {
                 text: [text, Validators.minLength(1)],

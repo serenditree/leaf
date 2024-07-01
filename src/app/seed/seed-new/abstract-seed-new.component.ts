@@ -1,11 +1,11 @@
 import {AbstractSeed} from '../model/abstract-seed';
-import {FormGroup} from '@angular/forms';
+import {UntypedFormGroup} from '@angular/forms';
 import {Location} from '@angular/common';
 import {MapService} from '../../map/service/map.service';
 
 export abstract class AbstractSeedNewComponent<T extends AbstractSeed> {
 
-    protected _formGroup: FormGroup;
+    protected _formGroup: UntypedFormGroup;
     protected _submitted = false;
     protected _parent: T;
     protected _parentIsGarden = false;
@@ -15,7 +15,7 @@ export abstract class AbstractSeedNewComponent<T extends AbstractSeed> {
                           protected _mapService: MapService) {
     }
 
-    get formGroup(): FormGroup {
+    get formGroup(): UntypedFormGroup {
         return this._formGroup;
     }
 

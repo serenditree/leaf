@@ -15,16 +15,9 @@ import {Observable} from 'rxjs';
 import {OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
 import {SeedService} from '../../seed/service/seed.service';
-import {StLoggingAspect} from '../../utils/aspects/st-logging';
 import {Subject} from 'rxjs';
 import {Subscription} from 'rxjs';
 
-@StLoggingAspect(
-    {
-        logBefore: false,
-        logAfter: false
-    }
-)
 @Injectable({providedIn: 'root'})
 export class MapService implements OnDestroy {
 

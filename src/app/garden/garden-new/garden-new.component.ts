@@ -1,6 +1,6 @@
 import {AbstractSeedNewComponent} from '../../seed/seed-new/abstract-seed-new.component';
 import {Component} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {UntypedFormGroup} from '@angular/forms';
 import {GardenService} from '../service/garden.service';
 import {Garden} from '../model/garden';
 import {IndicatorService} from '../../ui/indicator/service/indicator.service';
@@ -24,7 +24,7 @@ export class GardenNewComponent extends AbstractSeedNewComponent<Garden> impleme
                 private _indicator: IndicatorService,
                 private _gardenService: GardenService) {
         super(_location, _mapService);
-        this._formGroup = new FormGroup({});
+        this._formGroup = new UntypedFormGroup({});
     }
 
     ngOnInit(): void {
