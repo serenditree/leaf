@@ -1,3 +1,4 @@
+import {QRCodeModule} from 'angularx-qrcode';
 import {CommonModule} from '@angular/common';
 import {FenceModule} from '../fence/fence.module';
 import {FormsModule} from '@angular/forms';
@@ -39,7 +40,8 @@ import {StPipesModule} from '../utils/pipes/st-pipes.module';
             ReactiveFormsModule,
             RouterModule,
             SeedModule,
-            StPipesModule
+            StPipesModule,
+            QRCodeModule
         ],
         declarations: [
             GardenComponent,

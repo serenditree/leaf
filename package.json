@@ -36,7 +36,6 @@
     "mapbox-gl": "^1.13.2",
     "material-icons": "^1.11.7",
     "normalize.css": "^8.0.1",
-    "qrious": "^4.0.2",
     "rxjs": "^6.6.7",
     "smoothscroll-polyfill": "^0.4.4",
     "tslib": "^2.3.1",
