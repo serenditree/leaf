@@ -13,7 +13,7 @@
     "lint-fix": "ng lint --fix",
     "pylint-fix": "python dev/linting.py",
     "sass-fix": "sass-migrator division node_modules/font-awesome/**/*.scss",
-    "postinstall": "yarn run sass-fix; ngcc"
+    "postinstall": "yarn run sass-fix"
   },
   "dependencies": {
     "@angular/animations": "^16.2.12",
