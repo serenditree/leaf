@@ -2,7 +2,7 @@ import {ChangeDetectorRef} from '@angular/core';
 import {Component} from '@angular/core';
 import {HostListener} from '@angular/core';
 import {LayoutService} from '../../ui/layout/service/layout.service';
-import {MatOptionSelectionChange} from '@angular/material/core';
+import {MatLegacyOptionSelectionChange as MatOptionSelectionChange} from '@angular/material/legacy-core';
 import {OnDestroy} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {SearchService} from '../service/search.service';

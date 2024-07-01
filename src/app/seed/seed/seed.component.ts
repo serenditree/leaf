@@ -4,7 +4,7 @@ import {Component} from '@angular/core';
 import {FenceService} from '../../fence/service/fence.service';
 import {FenceType} from '../../fence/model/fence-type.enum';
 import {MapService} from '../../map/service/map.service';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {MessageService} from '../../ui/message/service/message.service';
 import {OnDestroy} from '@angular/core';
 import {OnInit} from '@angular/core';

@@ -1,7 +1,7 @@
 import {CommonModule} from '@angular/common';
 import {IndicatorComponent} from './indicator/indicator.component';
 import {IndicatorService} from './service/indicator.service';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatLegacyTooltipModule as MatTooltipModule} from '@angular/material/legacy-tooltip';
 import {NgModule} from '@angular/core';
 
 @NgModule(

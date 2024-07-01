@@ -6,7 +6,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BrowserModule} from '@angular/platform-browser';
 import {ConfirmModule} from './ui/confirm/confirm.module';
 import {DevModule} from './utils/dev/dev.module';
-import {FenceGuard} from './fence/feature/fence.guard';
 import {FenceInterceptor} from './fence/feature/fence.interceptor';
 import {FenceModule} from './fence/fence.module';
 import {GardenModule} from './garden/garden.module';
@@ -14,8 +13,8 @@ import {IndicatorModule} from './ui/indicator/indicator.module';
 import {LayoutModule} from './ui/layout/layout.module';
 import {ListModule} from './ui/list/list.module';
 import {MapModule} from './map/map.module';
-import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
 import {MenuModule} from './ui/menu/menu.module';
 import {MessageModule} from './ui/message/message.module';
 import {NavModule} from './ui/nav/nav.module';
@@ -66,7 +65,6 @@ import {environment} from '../environments/environment';
             )
         ],
         providers: [
-            FenceGuard,
             {
                 provide: HTTP_INTERCEPTORS,
                 useClass: FenceInterceptor,

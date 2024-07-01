@@ -6,7 +6,7 @@ import {Garden} from '../../model/garden';
 import {HostBinding} from '@angular/core';
 import {HostListener} from '@angular/core';
 import {Input} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {OnInit} from '@angular/core';
 import {ViewChild} from '@angular/core';
 

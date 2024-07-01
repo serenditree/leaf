@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {LayoutService} from '../../layout/service/layout.service';
-import {MatSnackBarConfig} from '@angular/material/snack-bar';
-import {MatSnackBarRef} from '@angular/material/snack-bar';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {SimpleSnackBar} from '@angular/material/snack-bar';
+import {LegacySimpleSnackBar as SimpleSnackBar} from '@angular/material/legacy-snack-bar';
+import {MatLegacySnackBar as MatSnackBar} from '@angular/material/legacy-snack-bar';
+import {MatLegacySnackBarConfig as MatSnackBarConfig} from '@angular/material/legacy-snack-bar';
+import {MatLegacySnackBarRef as MatSnackBarRef} from '@angular/material/legacy-snack-bar';
 
 @Injectable({providedIn: 'root'})
 export class MessageService {

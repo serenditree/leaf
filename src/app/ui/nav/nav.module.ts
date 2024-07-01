@@ -1,8 +1,8 @@
 import {CommonModule} from '@angular/common';
-import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import {MatListModule} from '@angular/material/list';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
+import {MatLegacyListModule as MatListModule} from '@angular/material/legacy-list';
+import {MatLegacyTooltipModule as MatTooltipModule} from '@angular/material/legacy-tooltip';
 import {MenuMainComponent} from '../menu/menu-main/menu-main.component';
 import {NavContainerComponent} from './nav-container/nav-container.component';
 import {NavItemComponent} from './nav-item/nav-item.component';

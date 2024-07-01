@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 import {ConfirmComponent} from '../../ui/confirm/confirm/confirm.component';
 import {FenceService} from '../../fence/service/fence.service';
 import {Issuer} from '../model/issuer';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {OnDestroy} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';

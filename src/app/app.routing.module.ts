@@ -1,4 +1,5 @@
 import {AboutComponent} from './about/about/about.component';
+import {FenceGuardChild} from './fence/feature/fence.guard';
 import {FenceGuard} from './fence/feature/fence.guard';
 import {GardenComponent} from './garden/garden/garden.component';
 import {GardenListComponent} from './garden/garden-list/garden-list/garden-list.component';
@@ -103,7 +104,7 @@ const routes: Routes = [
     },
     {
         path: 'user',
-        canActivateChild: [FenceGuard],
+        canActivateChild: [FenceGuardChild],
         children: [
             {
                 path: 'garden',

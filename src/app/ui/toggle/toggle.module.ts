@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatLegacySlideToggleModule as MatSlideToggleModule} from '@angular/material/legacy-slide-toggle';
 import {NgModule} from '@angular/core';
 import {ToggleComponent} from './toggle/toggle.component';
 

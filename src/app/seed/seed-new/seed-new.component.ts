@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 import {IndicatorService} from '../../ui/indicator/service/indicator.service';
 import {Location} from '@angular/common';
 import {MapService} from '../../map/service/map.service';
-import {MatSlideToggleChange} from '@angular/material/slide-toggle';
+import {MatLegacySlideToggleChange as MatSlideToggleChange} from '@angular/material/legacy-slide-toggle';
 import {OnDestroy} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {SeedService} from '../service/seed.service';
