@@ -2,8 +2,8 @@ import {HTTP_HEADERS} from '../../st-const';
 import {HTTP_STATUS} from '../../st-const';
 import {Component} from '@angular/core';
 import {DevService} from '../service/dev.service';
-import {UntypedFormControl} from '@angular/forms';
 import {Pair} from '../../model/pair';
+import {UntypedFormControl} from '@angular/forms';
 import {Validators} from '@angular/forms';
 
 @Component({

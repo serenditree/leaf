@@ -1,12 +1,12 @@
 import {AbstractFenceComponent} from '../abstract/abstract-fence.component';
 import {Component} from '@angular/core';
 import {FenceService} from '../service/fence.service';
-import {UntypedFormBuilder} from '@angular/forms';
 import {IndicatorService} from '../../ui/indicator/service/indicator.service';
 import {MessageService} from '../../ui/message/service/message.service';
 import {OnInit} from '@angular/core';
 import {Principal} from '../model/principal';
 import {StMaple} from '../../utils/st-maple';
+import {UntypedFormBuilder} from '@angular/forms';
 import {Validators} from '@angular/forms';
 import {finalize} from 'rxjs/operators';
 

@@ -1,6 +1,5 @@
 import {ChangeDetectorRef} from '@angular/core';
 import {Component} from '@angular/core';
-import {UntypedFormControl} from '@angular/forms';
 import {HostListener} from '@angular/core';
 import {LayoutService} from '../../ui/layout/service/layout.service';
 import {MatOptionSelectionChange} from '@angular/material/core';
@@ -8,6 +7,7 @@ import {OnDestroy} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {SearchService} from '../service/search.service';
 import {Subscription} from 'rxjs';
+import {UntypedFormControl} from '@angular/forms';
 import {User} from '../../user/model/user';
 import {debounceTime} from 'rxjs/operators';
 import {tap} from 'rxjs/operators';

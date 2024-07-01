@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
-import {UntypedFormArray} from '@angular/forms';
-import {UntypedFormBuilder} from '@angular/forms';
-import {UntypedFormGroup} from '@angular/forms';
 import {Input} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {StAnimations} from '../../utils/st-animations';
+import {UntypedFormArray} from '@angular/forms';
+import {UntypedFormBuilder} from '@angular/forms';
+import {UntypedFormGroup} from '@angular/forms';
 import {Validators} from '@angular/forms';
 
 @Component(

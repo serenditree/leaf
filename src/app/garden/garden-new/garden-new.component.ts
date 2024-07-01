@@ -1,6 +1,5 @@
 import {AbstractSeedNewComponent} from '../../seed/seed-new/abstract-seed-new.component';
 import {Component} from '@angular/core';
-import {UntypedFormGroup} from '@angular/forms';
 import {GardenService} from '../service/garden.service';
 import {Garden} from '../model/garden';
 import {IndicatorService} from '../../ui/indicator/service/indicator.service';
@@ -8,6 +7,7 @@ import {Location} from '@angular/common';
 import {MapService} from '../../map/service/map.service';
 import {OnDestroy} from '@angular/core';
 import {OnInit} from '@angular/core';
+import {UntypedFormGroup} from '@angular/forms';
 import {finalize} from 'rxjs/operators';
 
 @Component(

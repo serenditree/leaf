@@ -1,8 +1,5 @@
 import {AbstractSeed} from '../model/abstract-seed';
 import {Component} from '@angular/core';
-import {UntypedFormArray} from '@angular/forms';
-import {UntypedFormBuilder} from '@angular/forms';
-import {UntypedFormGroup} from '@angular/forms';
 import {Input} from '@angular/core';
 import {MapService} from '../../map/service/map.service';
 import {Observable} from 'rxjs';
@@ -12,6 +9,9 @@ import {SearchService} from '../../search/service/search.service';
 import {StAnimations} from '../../utils/st-animations';
 import {StOak} from '../../utils/st-oak';
 import {Subscription} from 'rxjs';
+import {UntypedFormArray} from '@angular/forms';
+import {UntypedFormBuilder} from '@angular/forms';
+import {UntypedFormGroup} from '@angular/forms';
 import {Validators} from '@angular/forms';
 import {debounceTime} from 'rxjs/operators';
 

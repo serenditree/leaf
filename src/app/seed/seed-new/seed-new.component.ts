@@ -1,7 +1,5 @@
 import {AbstractSeedNewComponent} from './abstract-seed-new.component';
 import {Component} from '@angular/core';
-import {UntypedFormArray} from '@angular/forms';
-import {UntypedFormBuilder} from '@angular/forms';
 import {IndicatorService} from '../../ui/indicator/service/indicator.service';
 import {Location} from '@angular/common';
 import {MapService} from '../../map/service/map.service';
@@ -11,6 +9,8 @@ import {OnInit} from '@angular/core';
 import {SeedService} from '../service/seed.service';
 import {Seed} from '../model/seed';
 import {StOak} from '../../utils/st-oak';
+import {UntypedFormArray} from '@angular/forms';
+import {UntypedFormBuilder} from '@angular/forms';
 import {finalize} from 'rxjs/operators';
 
 @Component(
