@@ -38,9 +38,9 @@ $serenditree-accent: (
     )
 );
 
-$serenditree-primary: mat.m2-define-palette(mat.$m2-grey-palette);
-$serenditree-accent: mat.m2-define-palette($serenditree-accent);
-$serenditree-warn: mat.m2-define-palette(mat.$m2-grey-palette);
+$serenditree-primary: mat.define-palette(mat.$grey-palette);
+$serenditree-accent: mat.define-palette($serenditree-accent);
+$serenditree-warn: mat.define-palette(mat.$grey-palette);
 
-@include mat.all-component-themes(mat.m2-define-light-theme($serenditree-primary, $serenditree-accent, $serenditree-warn));
-@include mat.all-component-typographies(mat.m2-define-typography-config($font-family: 'Quicksand, sans-serif'));
+@include mat.all-component-themes(mat.define-light-theme($serenditree-primary, $serenditree-accent, $serenditree-warn));
+@include mat.all-component-typographies(mat.define-typography-config($font-family: 'Quicksand, sans-serif'));
