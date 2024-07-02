@@ -44,11 +44,6 @@
     "zone.js": "~0.14.7"
   },
   "devDependencies": {
-    "@angular-eslint/builder": "1.1.0",
-    "@angular-eslint/eslint-plugin": "1.1.0",
-    "@angular-eslint/eslint-plugin-template": "1.1.0",
-    "@angular-eslint/schematics": "^1.2.0",
-    "@angular-eslint/template-parser": "1.1.0",
     "@angular/build": "^18.0.6",
     "@angular/cli": "^18.0.6",
     "@angular/compiler-cli": "^18.0.5",
@@ -56,11 +51,10 @@
     "@types/hammerjs": "^2.0.41",
     "@types/mapbox-gl": "^1.13.3",
     "@types/node": "^20.14.9",
-    "@typescript-eslint/eslint-plugin": "4.14.2",
-    "@typescript-eslint/parser": "4.14.2",
-    "eslint": "^7.32.0",
-    "eslint-plugin-html": "^6.2.0",
+    "angular-eslint": "18.1.0",
+    "eslint": "^9.6.0",
     "ts-node": "^7.0.1",
-    "typescript": "5.4.5"
+    "typescript": "5.4.5",
+    "typescript-eslint": "8.0.0-alpha.38"
   }
 }
