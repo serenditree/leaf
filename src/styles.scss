@@ -58,7 +58,6 @@ $st-content-margin-gt-lg: (100% - $st-content-width-gt-lg) * 0.5;
 
 $st-input-width: 100%;
 $st-input-width-gt-sm: 400px;
-
 /**********************************************************************************************************************
  * GLOBAL EFFECTS/DECORATIONS
  **********************************************************************************************************************/
@@ -102,7 +101,6 @@ $st-line: 1px dotted $st-color-gray-light;
 .st-flip-vertically {
     @include st-polyfill-property(transform, scaleY(-1));
 }
-
 /**********************************************************************************************************************
  * GLOBAL ELEMENTS
  **********************************************************************************************************************/
@@ -141,15 +139,11 @@ a:hover {
 a:hover {
     color: $st-color-green-leaf !important;
 }
-
 /**********************************************************************************************************************
  * MATERIAL OVERRIDE
- **********************************************************************************************************************/
-
-/**********************************************************************************************************************
+ **********************************************************************************************************************
  * INPUT
  **********************************************************************************************************************/
-
 mat-form-field mat-icon {
     font-size: $st-font-size-p;
     text-align: right;
@@ -160,60 +154,48 @@ mat-form-field mat-icon:hover {
     color: $st-color-green-leaf;
 }
 
-.mat-form-field {
+.mat-mdc-form-field {
     width: $st-input-width;
 }
 
-.mat-form-field:not(.small-except-mobile).small {
+.mat-mdc-form-field:not(.small-except-mobile).small {
     width: $st-input-width * 0.5 !important;
 }
 
 @include gt-xs {
-    .mat-form-field {
+    .mat-mdc-form-field {
         width: $st-input-width-gt-sm;
     }
 
-    .mat-form-field.small {
+    .mat-mdc-form-field.small {
         width: $st-input-width-gt-sm * 0.5 !important;
     }
 }
 
-.mat-input-element {
+.mat-mdc-input-element {
     color: $st-color-gray-primary !important;
 }
 
-.st-menu-top-search-input .mat-form-field-underline,
-.st-menu-top-search-input .mat-form-field-ripple {
-    display: none !important;
+.mdc-text-field--filled {
+    background-color: transparent !important;
+}
+.mat-mdc-form-field-focus-overlay {
+    background-color: transparent !important;
 }
 
-.mat-form-field-underline .mat-form-field-ripple {
-    //height: 1px !important;
-    //background-color: #000 !important;
-}
-
-.mat-error {
+.mat-mdc-form-field-error {
     color: $st-color-yellow-warning !important;
 }
-
-/**********************************************************************************************************************
- * TOGGLE
- **********************************************************************************************************************/
-//.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-//    background-color: $st-color-green-leaf !important;
-//}
-
 /**********************************************************************************************************************
  * BUTTON
  **********************************************************************************************************************/
-.mat-button {
+.mat-mdc-button {
     background-color: $st-background-color-accent !important;
 }
-
-.mat-mini-fab.mat-button-disabled {
+/*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
+.mat-mdc-mini-fab.mat-button-disabled {
     background-color: rgba(0, 0, 0, .42);
 }
-
 /**********************************************************************************************************************
  * ICON
  **********************************************************************************************************************/
@@ -223,45 +205,37 @@ mat-form-field mat-icon:hover {
 }
 
 .mat-icon {
-    height: auto !important;
-    width: auto !important;
+    overflow: visible !important;
 }
-
 /**********************************************************************************************************************
  * AUTOCOMPLETE
  **********************************************************************************************************************/
-.mat-autocomplete-panel.flat {
+.st-menu-top-search-input .mdc-line-ripple {
+    display: none !important;
+}
+div.mat-mdc-autocomplete-panel {
     box-shadow: none !important;
+    background-color: transparent !important;
 }
 
-.mat-autocomplete-panel {
-    background-color: $st-transparency;
-}
-
-.mat-autocomplete-panel.transparent {
-    background: none !important;
-}
-
-.mat-option {
+.mat-mdc-option {
     font-size: 14px !important;
     color: $st-color-gray-primary !important;
-    line-height: 24px !important;
-    height: 24px !important;
 }
 
-.mat-option.flat {
+.mat-mdc-option.flat {
     padding: 0 0 !important;
 }
 
-.mat-option:hover:not(.mat-option-disabled),
-.mat-option:focus:not(.mat-option-disabled),
-.mat-option.mat-active,
-.mat-option.mat-selected {
+.mat-mdc-option:hover:not(.mat-option-disabled),
+.mat-mdc-option:focus:not(.mat-option-disabled),
+.mat-mdc-option.mat-active,
+.mat-mdc-option.mat-selected {
     background: none !important;
     font-weight: bold;
 }
 
-.mat-optgroup-label {
+.mat-mdc-optgroup-label {
     font-size: inherit !important;
     font-weight: bold;
     line-height: 24px !important;
@@ -270,15 +244,14 @@ mat-form-field mat-icon:hover {
 }
 
 .no-label {
-    .mat-optgroup-label {
+    .mat-mdc-optgroup-label {
         display: none;
     }
 
-    .mat-option.flat:first-of-type {
+    .mat-mdc-option.flat:first-of-type {
         margin-top: 10px;
     }
 }
-
 /**********************************************************************************************************************
  * SNACK BAR
  **********************************************************************************************************************/
@@ -299,7 +272,7 @@ mat-form-field mat-icon:hover {
 }
 
 @include lt-sm {
-    .mat-snack-bar-container {
+    .mat-mdc-snack-bar-container {
         @include st-polyfill-property(border-radius, 0 !important);
     }
 
@@ -322,7 +295,6 @@ mat-form-field mat-icon:hover {
         line-height: $st-menu-top-height - 2 * 14px !important;
     }
 }
-
 /**********************************************************************************************************************
  * BOTTOM SHEET
  **********************************************************************************************************************/
@@ -332,7 +304,6 @@ mat-form-field mat-icon:hover {
     padding-bottom: $st-menu-sub-height + 40px !important;
     @include st-polyfill-property(border-radius, 20px 20px 0 0);
 }
-
 /**********************************************************************************************************************
  * FONT COLOR CUSTOMIZATION
  **********************************************************************************************************************/
@@ -362,7 +333,6 @@ mat-form-field mat-icon:hover {
 .st-accent-blue {
     color: $st-color-blue-accent !important;
 }
-
 /**********************************************************************************************************************
  * BACKGROUND COLOR CUSTOMIZATION
  **********************************************************************************************************************/

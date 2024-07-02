@@ -5,7 +5,7 @@ import {ConfirmComponent} from '../../ui/confirm/confirm/confirm.component';
 import {FenceService} from '../../fence/service/fence.service';
 import {MapService} from '../../map/service/map.service';
 import {MarkerType} from '../../map/model/marker-type.enum';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {MessageService} from '../../ui/message/service/message.service';
 import {SeedType} from '../model/seed-type.enum';
 import {Subscription} from 'rxjs';

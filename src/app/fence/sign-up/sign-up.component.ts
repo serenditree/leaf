@@ -4,7 +4,7 @@ import {AbstractFenceComponent} from '../abstract/abstract-fence.component';
 import {Component} from '@angular/core';
 import {FenceService} from '../service/fence.service';
 import {IndicatorService} from '../../ui/indicator/service/indicator.service';
-import {MatLegacyCheckboxChange as MatCheckboxChange} from '@angular/material/legacy-checkbox';
+import {MatCheckboxChange} from '@angular/material/checkbox';
 import {MessageService} from '../../ui/message/service/message.service';
 import {Observable} from 'rxjs';
 import {OnInit} from '@angular/core';

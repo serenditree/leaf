@@ -1,6 +1,6 @@
 <form [formGroup]="formGroup">
     <div formGroupName="location">
-        <mat-form-field appearance="standard" class="small">
+        <mat-form-field class="small">
             <mat-label>Longitude</mat-label>
             <input [matTooltip]="isLocationMutable() ?
                    'please set the location by moving the map' :
@@ -9,7 +9,7 @@
                    matInput
                    matTooltipShowDelay="400">
         </mat-form-field>
-        <mat-form-field appearance="standard" class="small">
+        <mat-form-field class="small">
             <mat-label>Latitude</mat-label>
             <input [matTooltip]="isLocationMutable() ?
                    'please set the location by moving the map' :
@@ -20,25 +20,21 @@
         </mat-form-field>
     </div>
     <br>
-    <mat-form-field appearance="standard">
+    <mat-form-field>
         <mat-label>Title</mat-label>
         <input class="st-input" formControlName="title" matInput>
         <mat-error *ngIf="formGroup.hasError('required', ['title'])">required</mat-error>
         <mat-error *ngIf="formGroup.hasError('html', ['title'])">contains &lt;tag&gt;</mat-error>
     </mat-form-field>
     <br>
-    <mat-form-field appearance="standard">
+    <mat-form-field>
         <mat-label>Text</mat-label>
-        <textarea formControlName="text"
-                  matInput
-                  matTextareaAutosize>
-                      </textarea>
-        <mat-hint align="end">(auto resize)</mat-hint>
+        <textarea formControlName="text" matInput></textarea>
         <mat-error *ngIf="formGroup.hasError('required', ['text'])">required</mat-error>
         <mat-error *ngIf="formGroup.hasError('html', ['text'])">contains &lt;tag&gt;</mat-error>
     </mat-form-field>
     <br>
-    <mat-form-field appearance="standard">
+    <mat-form-field>
         <mat-label>Tags</mat-label>
         <input (keyup.enter)="addTag()"
                [matAutocomplete]="autocomplete"

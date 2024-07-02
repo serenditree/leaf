@@ -2,7 +2,7 @@
 <form [formGroup]="formGroup">
     <div class="flex-row">
         <div>
-            <mat-form-field appearance="standard" class="small small-except-mobile">
+            <mat-form-field class="small small-except-mobile">
                 <mat-label>Username</mat-label>
                 <input autocomplete="username"
                        formControlName="username"
@@ -15,7 +15,7 @@
                 </mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field appearance="standard" class="small small-except-mobile">
+            <mat-form-field class="small small-except-mobile">
                 <mat-label>Email</mat-label>
                 <input autocomplete="email"
                        formControlName="email"
@@ -30,7 +30,7 @@
             </mat-form-field>
         </div>
         <div>
-            <mat-form-field appearance="standard" class="small small-except-mobile">
+            <mat-form-field class="small small-except-mobile">
                 <mat-label>Password</mat-label>
                 <input #password
                        autocomplete="new-password"
@@ -45,7 +45,7 @@
                 <mat-error *ngIf="formGroup.hasError('entropy', ['password'])">too weak</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field appearance="standard" class="small small-except-mobile">
+            <mat-form-field class="small small-except-mobile">
                 <mat-label>Confirm Password</mat-label>
                 <input #passwordConfirm
                        autocomplete="new-password"

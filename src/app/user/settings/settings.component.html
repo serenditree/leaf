@@ -14,7 +14,7 @@
     </a>
     will be stored in a separate database table without date information and no link to your account.
     <div>
-        <mat-form-field appearance="standard" class="countries">
+        <mat-form-field class="countries">
             <mat-select [formControl]="countryControl" required>
                 <mat-option *ngFor="let country of countries" [value]="country.code" [disabled]="!country.enabled">
                     {{country.code.toUpperCase()}} <span *ngIf="!country.enabled">(not yet available)</span>

@@ -1,6 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {ConfirmComponent} from './confirm/confirm.component';
-import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
+import {MatButtonModule} from '@angular/material/button';
 import {NgModule} from '@angular/core';
 
 @NgModule(

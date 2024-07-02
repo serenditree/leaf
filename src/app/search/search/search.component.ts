@@ -2,7 +2,7 @@ import {ChangeDetectorRef} from '@angular/core';
 import {Component} from '@angular/core';
 import {HostListener} from '@angular/core';
 import {LayoutService} from '../../ui/layout/service/layout.service';
-import {MatLegacyOptionSelectionChange as MatOptionSelectionChange} from '@angular/material/legacy-core';
+import {MatOptionSelectionChange} from '@angular/material/core';
 import {OnDestroy} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {SearchService} from '../service/search.service';
@@ -101,8 +101,9 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     public onFocus(event: FocusEvent): void {
-        this._isSearchFocused = event.returnValue;
-        this._searchService.setSearchFocus(event.returnValue);
+        const focused = event.type === 'focus';
+        this._isSearchFocused = focused;
+        this._searchService.setSearchFocus(focused);
     }
 
     private _search(term: string): void {
