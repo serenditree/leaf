@@ -96,7 +96,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     public onTagSelectionChange(selectionChange: MatOptionSelectionChange): void {
-        this._searchService.searchByTags([selectionChange.source.value])
+        this._searchService.searchByTags([selectionChange.source.value]);
         this._searchService.setSearchFocus(false);
     }
 
@@ -163,8 +163,18 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     @HostListener('window:click', ['$event'])
     private _clickWhenSearchFocusedHandler(event: MouseEvent): void {
-        if (event.target['id'] !== 'st-search-input') {
-            this._searchService.setSearchFocus(false);
+        if (this.isSearchFocused) {
+            let isSearchNode = false;
+            for (let element = event.target as HTMLElement;
+                 element && !isSearchNode;
+                 element = element.parentElement) {
+                if (element.nodeName === 'ST-SEARCH') {
+                    isSearchNode = true;
+                }
+            }
+            if (!isSearchNode) {
+                this._searchService.setSearchFocus(false);
+            }
         }
     }
 }

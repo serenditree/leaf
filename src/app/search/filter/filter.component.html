@@ -1,7 +1,7 @@
 <div class="flex-row">
     <div>
         <h3>Filter</h3>
-        <mat-slide-toggle (change)="setStrongLocalAlignment($event)" disabled>
+        <mat-slide-toggle (change)="setStrongLocalAlignment($event)">
             Strong local alignment
         </mat-slide-toggle>
         <br>
@@ -19,14 +19,12 @@
         </div>
         <div *ngIf="showUserFilter" [@enterSlideVertical]>
             <mat-slide-toggle
-                checked
                 (change)="resetUser()">
                 &#47;{{ filter.username }}
             </mat-slide-toggle>
         </div>
         <div *ngIf="filter.tags" [@enterSlideVertical]>
             <mat-slide-toggle
-                checked
                 (change)="resetTags()">
                 {{ filter.tags | tags }}
             </mat-slide-toggle>
