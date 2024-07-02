@@ -42,5 +42,14 @@ $serenditree-primary: mat.define-palette(mat.$grey-palette);
 $serenditree-accent: mat.define-palette($serenditree-accent);
 $serenditree-warn: mat.define-palette(mat.$grey-palette);
 
-@include mat.all-component-themes(mat.define-light-theme($serenditree-primary, $serenditree-accent, $serenditree-warn));
+$serenditree-light: mat.define-light-theme((
+    color: (
+        primary: $serenditree-primary,
+        accent: $serenditree-accent,
+        warn: $serenditree-warn,
+    ),
+    density: -1,
+));
+
+@include mat.all-component-themes($serenditree-light);
 @include mat.all-component-typographies(mat.define-typography-config($font-family: 'Quicksand, sans-serif'));
