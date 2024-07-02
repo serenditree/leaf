@@ -35,6 +35,7 @@
     "font-awesome": "^4.7.0",
     "mapbox-gl": "^1.13.2",
     "material-icons": "^1.11.7",
+    "material-symbols": "^0.20.0",
     "normalize.css": "^8.0.1",
     "rxjs": "^6.6.7",
     "smoothscroll-polyfill": "^0.4.4",
