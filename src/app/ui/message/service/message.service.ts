@@ -8,7 +8,7 @@ import {SimpleSnackBar} from '@angular/material/snack-bar';
 @Injectable({providedIn: 'root'})
 export class MessageService {
 
-    public static readonly MESSAGE_DISPLAY_DURATION = 5000;
+    public static readonly MESSAGE_DISPLAY_DURATION = 2500;
 
     private _messages: {message: string, isError: boolean}[]  = [];
     private _snackBarRef: MatSnackBarRef<SimpleSnackBar> = null;

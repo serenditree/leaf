@@ -39,15 +39,15 @@
                 Water
             </mat-radio-button>
             <br>
-            <mat-radio-button [value]="byNubits" [checked]="filter.sort == byNubits" disabled>
+            <mat-radio-button [value]="byNubits" [checked]="filter.sort === byNubits" disabled>
                 Nubits
             </mat-radio-button>
             <br>
-            <mat-radio-button [value]="byDate" [checked]="filter.sort == byDate">
+            <mat-radio-button [value]="byDate" [checked]="filter.sort === byDate">
                 Date
             </mat-radio-button>
             <br>
-            <mat-radio-button [value]="byChance" [checked]="filter.sort == byChance">
+            <mat-radio-button [value]="byChance" [checked]="filter.sort === byChance">
                 Chance
             </mat-radio-button>
         </mat-radio-group>

@@ -187,33 +187,13 @@ mat-form-field mat-icon:hover {
     color: $st-color-yellow-warning !important;
 }
 /**********************************************************************************************************************
- * BUTTON
- **********************************************************************************************************************/
-.mat-mdc-button {
-    background-color: $st-background-color-accent !important;
-}
-/*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
-.mat-mdc-mini-fab.mat-button-disabled {
-    background-color: rgba(0, 0, 0, .42);
-}
-/**********************************************************************************************************************
- * ICON
- **********************************************************************************************************************/
-.material-icons:not(.st-fab-icon) {
-    vertical-align: middle !important;
-    font-size: inherit !important;
-}
-
-.mat-icon {
-    overflow: visible !important;
-}
-/**********************************************************************************************************************
  * AUTOCOMPLETE
  **********************************************************************************************************************/
 .st-menu-top-search-input .mdc-line-ripple {
     display: none !important;
 }
-div.mat-mdc-autocomplete-panel {
+
+div.mat-mdc-autocomplete-panel:not(.opaque) {
     box-shadow: none !important;
     background-color: transparent !important;
 }
@@ -251,6 +231,33 @@ div.mat-mdc-autocomplete-panel {
     .mat-mdc-option.flat:first-of-type {
         margin-top: 10px;
     }
+}
+/**********************************************************************************************************************
+ * BUTTON
+ **********************************************************************************************************************/
+.mat-mdc-button {
+    background-color: $st-background-color-accent !important;
+}
+/*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
+.mat-mdc-mini-fab.mat-button-disabled {
+    background-color: rgba(0, 0, 0, .42);
+}
+/**********************************************************************************************************************
+ * SLIDE TOGGLE
+ **********************************************************************************************************************/
+mat-slide-toggle {
+    margin-bottom: 10px;
+}
+/**********************************************************************************************************************
+ * ICON
+ **********************************************************************************************************************/
+.material-icons:not(.st-fab-icon) {
+    vertical-align: middle !important;
+    font-size: inherit !important;
+}
+
+.mat-icon {
+    overflow: visible !important;
 }
 /**********************************************************************************************************************
  * SNACK BAR

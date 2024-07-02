@@ -4,7 +4,9 @@
 @use '@angular/material' as mat;
 @include mat.all-component-typographies();
 @include mat.core();
-
+/**********************************************************************************************************************
+ * COLORS
+ **********************************************************************************************************************/
 $serenditree-accent: (
     50 : #f2f5ec,
     100 : #dee6ce,
@@ -38,6 +40,7 @@ $serenditree-accent: (
     )
 );
 
+
 $serenditree-primary: mat.define-palette(mat.$grey-palette);
 $serenditree-accent: mat.define-palette($serenditree-accent);
 $serenditree-warn: mat.define-palette(mat.$grey-palette);
@@ -47,9 +50,31 @@ $serenditree-light: mat.define-light-theme((
         primary: $serenditree-primary,
         accent: $serenditree-accent,
         warn: $serenditree-warn,
-    ),
-    density: -1,
+    )
 ));
 
 @include mat.all-component-themes($serenditree-light);
-@include mat.all-component-typographies(mat.define-typography-config($font-family: 'Quicksand, sans-serif'));
+/**********************************************************************************************************************
+ * TYPOGRAPHY
+ **********************************************************************************************************************/
+$st-font-family: 'Quicksand', sans-serif;
+$st-font-size-h1: 18px;
+$st-font-size-h2: 16px;
+$st-font-size-p: 14px;
+
+$serenditree-typography-config: mat.define-typography-config(
+    $font-family: 'Quicksand, sans-serif',
+    $headline-5: mat.define-typography-level($font-size: $st-font-size-h1),
+    $headline-6: mat.define-typography-level($font-size: $st-font-size-h2),
+    $subtitle-1: mat.define-typography-level($font-size: $st-font-size-h2),
+    $subtitle-2: mat.define-typography-level($font-size: $st-font-size-p),
+    $body-2: mat.define-typography-level($font-size: $st-font-size-p),
+    $body-1: mat.define-typography-level($font-size: $st-font-size-p),
+    $button: mat.define-typography-level($font-size: $st-font-size-p),
+);
+
+@include mat.all-component-typographies($serenditree-typography-config);
+/**********************************************************************************************************************
+ * INDIVIDUAL
+ **********************************************************************************************************************/
+@include mat.radio-density(-3);

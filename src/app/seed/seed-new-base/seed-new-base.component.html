@@ -48,7 +48,7 @@
         </mat-icon>
         <mat-error>duplicated or invalid tag</mat-error>
     </mat-form-field>
-    <mat-autocomplete #autocomplete>
+    <mat-autocomplete #autocomplete class="opaque">
         <mat-option *ngFor="let result of tags | async"
                     [innerHTML]="result | highlight:term"
                     [value]="result">
