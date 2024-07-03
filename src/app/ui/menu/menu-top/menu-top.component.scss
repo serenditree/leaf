@@ -32,6 +32,7 @@ $st-menu-top-ref: 30px;
 
 @include gt-sm {
     .st-menu-top-home {
+        font-size: $st-font-size-h1 + 2px;
         top: $st-menu-top-height-gt-sm - $st-menu-top-ref;
     }
 }
