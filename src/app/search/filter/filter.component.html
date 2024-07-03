@@ -19,14 +19,16 @@
         </div>
         <div *ngIf="showUserFilter" [@enterSlideVertical]>
             <mat-slide-toggle
+                checked="true"
                 (change)="resetUser()">
-                &#47;{{ filter.username }}
+                User: &#47;{{ filter.username }}
             </mat-slide-toggle>
         </div>
         <div *ngIf="filter.tags" [@enterSlideVertical]>
             <mat-slide-toggle
+                checked="true"
                 (change)="resetTags()">
-                {{ filter.tags | tags }}
+                Tag: {{ filter.tags | tags }}
             </mat-slide-toggle>
         </div>
     </div>

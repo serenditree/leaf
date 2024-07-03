@@ -9,7 +9,8 @@
            matInput>
 </mat-form-field>
 
-<mat-autocomplete #autocomplete="matAutocomplete" class="st-menu-top-search-panel">
+<!--TODO search focus should fade filter ui on mobile. Remove opaque when fixed -->
+<mat-autocomplete #autocomplete [class]="isMobile ? 'opaque' : ''">
     <mat-optgroup *ngIf="isUserSearch" [ngClass]="{'no-label': !isTagSearch}" label="Users">
         <mat-option (onSelectionChange)="onUserSelectionChange($event)"
                     *ngFor="let user of users"

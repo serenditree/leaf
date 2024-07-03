@@ -1,0 +1,9 @@
+@import "styles";
+
+.mat-snack-bar,
+.mat-snack-bar-error {
+    display: block !important;
+    text-align: center !important;
+    font-weight: bold !important;
+    line-height: 42px !important;
+}

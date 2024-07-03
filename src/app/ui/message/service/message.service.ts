@@ -3,7 +3,7 @@ import {LayoutService} from '../../layout/service/layout.service';
 import {MatSnackBarConfig} from '@angular/material/snack-bar';
 import {MatSnackBarRef} from '@angular/material/snack-bar';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {SimpleSnackBar} from '@angular/material/snack-bar';
+import {MessageComponent} from '../message/message.component';
 
 @Injectable({providedIn: 'root'})
 export class MessageService {
@@ -11,7 +11,7 @@ export class MessageService {
     public static readonly MESSAGE_DISPLAY_DURATION = 2500;
 
     private _messages: {message: string, isError: boolean}[]  = [];
-    private _snackBarRef: MatSnackBarRef<SimpleSnackBar> = null;
+    private _snackBarRef: MatSnackBarRef<MessageComponent> = null;
 
     constructor(private _snackBar: MatSnackBar,
                 private _layoutService: LayoutService) {
@@ -31,10 +31,9 @@ export class MessageService {
         }
         if (this._snackBarRef === null) {
             const currentMessage = this._messages.shift();
-            this._snackBarRef = this._snackBar.open(
-                currentMessage.message,
-                '',
-                this._getConfig(currentMessage.isError)
+            this._snackBarRef = this._snackBar.openFromComponent(
+                MessageComponent,
+                this._getConfig(currentMessage.message, currentMessage.isError)
             );
         }
         this._snackBarRef.afterDismissed().subscribe(() => {
@@ -45,10 +44,15 @@ export class MessageService {
         });
     }
 
-    private _getConfig(error: boolean): MatSnackBarConfig {
+    private _getConfig(message: string, error: boolean): MatSnackBarConfig<MatSnackBarConfig> {
+        const panelClass = error ? 'mat-snack-bar-error' : 'mat-snack-bar';
         return {
+            data: {
+                data: message,
+                panelClass: panelClass
+            },
+            panelClass: panelClass,
             duration: MessageService.MESSAGE_DISPLAY_DURATION,
-            panelClass: error ? 'mat-snack-bar-error' : 'mat-snack-bar',
             verticalPosition: this._layoutService.isMobile() ? 'top' : 'bottom'
         };
     }
