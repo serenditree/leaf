@@ -15,23 +15,13 @@
     right: 80px !important;
 }
 
-.st-fab.filter {
+.st-fab.filter-active {
     background: $st-color-orange-warning;
 }
-
-.st-fab.no-filter {
-    background: #fff !important;
-    border: 1px solid $st-color-gray-light;
-}
-
 
 .st-fab-icon {
     color: #fff;
     vertical-align: initial !important;
-}
-
-.st-fab-icon.no-filter {
-    color: $st-color-gray-primary !important;
 }
 
 @include gt-sm {

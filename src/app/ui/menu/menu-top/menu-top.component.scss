@@ -22,7 +22,7 @@ $st-menu-top-ref: 30px;
 .st-menu-top-home {
     position: absolute;
     top: $st-menu-top-height - $st-menu-top-ref;
-    font-size: $st-font-size-h1;
+    font-size: $st-font-size-h1 + 2px;
     font-weight: bold;
 }
 
@@ -32,7 +32,6 @@ $st-menu-top-ref: 30px;
 
 @include gt-sm {
     .st-menu-top-home {
-        font-size: $st-font-size-h1 + 2px;
         top: $st-menu-top-height-gt-sm - $st-menu-top-ref;
     }
 }
