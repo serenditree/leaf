@@ -6,6 +6,7 @@ import {MatOptionSelectionChange} from '@angular/material/core';
 import {OnDestroy} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {SearchService} from '../service/search.service';
+import {StUtils} from '../../utils/st-utils';
 import {Subscription} from 'rxjs';
 import {UntypedFormControl} from '@angular/forms';
 import {User} from '../../user/model/user';
@@ -164,15 +165,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     @HostListener('window:click', ['$event'])
     private _clickWhenSearchFocusedHandler(event: MouseEvent): void {
         if (this.isSearchFocused) {
-            let isSearchNode = false;
-            for (let element = event.target as HTMLElement;
-                 element && !isSearchNode;
-                 element = element.parentElement) {
-                if (element.nodeName === 'ST-SEARCH') {
-                    isSearchNode = true;
-                }
-            }
-            if (!isSearchNode) {
+            if (!StUtils.isChildNode(event.target as HTMLElement, 'st-search-top', 'st-search-bottom')) {
                 this._searchService.setSearchFocus(false);
             }
         }

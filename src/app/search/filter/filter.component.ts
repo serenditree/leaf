@@ -8,6 +8,7 @@ import {SearchService} from '../service/search.service';
 import {SeedFilter} from '../../seed/model/seed-filter';
 import {SeedSortingType} from '../../seed/model/seed-sorting-type.enum';
 import {StAnimations} from '../../utils/st-animations';
+import {StUtils} from '../../utils/st-utils';
 
 @Component(
     {
@@ -133,17 +134,7 @@ export class FilterComponent {
         if (this._isInitialClick) {
             this._isInitialClick = false;
         } else {
-            let isFilterComponent = false;
-            for (let element = event.target as HTMLElement;
-                 element && !isFilterComponent;
-                 element = element.parentElement) {
-                if (element.classList.contains('st-map-container-overlay-filter') ||
-                    element.id === 'st-filter-reset') {
-                    isFilterComponent = true;
-                }
-            }
-
-            this._filterService.setFilterFocus(isFilterComponent);
+            this._filterService.setFilterFocus(StUtils.isChildNode(event.target as HTMLElement, 'st-overlay-filter'));
         }
     }
 }
