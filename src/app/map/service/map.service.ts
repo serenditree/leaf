@@ -10,6 +10,7 @@ import {MarkerContext} from '../model/marker-context';
 import {MarkerEvent} from '../model/marker-event';
 import {MarkerType} from '../model/marker-type.enum';
 import {Marker} from 'mapbox-gl';
+import {MessageService} from '../../ui/message/service/message.service';
 import {NavigationStart} from '@angular/router';
 import {Observable} from 'rxjs';
 import {OnDestroy} from '@angular/core';
@@ -51,7 +52,8 @@ export class MapService implements OnDestroy {
     constructor(private _router: Router,
                 private _seedService: SeedService,
                 private _gardenService: GardenService,
-                private _listEventService: ListEventService) {
+                private _listEventService: ListEventService,
+                private _messageService: MessageService) {
     }
 
     get seedMarkerObservable(): Observable<MarkerEvent> {
@@ -103,8 +105,14 @@ export class MapService implements OnDestroy {
                         );
                     }
                 },
-                (error) => console.log(error),
-                {enableHighAccuracy: true}
+                (error) => {
+                    console.log(error);
+                    this._messageService.error(error.message);
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 4200,
+                }
             );
         }
     }
