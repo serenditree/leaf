@@ -10,6 +10,12 @@
     @include st-shadow(bottom);
 }
 
+@media (display-mode: standalone) {
+    .st-menu-top {
+        background-color: $st-transparency !important;
+    }
+}
+
 @include gt-sm {
     .st-menu-top {
         height: $st-menu-top-height-gt-sm;
