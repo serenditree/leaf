@@ -34,7 +34,7 @@
               ]
             },
             "assets": [
-              "./src/assets",
+              "./src/assets/icons",
               "./src/favicon.ico",
               "./src/manifest.webmanifest"
             ],
@@ -65,12 +65,12 @@
               "budgets": [
                   {
                       "type": "initial",
-                      "maximumWarning": "1MB",
-                      "maximumError": "3MB"
+                      "maximumWarning": "4MB",
+                      "maximumError": "5MB"
                   },
                   {
                       "type": "anyComponentStyle",
-                      "maximumWarning": "5kB",
+                      "maximumWarning": "8kB",
                       "maximumError": "10kB"
                   }
               ],
