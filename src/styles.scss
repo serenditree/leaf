@@ -33,9 +33,15 @@ $st-color-orange-warning: $st-color-orange-trail;
 
 $st-menu-top-height: 60px;
 $st-menu-top-height-gt-sm: 100px;
-$st-menu-sub-height: 100px;
+$st-menu-sub-height: 80px;
+$st-menu-sub-height-standalone-delta: 20px;
 $st-menu-sub-height-gt-sm: 40px;
 $st-menu-z-index: 1000; // mat-bottom-sheet reference
+
+$st-menu-fab-bottom: 20px;
+$st-menu-fab-bottom-standalone: $st-menu-fab-bottom + $st-menu-sub-height-standalone-delta * .5;
+$st-menu-fab-bottom-right: 20px;
+$st-menu-fab-bottom-spacing: 60px;
 
 $st-map-height: 280px;
 $st-map-search-width: 320px;

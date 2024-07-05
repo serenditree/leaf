@@ -12,8 +12,8 @@
 
 .fab-container {
     position: fixed;
-    bottom: 30px;
-    right: 140px;
+    bottom: $st-menu-fab-bottom;
+    right: $st-menu-fab-bottom-right + $st-menu-fab-bottom-spacing * 2;
     z-index: $st-menu-z-index + 2;
     display: flex;
     flex-direction: column-reverse;
@@ -27,6 +27,12 @@
         button {
             margin-bottom: 20px;
         }
+    }
+}
+
+@media (display-mode: standalone) {
+    .fab-container {
+        bottom: $st-menu-fab-bottom-standalone;
     }
 }
 

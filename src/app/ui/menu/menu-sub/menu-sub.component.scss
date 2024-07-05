@@ -11,6 +11,13 @@
     @include st-shadow(top);
 }
 
+@media (display-mode: standalone) {
+    .st-menu-sub {
+        height: $st-menu-sub-height + $st-menu-sub-height-standalone-delta;
+        line-height: $st-menu-sub-height + $st-menu-sub-height-standalone-delta;
+    }
+}
+
 @include gt-sm {
     .st-menu-sub {
         z-index: $st-menu-z-index - 1;
