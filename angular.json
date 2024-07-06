@@ -50,7 +50,10 @@
             ],
             "allowedCommonJsDependencies": [
               "@mapbox/geo-viewport",
-              "chart.js"
+              "@turf/turf",
+              "chart.js",
+              "mapbox-gl",
+              "qrcode"
             ],
             "scripts": [],
             "serviceWorker": "./ngsw-config.json",
@@ -63,18 +66,25 @@
           "configurations": {
             "prod": {
               "budgets": [
-                  {
-                      "type": "initial",
-                      "maximumWarning": "4MB",
-                      "maximumError": "5MB"
-                  },
-                  {
-                      "type": "anyComponentStyle",
-                      "maximumWarning": "8kB",
-                      "maximumError": "10kB"
-                  }
+                {
+                  "type": "initial",
+                  "maximumWarning": "4MB",
+                  "maximumError": "5MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "8kB",
+                  "maximumError": "10kB"
+                }
               ],
-              "optimization": true,
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+              },
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
@@ -88,18 +98,25 @@
             },
             "compose": {
               "budgets": [
-                  {
-                      "type": "initial",
-                      "maximumWarning": "1MB",
-                      "maximumError": "3MB"
-                  },
-                  {
-                      "type": "anyComponentStyle",
-                      "maximumWarning": "5kB",
-                      "maximumError": "10kB"
-                  }
+                {
+                  "type": "initial",
+                  "maximumWarning": "1MB",
+                  "maximumError": "3MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "5kB",
+                  "maximumError": "10kB"
+                }
               ],
-              "optimization": true,
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+              },
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
@@ -144,6 +161,7 @@
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "packageManager": "yarn"
   }
 }

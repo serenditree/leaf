@@ -1,28 +1,28 @@
 {
-    "files": [
-        "./src/main.ts",
-        "./src/polyfills.ts"
+  "files": [
+    "./src/main.ts",
+    "./src/polyfills.ts"
+  ],
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "lib": [
+      "es2018",
+      "dom"
     ],
-    "compileOnSave": false,
-    "compilerOptions": {
-      "baseUrl": "./src",
-      "declaration": false,
-      "emitDecoratorMetadata": true,
-      "esModuleInterop": true,
-      "experimentalDecorators": true,
-      "importHelpers": true,
-      "lib": [
-        "es2018",
-        "dom"
-      ],
-      "module": "es2020",
-      "moduleResolution": "node",
-      "outDir": "./dist/out-tsc",
-      "sourceMap": true,
-      "target": "ES2022",
-      "typeRoots": [
-        "./node_modules/@types"
-      ],
-      "useDefineForClassFields": false
-    }
+    "module": "es2020",
+    "moduleResolution": "node",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "target": "ES2022",
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "useDefineForClassFields": false
+  }
 }
