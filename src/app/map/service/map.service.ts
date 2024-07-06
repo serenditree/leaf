@@ -271,7 +271,7 @@ export class MapService implements OnDestroy {
         );
     }
 
-    private _onItemEvent(id: string, scroll: boolean = false, navigate: boolean = false): void {
+    private _onItemEvent(id: string, scroll = false, navigate = false): void {
         let markerSubject;
         if (this._markerContext.type === MarkerType.SEED || this._markerContext.type === MarkerType.TRAIL) {
             markerSubject = this._seedMarkerSubject;
@@ -302,7 +302,7 @@ export class MapService implements OnDestroy {
         }
     }
 
-    private _onBoundsChangeEnd(timeout: boolean = true): void {
+    private _onBoundsChangeEnd(timeout = true): void {
         if (this._markerContext.update) {
             this._updateMarkers(timeout);
         }
@@ -337,7 +337,7 @@ export class MapService implements OnDestroy {
         }
     }
 
-    private _updateMarkers(timeout: boolean = true): void {
+    private _updateMarkers(timeout = true): void {
         this._updateMarkersTimeout = setTimeout(
             () => {
                 this._mapComponent.clearMarkers();
@@ -460,7 +460,7 @@ export class MapService implements OnDestroy {
                           lngLat: LngLat,
                           size: number,
                           type: MarkerType,
-                          show: boolean = true): MarkerContainer {
+                          show = true): MarkerContainer {
         const markerElement = this._createMarkerElement(id, size, type);
         const marker = new Marker(markerElement);
         marker.setLngLat(lngLat);

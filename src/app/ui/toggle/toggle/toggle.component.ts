@@ -18,7 +18,7 @@ export class ToggleComponent {
 
     private _state = StAnimations.STATE_INACTIVE;
     private _name: string;
-    private _onToggle: EventEmitter<boolean> = new EventEmitter();
+    private _onToggle = new EventEmitter<boolean>();
 
     get state(): string {
         return this._state;

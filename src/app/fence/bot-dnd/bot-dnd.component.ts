@@ -13,7 +13,7 @@ import {moveItemInArray} from '@angular/cdk/drag-drop';
 )
 export class BotDndComponent {
 
-    private _onTuring: EventEmitter<boolean> = new EventEmitter();
+    private _onTuring = new EventEmitter<boolean>();
     private _words = [
         'am',
         'I',

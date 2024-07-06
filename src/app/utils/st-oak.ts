@@ -17,7 +17,7 @@ export class StOak {
      */
     public static identical(field1: string | number, field2: string | number): ValidatorFn {
 
-        return (formGroup: UntypedFormGroup): {[key: string]: any} => {
+        return (formGroup: UntypedFormGroup): Record<string, any> => {
             let identical = true;
             if (formGroup.controls[field1].value !== formGroup.controls[field2].value) {
                 formGroup.controls[field2].setErrors({identical: true});
@@ -34,7 +34,7 @@ export class StOak {
      */
     public static entropy(): ValidatorFn {
 
-        return (formControl: AbstractControl): {[key: string]: any} => {
+        return (formControl: AbstractControl): Record<string, any> => {
             const password = formControl.value;
 
             // Check if there is a word-list and count words.
@@ -72,7 +72,7 @@ export class StOak {
      */
     public static html(): ValidatorFn {
 
-        return (formControl: AbstractControl): {[key: string]: any} => {
+        return (formControl: AbstractControl): Record<string, any> => {
             const text = formControl.value;
 
             return /<.+>/.test(text) ? {html: true} : null;

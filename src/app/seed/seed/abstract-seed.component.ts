@@ -77,7 +77,7 @@ export abstract class AbstractSeedComponent<T extends AbstractSeed> {
         this._idSubscription.unsubscribe();
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected _onSeedResponse(seed: T): void {
         // hook
     }

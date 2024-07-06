@@ -29,7 +29,7 @@ export class SeedListComponent extends AbstractList<Seed> implements OnInit, OnD
     protected _itemElements: QueryList<ElementRef>;
 
     private _emptyListMessage = 'Nothing planted around here...';
-    private _onSeedsUpdateEmitter: EventEmitter<Seed[]> = new EventEmitter();
+    private _onSeedsUpdateEmitter = new EventEmitter<Seed[]>();
 
     private _seedsSubscription: Subscription;
     private _trailSubscription: Subscription;

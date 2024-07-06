@@ -66,11 +66,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
             (listEvent) => {
                 if (listEvent.offset < this._mapHeight) {
                     map.classList.remove('st-slide');
-                    // TODO eslint false-negative
-                    /* eslint-disable @typescript-eslint/restrict-plus-operands */
                     const height = map.offsetHeight + listEvent.delta;
                     map.style.height = (height < this._mapHeight ? height : this._mapHeight) + 'px';
-                    /* eslint-disable @typescript-eslint/restrict-plus-operands */
                 } else {
                     map.classList.add('st-slide');
                     map.style.height = '0px';

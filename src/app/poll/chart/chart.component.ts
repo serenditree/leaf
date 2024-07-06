@@ -158,7 +158,7 @@ export class ChartComponent implements OnInit {
         });
     }
 
-    private _setChartData(update: boolean = false): void {
+    private _setChartData(update = false): void {
         if (update) {
             this._data = [];
             this._labels = [];

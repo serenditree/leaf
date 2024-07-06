@@ -198,8 +198,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         const mapOverlay = this._mapOverlay.nativeElement;
 
         const sw = new Point(
-            // TODO eslint false-negative
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             mapOverlay.offsetWidth + MapComponent.MAP_VIEWPORT_OFFSET,
             mapContainer.offsetHeight - MapComponent.MAP_VIEWPORT_OFFSET
         );

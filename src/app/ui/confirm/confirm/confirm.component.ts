@@ -13,7 +13,6 @@ import {MatDialogRef} from '@angular/material/dialog';
 export class ConfirmComponent {
 
     constructor(private _dialogRef: MatDialogRef<ConfirmComponent>,
-                // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
                 @Inject(MAT_DIALOG_DATA) private readonly _data: any) {
     }
 

@@ -70,7 +70,6 @@ export class PollNewComponent implements OnInit {
     }
 
     public removeOption(pollIndex: number, optionIndex: number): void {
-        // eslint-disable-next-line no-extra-parens
         (this._pollsArray.at(pollIndex).get('options') as UntypedFormArray).removeAt(optionIndex);
     }
 

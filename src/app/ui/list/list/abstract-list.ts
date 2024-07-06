@@ -34,7 +34,7 @@ export abstract class AbstractList<T extends AbstractSeed> {
         window.scroll({top: 0, behavior: 'smooth'});
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected _onUpdate(items: T[]): void {
         // extension hook
     }

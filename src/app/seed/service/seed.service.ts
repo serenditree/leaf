@@ -19,7 +19,7 @@ import {finalize} from 'rxjs/operators';
 export class SeedService extends AbstractSeedService<Seed> {
 
     protected _trail: Seed[] = [];
-    protected _trailSubject: Subject<Seed[]> = new Subject();
+    protected _trailSubject = new Subject<Seed[]>();
 
     constructor(protected _http: HttpClient,
                 protected _router: Router,

@@ -11,7 +11,7 @@ export class PollService {
 
     private readonly BASE_URL_POLL = environment.API_BASE_URL_POLL;
 
-    private _pollsSubject: Subject<Poll[]> = new Subject();
+    private _pollsSubject = new Subject<Poll[]>();
 
     constructor(private _http: HttpClient) {
     }

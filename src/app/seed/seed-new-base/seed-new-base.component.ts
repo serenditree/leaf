@@ -117,7 +117,6 @@ export class SeedNewBaseComponent implements OnInit, OnDestroy {
 
     public addTag(): void {
         const tagControl = this.formGroup.get('tag');
-        // eslint-disable-next-line no-extra-parens
         const tag = (tagControl.value as string).replace(/[^A-Za-z1-9\-+_]/g, '');
         const tagsArray = this._parentFormGroup.get('tags') as UntypedFormArray;
 
@@ -131,7 +130,6 @@ export class SeedNewBaseComponent implements OnInit, OnDestroy {
     }
 
     public removeTag(index: number): void {
-        // eslint-disable-next-line no-extra-parens
         (this._parentFormGroup.get('tags') as UntypedFormArray).removeAt(index);
     }
 

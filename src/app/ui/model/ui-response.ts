@@ -3,7 +3,6 @@ export class UiResponse {
     public text: string;
     public data: any;
 
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     constructor(code: number, text: string, data?: any) {
         this.code = code;
         this.text = text;

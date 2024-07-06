@@ -19,8 +19,8 @@ import {finalize} from 'rxjs/operators';
 export class AbstractSeedService<T extends AbstractSeed> {
 
     protected _seeds: T[] = [];
-    protected _seedsSubject: Subject<T[]> = new Subject();
-    protected _seedSubject: Subject<T> = new Subject();
+    protected _seedsSubject = new Subject<T[]>();
+    protected _seedSubject = new Subject<T>();
 
     protected readonly _api: string;
     protected readonly _route: string;
