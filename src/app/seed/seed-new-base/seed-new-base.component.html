@@ -29,7 +29,13 @@
     <br>
     <mat-form-field>
         <mat-label>Text</mat-label>
-        <textarea formControlName="text" matInput></textarea>
+        <textarea formControlName="text"
+                  matInput
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="10">
+        </textarea>
         <mat-error *ngIf="formGroup.hasError('required', ['text'])">required</mat-error>
         <mat-error *ngIf="formGroup.hasError('html', ['text'])">contains &lt;tag&gt;</mat-error>
     </mat-form-field>

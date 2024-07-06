@@ -1,5 +1,7 @@
 import {AbstractSeed} from '../model/abstract-seed';
+import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import {Component} from '@angular/core';
+import {Injector} from '@angular/core';
 import {Input} from '@angular/core';
 import {MapService} from '../../map/service/map.service';
 import {Observable} from 'rxjs';
@@ -13,7 +15,10 @@ import {UntypedFormArray} from '@angular/forms';
 import {UntypedFormBuilder} from '@angular/forms';
 import {UntypedFormGroup} from '@angular/forms';
 import {Validators} from '@angular/forms';
+import {ViewChild} from '@angular/core';
+import {afterNextRender} from '@angular/core';
 import {debounceTime} from 'rxjs/operators';
+import {inject} from '@angular/core';
 
 @Component(
     {
@@ -33,6 +38,9 @@ export class SeedNewBaseComponent implements OnInit, OnDestroy {
     private _tags: Observable<string[]>;
     private _centerSubscription: Subscription;
     private _searchTermSubscription: Subscription;
+    @ViewChild('autosize')
+    private _autosize: CdkTextareaAutosize;
+    private _injector = inject(Injector);
 
     constructor(private _mapService: MapService,
                 private _searchService: SearchService,
@@ -113,6 +121,17 @@ export class SeedNewBaseComponent implements OnInit, OnDestroy {
         if (this.isLocationMutable()) {
             this._centerSubscription.unsubscribe();
         }
+    }
+
+    resizeTextArea(): void {
+        afterNextRender(
+            () => {
+                this._autosize.resizeToFitContent(true);
+            },
+            {
+                injector: this._injector
+            }
+        );
     }
 
     public addTag(): void {
