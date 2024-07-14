@@ -49,5 +49,6 @@ class Yarn(object):
 
 
 if __name__ == '__main__':
+    print('\033[1mSyncing package.json with yarn.lock...\033[0m')
     yarn = Yarn('package.json', 'yarn.lock')
     yarn.sync()
