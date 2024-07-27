@@ -22,14 +22,16 @@
     <br>
     <mat-form-field>
         <mat-label>Title</mat-label>
-        <input class="st-input" formControlName="title" matInput>
+        <input (focusin)="hideMap()" (focusout)="showMap()" class="st-input" formControlName="title" matInput>
         <mat-error *ngIf="formGroup.hasError('required', ['title'])">required</mat-error>
         <mat-error *ngIf="formGroup.hasError('html', ['title'])">contains &lt;tag&gt;</mat-error>
     </mat-form-field>
     <br>
     <mat-form-field>
         <mat-label>Text</mat-label>
-        <textarea formControlName="text"
+        <textarea (focusin)="hideMap()"
+                  (focusout)="showMap()"
+                  formControlName="text"
                   matInput
                   cdkTextareaAutosize
                   #autosize="cdkTextareaAutosize"
@@ -42,7 +44,9 @@
     <br>
     <mat-form-field>
         <mat-label>Tags</mat-label>
-        <input (keyup.enter)="addTag()"
+        <input (focusin)="hideMap()"
+               (focusout)="showMap()"
+               (keyup.enter)="addTag()"
                [matAutocomplete]="autocomplete"
                formControlName="tag"
                inputmode="search"

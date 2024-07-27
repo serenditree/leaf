@@ -6,6 +6,7 @@ import {HostListener} from '@angular/core';
 import {LayoutService} from './ui/layout/service/layout.service';
 import {ListEventService} from './ui/list/service/list-event.service';
 import {MapComponent} from './map/map/map.component';
+import {MapService} from './map/service/map.service';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {MatIconRegistry} from '@angular/material/icon';
 import {MenuTopComponent} from './ui/menu/menu-top/menu-top.component';
@@ -36,12 +37,15 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     private _mapHeight: number;
     private _routerEventSubscription: Subscription;
     private _listEventSubscription: Subscription;
+    private _mapVisibleSubscription: Subscription;
+    private _resetBlock = false;
 
     constructor(private _router: Router,
                 private _matIconRegistry: MatIconRegistry,
                 private _updateService: UpdateService,
                 private _bottomSheet: MatBottomSheet,
                 private _layoutService: LayoutService,
+                private _mapService: MapService,
                 private _searchService: SearchService,
                 private _listEventService: ListEventService) {
 
@@ -60,8 +64,22 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
     ngAfterViewInit(): void {
         this._registerGlobalRouterActions();
+
         const map = this._map.nativeElement.firstChild;
         this._mapHeight = map.offsetHeight;
+
+        this._mapVisibleSubscription = this._mapService.mapVisibleObservable.subscribe(
+            (visible) => {
+                if (this._layoutService.isMobile()) {
+                    if (visible.key()) {
+                        this._resetView();
+                    } else {
+                        map.style.height = visible.value() + 'px';
+                        this._resetBlock = true;
+                    }
+                }
+            }
+        );
         this._listEventSubscription = this._listEventService.listEventObservable.subscribe(
             (listEvent) => {
                 if (listEvent.offset < this._mapHeight) {
@@ -78,6 +96,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
     ngOnDestroy(): void {
         this._routerEventSubscription.unsubscribe();
+        this._mapVisibleSubscription.unsubscribe();
         this._listEventSubscription.unsubscribe();
     }
 
@@ -124,6 +143,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         const map = this._map.nativeElement.firstChild;
         map.classList.add('st-slide');
         map.style.height = this._mapHeight.toString() + 'px';
+        this._resetBlock = false;
     }
 
     @HostListener('window:keydown', ['$event'])
@@ -146,6 +166,14 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
     @HostListener('window:resize')
     private _onViewportChange(): void {
-        this._resetView();
+        setTimeout(
+            () => {
+                if (!this._resetBlock) {
+                    this._resetView();
+                }
+            },
+            420
+        );
+
     }
 }

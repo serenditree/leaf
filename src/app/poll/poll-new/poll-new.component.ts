@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Input} from '@angular/core';
+import {MapService} from '../../map/service/map.service';
 import {OnInit} from '@angular/core';
 import {StAnimations} from '../../utils/st-animations';
 import {UntypedFormArray} from '@angular/forms';
@@ -22,7 +23,8 @@ export class PollNewComponent implements OnInit {
     private _parentFormGroup: UntypedFormGroup;
     private _pollsArray: UntypedFormArray;
 
-    constructor(private _formBuilder: UntypedFormBuilder) {
+    constructor(private _formBuilder: UntypedFormBuilder,
+                private _mapService: MapService) {
     }
 
     get formGroup(): UntypedFormGroup {
@@ -41,6 +43,14 @@ export class PollNewComponent implements OnInit {
     ngOnInit(): void {
         this._pollsArray = this._parentFormGroup.get('polls') as UntypedFormArray;
         this.addPoll();
+    }
+
+    public showMap(): void {
+        this._mapService.setMapVisible(true, null);
+    }
+
+    public hideMap(): void {
+        this._mapService.setMapVisible(false, 60);
     }
 
     public addPoll(): void {

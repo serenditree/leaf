@@ -134,6 +134,14 @@ export class SeedNewBaseComponent implements OnInit, OnDestroy {
         );
     }
 
+    public showMap(): void {
+        this._mapService.setMapVisible(true, null);
+    }
+
+    public hideMap(): void {
+        this._mapService.setMapVisible(false, 60);
+    }
+
     public addTag(): void {
         const tagControl = this.formGroup.get('tag');
         const tag = (tagControl.value as string).replace(/[^A-Za-z1-9\-+_]/g, '');

@@ -14,6 +14,7 @@ import {MessageService} from '../../ui/message/service/message.service';
 import {NavigationStart} from '@angular/router';
 import {Observable} from 'rxjs';
 import {OnDestroy} from '@angular/core';
+import {Pair} from '../../utils/model/pair';
 import {Router} from '@angular/router';
 import {SeedService} from '../../seed/service/seed.service';
 import {Subject} from 'rxjs';
@@ -31,6 +32,7 @@ export class MapService implements OnDestroy {
     private readonly GARDEN_PATH_REGEX = /\/gardens\/\S+/;
 
     private _mapComponent: MapComponent;
+    private _mapVisibleSubject = new BehaviorSubject<Pair<boolean, number>>(new Pair(true, null));
     private _singleMarker: MarkerContainer;
     private _seedMarkers: MarkerContainer[] = [];
     private _seedMarkerSubject = new BehaviorSubject<MarkerEvent>(new MarkerEvent());
@@ -54,6 +56,10 @@ export class MapService implements OnDestroy {
                 private _gardenService: GardenService,
                 private _listEventService: ListEventService,
                 private _messageService: MessageService) {
+    }
+
+    get mapVisibleObservable(): Observable<Pair<boolean, number>> {
+        return this._mapVisibleSubject.asObservable();
     }
 
     get seedMarkerObservable(): Observable<MarkerEvent> {
@@ -91,6 +97,10 @@ export class MapService implements OnDestroy {
         this._registerBoundsChangeActions();
     }
 
+    public setMapVisible(visible: boolean, height: number): void {
+        this._mapVisibleSubject.next(new Pair(visible, height));
+    }
+
     public setLocation(): void {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -111,7 +121,7 @@ export class MapService implements OnDestroy {
                 },
                 {
                     enableHighAccuracy: true,
-                    timeout: 4200,
+                    timeout: 2000,
                 }
             );
         }

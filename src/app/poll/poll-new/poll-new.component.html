@@ -14,14 +14,18 @@
             <div [formGroupName]="pollIndex">
                 <mat-form-field>
                     <mat-label>Title</mat-label>
-                    <input formControlName="title" matInput>
+                    <input (focusin)="hideMap()" (focusout)="showMap()" formControlName="title" matInput>
                     <mat-error>required</mat-error>
                 </mat-form-field>
                 <br>
 
                 <mat-form-field>
                     <mat-label>Option</mat-label>
-                    <input (keyup.enter)="addOption(pollIndex)" formControlName="optionInput" matInput>
+                    <input (focusin)="hideMap()"
+                           (focusout)="showMap()"
+                           (keyup.enter)="addOption(pollIndex)"
+                           formControlName="optionInput"
+                           matInput>
                     <mat-icon (click)="addOption(pollIndex)"
                               fontIcon="fa-plus-circle"
                               fontSet="fa"

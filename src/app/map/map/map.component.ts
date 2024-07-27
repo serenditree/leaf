@@ -74,6 +74,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     private _isFilterFocused: boolean;
     private _isFilterFocusedSubscription: Subscription;
     private _showControl = true;
+    private _mapVisibleSubscription: Subscription;
     private _listEventSubscription: Subscription;
 
     constructor(private _mapService: MapService,
@@ -99,9 +100,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     get showControl(): boolean {
         return this._showControl &&
-               ! this._router.isActive('about', EXACT_MATCH_TRUE) &&
-               ! this._router.isActive('sign-in', EXACT_MATCH_FALSE) &&
-               ! this._router.isActive('sign-up', EXACT_MATCH_FALSE);
+               !this._router.isActive('about', EXACT_MATCH_TRUE) &&
+               !this._router.isActive('sign-in', EXACT_MATCH_FALSE) &&
+               !this._router.isActive('sign-up', EXACT_MATCH_FALSE);
     }
 
     ngOnInit(): void {
@@ -130,8 +131,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                     this._isFilterFocused = state;
                 }
             );
-
-        this._listEventSubscription = this._listEventService.listEventObservable
+        this._mapVisibleSubscription = this._mapService
+            .mapVisibleObservable
+            .subscribe(
+                (visible) => {
+                    this._showControl = visible.key();
+                }
+            );
+        this._listEventSubscription = this._listEventService
+            .listEventObservable
             .subscribe(
                 (listEvent) => {
                     this._showControl = listEvent.offset <= 0;
@@ -146,6 +154,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     ngOnDestroy(): void {
         this._isSearchFocusedSubscription.unsubscribe();
         this._isFilterFocusedSubscription.unsubscribe();
+        this._mapVisibleSubscription.unsubscribe();
         this._listEventSubscription.unsubscribe();
     }
 
