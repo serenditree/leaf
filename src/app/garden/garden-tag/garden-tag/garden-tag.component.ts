@@ -6,6 +6,7 @@ import {HostListener} from '@angular/core';
 import {Input} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {OnInit} from '@angular/core';
+import {environment} from '../../../../environments/environment';
 
 @Component(
     {
@@ -45,7 +46,7 @@ export class GardenTagComponent implements OnInit {
     }
 
     get data(): string {
-        return `https://serenditree.io/gardens/${this._garden.id}`;
+        return `https://${environment.HOSTNAME}/gardens/${this._garden.id}`;
     }
 
     @Input()
