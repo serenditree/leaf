@@ -1,13 +1,10 @@
-import {DomSanitizer} from '@angular/platform-browser';
-import {PipeTransform} from '@angular/core';
-import {Pipe} from '@angular/core';
-import {SafeHtml} from '@angular/platform-browser';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {Pipe, PipeTransform, inject} from '@angular/core';
 
-@Pipe({name: 'highlight'})
+@Pipe({name: 'highlight', standalone: false})
 export class StHighlightPipe implements PipeTransform {
+    private _sanitizer = inject(DomSanitizer);
 
-    constructor(private _sanitizer: DomSanitizer) {
-    }
 
     transform(text: string, term: string): SafeHtml {
         if (text) {

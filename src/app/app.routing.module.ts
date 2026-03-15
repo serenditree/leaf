@@ -1,11 +1,10 @@
 import {AboutComponent} from './about/about/about.component';
-import {FenceGuard} from './fence/feature/fence.guard';
+import {FenceGuard, FenceGuardChild} from './fence/feature/fence.guard';
 import {GardenComponent} from './garden/garden/garden.component';
 import {GardenListComponent} from './garden/garden-list/garden-list/garden-list.component';
 import {GardenNewComponent} from './garden/garden-new/garden-new.component';
 import {NgModule} from '@angular/core';
-import {RouterModule} from '@angular/router';
-import {Routes} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {SeedComponent} from './seed/seed/seed.component';
 import {SeedListComponent} from './seed/seed-list/seed-list/seed-list.component';
 import {SeedNewComponent} from './seed/seed-new/seed-new.component';
@@ -29,7 +28,10 @@ const routes: Routes = [
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     {
         path: 'about',
-        component: AboutComponent
+        component: AboutComponent,
+        data: {
+            nomap: true
+        }
     },
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // SEED
@@ -100,7 +102,7 @@ const routes: Routes = [
     },
     {
         path: 'user',
-        canActivateChild: [FenceGuard],
+        canActivateChild: [FenceGuardChild],
         children: [
             {
                 path: 'garden',
@@ -124,17 +126,23 @@ const routes: Routes = [
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     {
         path: 'sign-up',
-        component: SignUpComponent
+        component: SignUpComponent,
+        data: {
+            nomap: true
+        }
     },
     {
         path: 'sign-in',
-        component: SignInComponent
+        component: SignInComponent,
+        data: {
+            nomap: true
+        }
     }
 ];
 
 @NgModule(
     {
-        imports: [RouterModule.forRoot(routes, {relativeLinkResolution: 'legacy'})],
+        imports: [RouterModule.forRoot(routes, {})],
         exports: [RouterModule]
     }
 )

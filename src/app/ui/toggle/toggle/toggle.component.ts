@@ -1,7 +1,4 @@
-import {Component} from '@angular/core';
-import {EventEmitter} from '@angular/core';
-import {Input} from '@angular/core';
-import {Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {StAnimations} from '../../../utils/st-animations';
 
 @Component(
@@ -11,14 +8,15 @@ import {StAnimations} from '../../../utils/st-animations';
         styleUrls: ['./toggle.component.scss'],
         animations: [
             StAnimations.slideVertical
-        ]
+        ],
+        standalone: false
     }
 )
 export class ToggleComponent {
 
     private _state = StAnimations.STATE_INACTIVE;
     private _name: string;
-    private _onToggle: EventEmitter<boolean> = new EventEmitter();
+    private _onToggle = new EventEmitter<boolean>();
 
     get state(): string {
         return this._state;

@@ -1,5 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
+import {StEllipsisLinePipe} from './st-ellipsis-line.pipe';
 import {StEllipsisPipe} from './st-ellipsis.pipe';
 import {StGreetingPipe} from './st-greeting.pipe';
 import {StHighlightPipe} from './st-highlight.pipe';
@@ -14,6 +15,7 @@ import {StTagsPipe} from './st-tags.pipe';
         ],
         declarations: [
             StEllipsisPipe,
+            StEllipsisLinePipe,
             StGreetingPipe,
             StHighlightPipe,
             StHtmlPipe,
@@ -22,6 +24,7 @@ import {StTagsPipe} from './st-tags.pipe';
         ],
         exports: [
             StEllipsisPipe,
+            StEllipsisLinePipe,
             StGreetingPipe,
             StHighlightPipe,
             StHtmlPipe,

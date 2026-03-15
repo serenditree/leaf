@@ -1,0 +1,27 @@
+@if (menuService.isMenuMobileActive) {
+    <div class="st-menu-mobile-container">
+        <div class="st-menu-mobile">
+            @if (menuService.isMainActive) {
+                <div class="st-menu-mobile-inner-menu">
+                    <st-menu-main
+                        (click)="close()"
+                        align="right">
+                        <st-nav-item routerLink="/about" text="About"></st-nav-item>
+                        @if (!fenceService.isAuthenticated()) {
+                            <st-nav-item (click)="fenceService.signInRedirect()" text="Sign in"></st-nav-item>
+                        } @else {
+                            <st-nav-item (click)="fenceService.signOut()" text="Sign out"></st-nav-item>
+                        }
+                    </st-menu-main>
+                </div>
+            } @else {
+                <div class="st-menu-mobile-inner-filter">
+                    <st-search id="st-search-bottom"></st-search>
+                    @if (!isSearchFocused) {
+                        <st-filter></st-filter>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+}

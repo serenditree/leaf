@@ -1,7 +1,6 @@
-import {PipeTransform} from '@angular/core';
-import {Pipe} from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
-@Pipe({name: 'greeting'})
+@Pipe({name: 'greeting', standalone: false})
 export class StGreetingPipe implements PipeTransform {
 
     private readonly NOON = 0;

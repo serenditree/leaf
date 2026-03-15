@@ -1,7 +1,6 @@
-import {PipeTransform} from '@angular/core';
-import {Pipe} from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
-@Pipe({name: 'tags'})
+@Pipe({name: 'tags', standalone: false})
 export class StTagsPipe implements PipeTransform {
 
     transform(tags: string[]): string {

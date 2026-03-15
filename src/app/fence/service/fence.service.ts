@@ -1,32 +1,30 @@
-import {EXACT_MATCH_FALSE} from '../../utils/st-const';
-import {HTTP_HEADERS} from '../../utils/st-const';
-import {HTTP_STATUS} from '../../utils/st-const';
-import {X_HTTP_HEADERS} from '../../utils/st-const';
-import {ActivatedRoute} from '@angular/router';
+import {EXACT_MATCH_FALSE, HTTP_HEADERS, HTTP_STATUS, X_HTTP_HEADERS} from '../../utils/st-const';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FenceType} from '../model/fence-type.enum';
-import {HttpClient} from '@angular/common/http';
-import {HttpErrorResponse} from '@angular/common/http';
-import {HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {Injectable, inject} from '@angular/core';
 import {MessageService} from '../../ui/message/service/message.service';
-import {Observable} from 'rxjs';
+import {Observable, Subscriber} from 'rxjs';
 import {Principal} from '../model/principal';
-import {Router} from '@angular/router';
 import {StGreetingPipe} from '../../utils/pipes/st-greeting.pipe';
 import {StMaple} from '../../utils/st-maple';
 import {StOak} from '../../utils/st-oak';
-import {Subscriber} from 'rxjs';
 import {UiResponse} from '../../ui/model/ui-response';
 import {environment} from '../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class FenceService {
+    private _http = inject(HttpClient);
+    private _router = inject(Router);
+    private _route = inject(ActivatedRoute);
+    private _messageService = inject(MessageService);
 
     public static readonly ID_KEY = X_HTTP_HEADERS.ID;
     public static readonly USERNAME_KEY = X_HTTP_HEADERS.USERNAME;
     public static readonly EMAIL_KEY = X_HTTP_HEADERS.EMAIL;
     public static readonly PASSWORD_KEY = X_HTTP_HEADERS.PASSWORD;
     public static readonly VERIFICATION_KEY = X_HTTP_HEADERS.VERIFICATION;
+    public static readonly VERIFIED_KEY = X_HTTP_HEADERS.VERIFIED;
     public static readonly TOKEN_KEY = HTTP_HEADERS.AUTHORIZATION;
     public static readonly AUTHENTICATE_KEY = HTTP_HEADERS.WWW_AUTHENTICATE;
 
@@ -39,12 +37,6 @@ export class FenceService {
     private static readonly GREETING = new StGreetingPipe();
 
     private _principal: Principal = null;
-
-    constructor(private _http: HttpClient,
-                private _router: Router,
-                private _route: ActivatedRoute,
-                private _messageService: MessageService) {
-    }
 
     private static _getEndpoint(fence: FenceType): string {
         let baseUrl;
@@ -146,7 +138,7 @@ export class FenceService {
                 console.error(error);
             }
         } else {
-            console.warn('Already signed out!')
+            console.warn('Already signed out!');
         }
     }
 
@@ -165,7 +157,9 @@ export class FenceService {
                     if (response.ok) {
                         this._messageService.info('Verified!');
                         const token = response.headers.get(FenceService.TOKEN_KEY);
+                        const verified = response.headers.get(FenceService.VERIFIED_KEY);
                         localStorage.setItem(FenceService.TOKEN_KEY, token);
+                        localStorage.setItem(FenceService.VERIFIED_KEY, verified);
                     }
                 },
                 (error) => {
@@ -173,6 +167,11 @@ export class FenceService {
                     console.log(error);
                 }
             );
+    }
+
+    public verified(): boolean {
+        const verified = localStorage.getItem(FenceService.VERIFIED_KEY);
+        return StOak.isNotBlank(verified) && verified === 'true';
     }
 
     public getUsername(): string | null {
@@ -188,7 +187,7 @@ export class FenceService {
             const id = localStorage.getItem(FenceService.ID_KEY);
             const username = localStorage.getItem(FenceService.USERNAME_KEY);
             const token = localStorage.getItem(FenceService.TOKEN_KEY);
-            if (StOak.notBlank(username) && StOak.notBlank(token)) {
+            if (StOak.isNotBlank(username) && StOak.isNotBlank(token)) {
                 this._principal = new Principal(+id, username, null, null, token);
             }
         }
@@ -238,10 +237,12 @@ export class FenceService {
                     const id = response.headers.get(FenceService.ID_KEY);
                     const username = response.headers.get(FenceService.USERNAME_KEY);
                     const token = response.headers.get(FenceService.TOKEN_KEY);
+                    const verified = response.headers.get(FenceService.VERIFIED_KEY);
 
                     localStorage.setItem(FenceService.ID_KEY, id);
                     localStorage.setItem(FenceService.USERNAME_KEY, username);
                     localStorage.setItem(FenceService.TOKEN_KEY, token);
+                    localStorage.setItem(FenceService.VERIFIED_KEY, verified);
 
                     this._principal = new Principal(+id, username, null, null, token);
 

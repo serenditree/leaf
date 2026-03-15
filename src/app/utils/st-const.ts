@@ -122,47 +122,53 @@ export const HTTP_STATUS = {
  * From javax.ws.rs.core.HttpHeaders.
  */
 export const HTTP_HEADERS = {
-    ACCEPT: "Accept",
-    ACCEPT_CHARSET: "Accept-Charset",
-    ACCEPT_ENCODING: "Accept-Encoding",
-    ACCEPT_LANGUAGE: "Accept-Language",
-    ALLOW: "Allow",
-    AUTHORIZATION: "Authorization",
-    CACHE_CONTROL: "Cache-Control",
-    CONTENT_DISPOSITION: "Content-Disposition",
-    CONTENT_ENCODING: "Content-Encoding",
-    CONTENT_ID: "Content-ID",
-    CONTENT_LANGUAGE: "Content-Language",
-    CONTENT_LENGTH: "Content-Length",
-    CONTENT_LOCATION: "Content-Location",
-    CONTENT_TYPE: "Content-Type",
-    DATE: "Date",
-    ETAG: "ETag",
-    EXPIRES: "Expires",
-    HOST: "Host",
-    IF_MATCH: "If-Match",
-    IF_MODIFIED_SINCE: "If-Modified-Since",
-    IF_NONE_MATCH: "If-None-Match",
-    IF_UNMODIFIED_SINCE: "If-Unmodified-Since",
-    LAST_MODIFIED: "Last-Modified",
-    LOCATION: "Location",
-    LINK: "Link",
-    RETRY_AFTER: "Retry-After",
-    USER_AGENT: "User-Agent",
-    VARY: "Vary",
-    WWW_AUTHENTICATE: "WWW-Authenticate",
-    COOKIE: "Cookie",
-    SET_COOKIE: "Set-Cookie",
-    LAST_EVENT_ID_HEADER: "Last-Event-ID"
+    ACCEPT: 'Accept',
+    ACCEPT_CHARSET: 'Accept-Charset',
+    ACCEPT_ENCODING: 'Accept-Encoding',
+    ACCEPT_LANGUAGE: 'Accept-Language',
+    ALLOW: 'Allow',
+    AUTHORIZATION: 'Authorization',
+    CACHE_CONTROL: 'Cache-Control',
+    CONTENT_DISPOSITION: 'Content-Disposition',
+    CONTENT_ENCODING: 'Content-Encoding',
+    CONTENT_ID: 'Content-ID',
+    CONTENT_LANGUAGE: 'Content-Language',
+    CONTENT_LENGTH: 'Content-Length',
+    CONTENT_LOCATION: 'Content-Location',
+    CONTENT_TYPE: 'Content-Type',
+    DATE: 'Date',
+    ETAG: 'ETag',
+    EXPIRES: 'Expires',
+    HOST: 'Host',
+    IF_MATCH: 'If-Match',
+    IF_MODIFIED_SINCE: 'If-Modified-Since',
+    IF_NONE_MATCH: 'If-None-Match',
+    IF_UNMODIFIED_SINCE: 'If-Unmodified-Since',
+    LAST_MODIFIED: 'Last-Modified',
+    LOCATION: 'Location',
+    LINK: 'Link',
+    RETRY_AFTER: 'Retry-After',
+    USER_AGENT: 'User-Agent',
+    VARY: 'Vary',
+    WWW_AUTHENTICATE: 'WWW-Authenticate',
+    COOKIE: 'Cookie',
+    SET_COOKIE: 'Set-Cookie',
+    LAST_EVENT_ID_HEADER: 'Last-Event-ID'
 };
+
+/**
+ * Prefix for all X_HTTP_HEADERS.
+ */
+const X_HTTP_HEADER_PREFIX = 'X-ST-';
 
 /**
  * Constants for custom headers.
  */
 export const X_HTTP_HEADERS = {
-    ID: 'X-ST-ID',
-    USERNAME: 'X-ST-Username',
-    EMAIL: 'X-ST-Email',
-    PASSWORD: 'X-ST-Password',
-    VERIFICATION: 'X-ST-Verification'
+    ID: X_HTTP_HEADER_PREFIX + 'ID',
+    USERNAME: X_HTTP_HEADER_PREFIX + 'Username',
+    EMAIL: X_HTTP_HEADER_PREFIX + 'Email',
+    PASSWORD: X_HTTP_HEADER_PREFIX + 'Password',
+    VERIFICATION: X_HTTP_HEADER_PREFIX + 'Verification',
+    VERIFIED: X_HTTP_HEADER_PREFIX + 'Verified'
 };

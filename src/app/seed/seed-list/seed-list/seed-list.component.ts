@@ -1,45 +1,56 @@
 import {AbstractList} from '../../../ui/list/list/abstract-list';
-import {Component} from '@angular/core';
-import {ElementRef} from '@angular/core';
-import {EventEmitter} from '@angular/core';
-import {Input} from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    QueryList,
+    ViewChildren,
+    inject
+} from '@angular/core';
 import {LayoutService} from '../../../ui/layout/service/layout.service';
 import {ListEventService} from '../../../ui/list/service/list-event.service';
 import {MapService} from '../../../map/service/map.service';
-import {OnDestroy} from '@angular/core';
-import {OnInit} from '@angular/core';
-import {Output} from '@angular/core';
-import {QueryList} from '@angular/core';
 import {SeedListItemComponent} from '../seed-list-item/seed-list-item.component';
 import {SeedService} from '../../service/seed.service';
 import {Seed} from '../../model/seed';
 import {Subscription} from 'rxjs';
-import {ViewChildren} from '@angular/core';
 
 @Component(
     {
         selector: 'st-seed-list',
         templateUrl: './seed-list.component.html',
-        styleUrls: ['./seed-list.component.scss']
+        styleUrls: ['./seed-list.component.scss'],
+        standalone: false
     }
 )
 export class SeedListComponent extends AbstractList<Seed> implements OnInit, OnDestroy {
+    protected _listEventService: ListEventService;
+    protected _layoutService: LayoutService;
+    private _seedService = inject(SeedService);
+    private _mapService = inject(MapService);
 
     @ViewChildren(SeedListItemComponent, {read: ElementRef})
     protected _itemElements: QueryList<ElementRef>;
 
     private _emptyListMessage = 'Nothing planted around here...';
-    private _onSeedsUpdateEmitter: EventEmitter<Seed[]> = new EventEmitter();
+    private _onSeedsUpdateEmitter = new EventEmitter<Seed[]>();
 
     private _seedsSubscription: Subscription;
     private _trailSubscription: Subscription;
     private _markerSubscription: Subscription;
 
-    constructor(protected _listEventService: ListEventService,
-                protected _layoutService: LayoutService,
-                private _seedService: SeedService,
-                private _mapService: MapService) {
+    constructor() {
+        const _listEventService = inject(ListEventService);
+        const _layoutService = inject(LayoutService);
+
         super(_listEventService, _layoutService);
+
+        this._listEventService = _listEventService;
+        this._layoutService = _layoutService;
     }
 
     get emptyListMessage(): string {

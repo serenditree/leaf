@@ -1,26 +1,26 @@
 import {AbstractList} from '../../../ui/list/list/abstract-list';
-import {Component} from '@angular/core';
-import {ElementRef} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren, inject} from '@angular/core';
 import {GardenListItemComponent} from '../garden-list-item/garden-list-item.component';
 import {GardenService} from '../../service/garden.service';
 import {Garden} from '../../model/garden';
 import {LayoutService} from '../../../ui/layout/service/layout.service';
 import {ListEventService} from '../../../ui/list/service/list-event.service';
 import {MapService} from '../../../map/service/map.service';
-import {OnDestroy} from '@angular/core';
-import {OnInit} from '@angular/core';
-import {QueryList} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {ViewChildren} from '@angular/core';
 
 @Component(
     {
         selector: 'st-garden-list',
         templateUrl: './garden-list.component.html',
-        styleUrls: ['./garden-list.component.scss']
+        styleUrls: ['./garden-list.component.scss'],
+        standalone: false
     }
 )
 export class GardenListComponent extends AbstractList<Garden> implements OnInit, OnDestroy {
+    protected _listEventService: ListEventService;
+    protected _layoutService: LayoutService;
+    private _gardenService = inject(GardenService);
+    private _mapService = inject(MapService);
 
     @ViewChildren(GardenListItemComponent, {read: ElementRef})
     protected _itemElements: QueryList<ElementRef>;
@@ -28,11 +28,14 @@ export class GardenListComponent extends AbstractList<Garden> implements OnInit,
     private _gardensSubscription: Subscription;
     private _markerSubscription: Subscription;
 
-    constructor(protected _listEventService: ListEventService,
-                protected _layoutService: LayoutService,
-                private _gardenService: GardenService,
-                private _mapService: MapService) {
+    constructor() {
+        const _listEventService = inject(ListEventService);
+        const _layoutService = inject(LayoutService);
+
         super(_listEventService, _layoutService);
+
+        this._listEventService = _listEventService;
+        this._layoutService = _layoutService;
     }
 
     get gardens(): Garden[] {

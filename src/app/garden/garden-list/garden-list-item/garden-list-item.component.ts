@@ -1,7 +1,7 @@
 import {AbstractListItem} from '../../../ui/list/list/abstract-list-item';
-import {Component} from '@angular/core';
+import {Component, Input, inject} from '@angular/core';
 import {Garden} from '../../model/garden';
-import {Input} from '@angular/core';
+import {LayoutService} from '../../../ui/layout/service/layout.service';
 import {ListEventService} from '../../../ui/list/service/list-event.service';
 import {StAnimations} from '../../../utils/st-animations';
 
@@ -12,13 +12,22 @@ import {StAnimations} from '../../../utils/st-animations';
         styleUrls: ['./garden-list-item.component.scss'],
         animations: [
             StAnimations.enterSlideHorizontal
-        ]
+        ],
+        standalone: false
     }
 )
 export class GardenListItemComponent extends AbstractListItem<Garden> {
+    protected _layoutService: LayoutService;
+    protected _listEventService: ListEventService;
 
-    constructor(protected _listEventService: ListEventService) {
-        super(_listEventService);
+    constructor() {
+        const _layoutService = inject(LayoutService);
+        const _listEventService = inject(ListEventService);
+
+        super(_layoutService, _listEventService);
+
+        this._layoutService = _layoutService;
+        this._listEventService = _listEventService;
     }
 
     get garden(): Garden {

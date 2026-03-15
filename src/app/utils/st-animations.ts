@@ -1,18 +1,28 @@
-import {AnimationCurves} from '@angular/material/core';
-import {AnimationDurations} from '@angular/material/core';
-import {AnimationTriggerMetadata} from '@angular/animations';
-import {animate} from '@angular/animations';
-import {keyframes} from '@angular/animations';
-import {query} from '@angular/animations';
-import {stagger} from '@angular/animations';
-import {state} from '@angular/animations';
-import {style} from '@angular/animations';
-import {transition} from '@angular/animations';
-import {trigger} from '@angular/animations';
+const AnimationCurves = {
+    STANDARD_CURVE: 'cubic-bezier(0.4, 0.0, 0.2, 1)',
+    DECELERATION_CURVE: 'cubic-bezier(0.0, 0.0, 0.2, 1)',
+    ACCELERATION_CURVE: 'cubic-bezier(0.4, 0.0, 1, 1)',
+    SHARP_CURVE: 'cubic-bezier(0.4, 0.0, 0.6, 1)'
+} as const;
 
-/**
- * Collection of reusable Angular animations.
- */
+const AnimationDurations = {
+    COMPLEX: '375ms',
+    ENTERING: '225ms',
+    EXITING: '195ms'
+} as const;
+
+import {
+    AnimationTriggerMetadata,
+    animate,
+    keyframes,
+    query,
+    stagger,
+    state,
+    style,
+    transition,
+    trigger
+} from '@angular/animations';
+
 export class StAnimations {
 
     public static readonly STATE_ACTIVE = 'active';
@@ -20,9 +30,9 @@ export class StAnimations {
     public static readonly COMPLEX = `${AnimationDurations.COMPLEX} ${AnimationCurves.DECELERATION_CURVE}`;
     public static readonly ENTERING = `${AnimationDurations.ENTERING} ${AnimationCurves.DECELERATION_CURVE}`;
     public static readonly LEAVING = `${AnimationDurations.EXITING} ${AnimationCurves.DECELERATION_CURVE}`;
-    public static readonly COMPLEX_DURATION = parseInt(AnimationDurations.COMPLEX);
-    public static readonly ENTERING_DURATION = parseInt(AnimationDurations.ENTERING);
-    public static readonly LEAVING_DURATION = parseInt(AnimationDurations.EXITING);
+    public static readonly COMPLEX_DURATION = Number.parseInt(AnimationDurations.COMPLEX);
+    public static readonly ENTERING_DURATION = Number.parseInt(AnimationDurations.ENTERING);
+    public static readonly LEAVING_DURATION = Number.parseInt(AnimationDurations.EXITING);
 
     public static readonly slideVertical: AnimationTriggerMetadata = trigger(
         'slideVertical',

@@ -1,24 +1,20 @@
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {Component} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {Component, inject} from '@angular/core';
 import {Garden} from '../../model/garden';
-import {Inject} from '@angular/core';
 import {LayoutService} from '../../../ui/layout/service/layout.service';
-import {MatDialogRef} from '@angular/material/dialog';
 
 @Component(
     {
         selector: 'st-garden-tag-print',
         templateUrl: './garden-tag-print.component.html',
-        styleUrls: ['./garden-tag-print.component.scss']
+        styleUrls: ['./garden-tag-print.component.scss'],
+        standalone: false
     }
 )
 export class GardenTagPrintComponent {
-
-    constructor(private _layoutService: LayoutService,
-                private _dialogRef: MatDialogRef<GardenTagPrintComponent>,
-                @Inject(MAT_DIALOG_DATA)
-                private _garden: Garden) {
-    }
+    private _layoutService = inject(LayoutService);
+    private _dialogRef = inject<MatDialogRef<GardenTagPrintComponent>>(MatDialogRef);
+    private _garden = inject<Garden>(MAT_DIALOG_DATA);
 
     get garden(): Garden {
         return this._garden;

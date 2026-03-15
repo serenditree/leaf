@@ -1,4 +1,4 @@
-import {Marker} from 'mapbox-gl';
+import {Marker} from 'maplibre-gl';
 
 export class MarkerContainer {
     public id: string;

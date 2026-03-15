@@ -1,16 +1,12 @@
 import {SCROLL_TIME} from '../../../utils/st-const';
 import {AbstractSeed} from '../../../seed/model/abstract-seed';
-import {Directive} from '@angular/core';
-import {ElementRef} from '@angular/core';
-import {HostListener} from '@angular/core';
+import {Directive, ElementRef, HostListener, QueryList} from '@angular/core';
 import {LayoutService} from '../../layout/service/layout.service';
 import {ListEventService} from '../service/list-event.service';
 import {ListEvent} from '../model/list-event';
 import {MarkerEvent} from '../../../map/model/marker-event';
-import {QueryList} from '@angular/core';
 
-@Directive({selector: 'list'}) // no need to use it in a directive manner
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
+@Directive()
 export abstract class AbstractList<T extends AbstractSeed> {
 
     protected _activeItemId: string;
@@ -34,7 +30,7 @@ export abstract class AbstractList<T extends AbstractSeed> {
         window.scroll({top: 0, behavior: 'smooth'});
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected _onUpdate(items: T[]): void {
         // extension hook
     }
@@ -64,12 +60,12 @@ export abstract class AbstractList<T extends AbstractSeed> {
             const itemElement = this._itemElements.find(
                 (item, index) => {
                     itemIndex = index;
-                    return item.nativeElement.id === id.toString();
+                    return item.nativeElement.id === id;
                 }
             );
             window.scroll(
                 {
-                    top: itemIndex === 0 ? 0 : Number(itemElement.nativeElement.offsetTop) + 42,
+                    top: itemIndex === 0 ? 0 : itemElement.nativeElement.offsetTop + 42,
                     behavior: 'smooth'
                 }
             );
@@ -77,9 +73,9 @@ export abstract class AbstractList<T extends AbstractSeed> {
     }
 
     @HostListener('window:scroll', ['$event.target.scrollingElement'])
-    private _onScroll(event: HTMLElement): void {
+    protected _onScroll(event: HTMLElement): void {
         if (this._layoutService.isMobile() && !this._scrollingToItem) {
-            const top = event.scrollTop < 0 ? 0 : event.scrollTop;
+            const top = Math.max(event.scrollTop, 0);
             const delta = this._lastScrollTop - top; // + up / - down
             this._lastScrollTop = top;
             this._listEventService.fireListEvent(new ListEvent(top, delta));

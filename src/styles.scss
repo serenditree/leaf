@@ -1,26 +1,17 @@
-/**********************************************************************************************************************
- * MEDIA QUERIES
- **********************************************************************************************************************/
-@import "assets/styles/media";
-/**********************************************************************************************************************
- * UTILITIES
- **********************************************************************************************************************/
-@import "assets/styles/utils";
-/**********************************************************************************************************************
- * ANIMATIONS
- **********************************************************************************************************************/
-@import "assets/styles/animations";
+@use '@angular/material' as mat;
+@use "assets/styles/media";
+@use "assets/styles/utils";
 
 /**********************************************************************************************************************
  * GLOBAL DEFAULTS
  **********************************************************************************************************************/
 $st-font-family: 'Quicksand', sans-serif;
-$st-font-size-h1: 18px;
-$st-font-size-h2: 16px;
-$st-font-size-p: 14px;
+$st-font-size-h1: 20px;
+$st-font-size-h2: 18px;
+$st-font-size-p: 16px;
 
-$st-background-color-body: #fff;
-$st-background-color-accent: #f8f9f7;
+$st-background-color: #fafafa;
+$st-background-color-button: #fff;
 
 $st-color-gray-primary: #666;
 $st-color-gray-secondary: #999;
@@ -32,20 +23,38 @@ $st-color-green-leaf: #91aa5d;
 $st-color-yellow-warning: #daa520;
 $st-color-orange-warning: $st-color-orange-trail;
 
+$st-menu-z-index: 1000; // mat-bottom-sheet reference
+
 $st-menu-top-height: 60px;
 $st-menu-top-height-gt-sm: 100px;
+$st-menu-top-z-index: $st-menu-z-index + 20;
 $st-menu-sub-height: 80px;
+$st-menu-sub-height-standalone-delta: 20px;
 $st-menu-sub-height-gt-sm: 40px;
-$st-menu-z-index: 1000; // mat-bottom-sheet reference
+
+$st-menu-fab-bottom: 20px;
+$st-menu-fab-bottom-standalone: $st-menu-fab-bottom + $st-menu-sub-height-standalone-delta * .5;
+$st-menu-fab-bottom-right: 20px;
+$st-menu-fab-bottom-spacing: 60px;
+$st-menu-fab-size: 36px;
+$st-menu-fab-z-index: $st-menu-z-index + 20;
+
+$st-menu-mobile-z-index: $st-menu-z-index + 15;
 
 $st-map-height: 280px;
 $st-map-search-width: 320px;
+$st-map-z-index: $st-menu-z-index;
 
 $st-content-start: $st-menu-top-height + $st-map-height + 20px;
 $st-content-start-gt-sm: $st-menu-top-height-gt-sm + $st-map-height + $st-menu-sub-height-gt-sm;
+
 $st-content-start-sub: $st-content-start;
 $st-content-start-sub-gt-sm: $st-content-start-gt-sm + $st-menu-sub-height-gt-sm;
-$st-content-width: 95%;
+
+$st-content-start-no-map: $st-menu-top-height;
+$st-content-start-no-map-gt-sm: $st-menu-top-height-gt-sm + $st-menu-sub-height-gt-sm;
+
+$st-content-width: 100%;
 $st-content-width-gt-sm: 70%;
 $st-content-width-gt-lg: 50%;
 $st-content-margin: 0;
@@ -54,30 +63,38 @@ $st-content-margin-gt-lg: (100% - $st-content-width-gt-lg) * 0.5;
 
 $st-input-width: 100%;
 $st-input-width-gt-sm: 400px;
-
 /**********************************************************************************************************************
  * GLOBAL EFFECTS/DECORATIONS
  **********************************************************************************************************************/
 @mixin st-shadow($display) {
     @if $display == top {
-        @include st-polyfill-property(box-shadow, 0 -1px 8px 0 rgba(0, 0, 0, 0.2));
+        @include utils.st-polyfill-property(box-shadow, 0 -8px 10px -10px rgba(0, 0, 0, 0.2));
     } @else if $display == bottom {
-        @include st-polyfill-property(box-shadow, 0 1px 8px 0 rgba(0, 0, 0, 0.2));
+        @include utils.st-polyfill-property(box-shadow, 0 8px 10px -10px rgba(0, 0, 0, 0.2));
     } @else {
-        @include st-polyfill-property(box-shadow, none);
+        @include utils.st-polyfill-property(box-shadow, none);
     }
 }
 
-$st-transparency: rgba(255, 255, 255, .9);
+@mixin st-transparency($opacity:.9) {
+    background-color: rgba($st-background-color, $opacity) !important;
+}
+
 $st-line: 1px dotted $st-color-gray-light;
 
-.underline {
+.st-underline {
     border-bottom: 1px dotted $st-color-gray-primary !important;
 }
 
-.underline:hover {
+.st-underline:hover {
     color: inherit !important;
     border-bottom: 1px solid $st-color-gray-secondary !important;
+}
+
+.st-phonetic {
+    font-size: small;
+    font-weight: normal !important;
+    font-style: italic;
 }
 
 .st-match {
@@ -85,17 +102,12 @@ $st-line: 1px dotted $st-color-gray-light;
     font-weight: bold;
 }
 
-.st-ellipsis {
-    color: $st-color-gray-light;
-    font-weight: bold;
-}
-
 .st-flipped-horizontally {
-    @include st-polyfill-property(transform, scaleX(-1));
+    @include utils.st-polyfill-property(transform, scaleX(-1));
 }
 
 .st-flip-vertically {
-    @include st-polyfill-property(transform, scaleY(-1));
+    @include utils.st-polyfill-property(transform, scaleY(-1));
 }
 
 /**********************************************************************************************************************
@@ -104,10 +116,10 @@ $st-line: 1px dotted $st-color-gray-light;
 body {
     overflow-y: scroll;
     font-family: $st-font-family;
-    color: $st-color-gray-primary;
     font-size: $st-font-size-p;
-    // PWA
-    -webkit-tap-highlight-color: transparent;
+    color: $st-color-gray-primary;
+    background-color: $st-background-color;
+    -webkit-tap-highlight-color: transparent; // PWA
 }
 
 h1 {
@@ -139,12 +151,9 @@ a:hover {
 
 /**********************************************************************************************************************
  * MATERIAL OVERRIDE
- **********************************************************************************************************************/
-
-/**********************************************************************************************************************
+ **********************************************************************************************************************
  * INPUT
  **********************************************************************************************************************/
-
 mat-form-field mat-icon {
     font-size: $st-font-size-p;
     text-align: right;
@@ -155,58 +164,112 @@ mat-form-field mat-icon:hover {
     color: $st-color-green-leaf;
 }
 
-.mat-form-field {
+.mat-mdc-form-field {
     width: $st-input-width;
 }
 
-.mat-form-field:not(.small-except-mobile).small {
+.mat-mdc-form-field:not(.small-except-mobile).small {
     width: $st-input-width * 0.5 !important;
 }
 
-@include gt-xs {
-    .mat-form-field {
+@include media.gt-xs {
+    .mat-mdc-form-field {
         width: $st-input-width-gt-sm;
     }
 
-    .mat-form-field.small {
+    .mat-mdc-form-field.small {
         width: $st-input-width-gt-sm * 0.5 !important;
     }
 }
 
-.mat-input-element {
+.mat-mdc-input-element {
     color: $st-color-gray-primary !important;
 }
 
-.st-menu-top-search-input .mat-form-field-underline,
-.st-menu-top-search-input .mat-form-field-ripple {
-    display: none !important;
+.mdc-text-field--filled {
+    background-color: transparent !important;
 }
 
-.mat-form-field-underline .mat-form-field-ripple {
-    //height: 1px !important;
-    //background-color: #000 !important;
+.mat-mdc-form-field-focus-overlay {
+    background-color: transparent !important;
 }
 
-.mat-error {
+.mat-mdc-form-field-error {
     color: $st-color-yellow-warning !important;
 }
 
 /**********************************************************************************************************************
- * TOGGLE
+ * AUTOCOMPLETE
  **********************************************************************************************************************/
-//.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-//    background-color: $st-color-green-leaf !important;
-//}
+.st-menu-top-search-input .mdc-line-ripple {
+    display: none !important;
+}
+
+div.mat-mdc-autocomplete-panel:not(.opaque) {
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
+
+.mat-mdc-optgroup-label {
+    font-size: inherit !important;
+    font-weight: bold;
+    min-height: 26px !important;
+}
+
+.no-label {
+    .mat-mdc-optgroup-label {
+        display: none;
+    }
+
+    .mat-mdc-option.flat:first-of-type {
+        margin-top: 10px;
+    }
+}
+
+.mat-mdc-option {
+    font-size: 14px !important;
+    min-height: 24px !important;
+    color: $st-color-gray-primary !important;
+}
+
+.mat-mdc-option.flat {
+    padding: 0 16px !important;
+}
+
+.mdc-list-item {
+    background: none !important;
+}
+
+.mat-mdc-option-active {
+    font-weight: bold !important;
+}
 
 /**********************************************************************************************************************
  * BUTTON
  **********************************************************************************************************************/
-.mat-button {
-    background-color: $st-background-color-accent !important;
+.mat-mdc-button {
+    background-color: $st-background-color-button !important;
+    border: 1px solid $st-color-green-leaf !important;
 }
 
-.mat-mini-fab.mat-button-disabled {
+.mat-mdc-button.mat-mdc-button-disabled {
+    border: 1px solid $st-color-gray-light !important;
+}
+
+.mat-mdc-mini-fab {
+    height: $st-menu-fab-size !important;
+    width: $st-menu-fab-size !important;
+}
+
+.mat-mdc-mini-fab.mat-button-disabled {
     background-color: rgba(0, 0, 0, .42);
+}
+
+/**********************************************************************************************************************
+ * SLIDE TOGGLE
+ **********************************************************************************************************************/
+mat-slide-toggle {
+    margin-bottom: 10px;
 }
 
 /**********************************************************************************************************************
@@ -217,110 +280,33 @@ mat-form-field mat-icon:hover {
     font-size: inherit !important;
 }
 
-/**********************************************************************************************************************
- * AUTOCOMPLETE
- **********************************************************************************************************************/
-.mat-autocomplete-panel.flat {
-    box-shadow: none !important;
-}
-
-.mat-autocomplete-panel {
-    background-color: $st-transparency;
-}
-
-.mat-autocomplete-panel.transparent {
-    background: none !important;
-}
-
-.mat-option {
-    font-size: 14px !important;
-    color: $st-color-gray-primary !important;
-    line-height: 24px !important;
-    height: 24px !important;
-}
-
-.mat-option.flat {
-    padding: 0 0 !important;
-}
-
-.mat-option:hover:not(.mat-option-disabled),
-.mat-option:focus:not(.mat-option-disabled),
-.mat-option.mat-active,
-.mat-option.mat-selected {
-    background: none !important;
-    font-weight: bold;
-}
-
-.mat-optgroup-label {
-    font-size: inherit !important;
-    font-weight: bold;
-    line-height: 24px !important;
-    height: 24px !important;
-    padding: 10px 0 0 0 !important;
-}
-
-.no-label {
-    .mat-optgroup-label {
-        display: none;
-    }
-
-    .mat-option.flat:first-of-type {
-        margin-top: 10px;
-    }
+.mat-icon {
+    overflow: visible !important;
 }
 
 /**********************************************************************************************************************
  * SNACK BAR
  **********************************************************************************************************************/
 .mat-snack-bar {
-    background-color: $st-color-green-leaf !important;
+    @include mat.snack-bar-overrides((
+        container-color: $st-color-green-leaf,
+    ));
 }
 
 .mat-snack-bar-error {
-    background-color: $st-color-orange-warning !important;
-}
-
-.mat-snack-bar simple-snack-bar,
-.mat-snack-bar-error simple-snack-bar {
-    display: block !important;
-    text-align: center !important;
-    font-weight: bold !important;
-    line-height: 42px !important;
-}
-
-@include lt-sm {
-    .mat-snack-bar-container {
-        @include st-polyfill-property(border-radius, 0 !important);
-    }
-
-    .mat-snack-bar,
-    .mat-snack-bar-error {
-        margin: 0 !important;
-    }
-
-    .mat-snack-bar {
-        background-color: rgba(145, 170, 93, .9) !important;
-    }
-
-    .mat-snack-bar-error {
-        background-color: rgba(203, 120, 50, .9) !important;
-    }
-
-    .mat-snack-bar simple-snack-bar,
-    .mat-snack-bar-error simple-snack-bar {
-        // st-menu-top-height - vertical padding of mat-snack-bar-container
-        line-height: $st-menu-top-height - 2 * 14px !important;
-    }
+    @include mat.snack-bar-overrides((
+        container-color: $st-color-orange-warning,
+    ));
 }
 
 /**********************************************************************************************************************
  * BOTTOM SHEET
  **********************************************************************************************************************/
 .mat-bottom-sheet-container {
-    background: $st-transparency;
     padding-top: 16px !important;
     padding-bottom: $st-menu-sub-height + 40px !important;
-    @include st-polyfill-property(border-radius, 20px 20px 0 0);
+    @include st-transparency();
+    @include utils.st-polyfill-property(border-radius, 20px 20px 0 0);
 }
 
 /**********************************************************************************************************************

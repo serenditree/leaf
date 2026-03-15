@@ -1,0 +1,6 @@
+<mat-icon (click)="toggleJson()" [ngClass]="'drop-item-event'" matTooltip="json">
+    data_object
+</mat-icon>
+<div [@slideVertical]="state" class="st-toggle-content">
+    <pre>{{ object | json | ellipsisLine:100 }}</pre>
+</div>

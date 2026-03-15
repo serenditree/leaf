@@ -3,30 +3,42 @@ import {AbstractSeedService} from './abstract-seed.service';
 import {FilterService} from '../../search/service/filter.service';
 import {HttpClient} from '@angular/common/http';
 import {IndicatorService} from '../../ui/indicator/service/indicator.service';
-import {Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {MessageService} from '../../ui/message/service/message.service';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {Router} from '@angular/router';
 import {SeedFilter} from '../model/seed-filter';
 import {SeedSortingType} from '../model/seed-sorting-type.enum';
 import {SeedType} from '../model/seed-type.enum';
 import {Seed} from '../model/seed';
 import {StMaple} from '../../utils/st-maple';
-import {Subject} from 'rxjs';
 import {finalize} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class SeedService extends AbstractSeedService<Seed> {
+    protected _http: HttpClient;
+    protected _router: Router;
+    protected _filterService: FilterService;
+    protected _messageService: MessageService;
+    protected _indicator: IndicatorService;
 
     protected _trail: Seed[] = [];
-    protected _trailSubject: Subject<Seed[]> = new Subject();
+    protected _trailSubject = new Subject<Seed[]>();
 
-    constructor(protected _http: HttpClient,
-                protected _router: Router,
-                protected _filterService: FilterService,
-                protected _messageService: MessageService,
-                protected _indicator: IndicatorService) {
+    constructor() {
+        const _http = inject(HttpClient);
+        const _router = inject(Router);
+        const _filterService = inject(FilterService);
+        const _messageService = inject(MessageService);
+        const _indicator = inject(IndicatorService);
+
         super(SeedType.SEED, _http, _router, _filterService, _messageService, _indicator);
+
+        this._http = _http;
+        this._router = _router;
+        this._filterService = _filterService;
+        this._messageService = _messageService;
+        this._indicator = _indicator;
     }
 
     get trailObservable(): Observable<Seed[]> {
@@ -37,8 +49,7 @@ export class SeedService extends AbstractSeedService<Seed> {
         this._indicator.progressStart();
 
         const filter = new SeedFilter();
-        filter.parent = id;
-        filter.trail = true;
+        filter.trailId = id;
         filter.sort = SeedSortingType.BY_DATE;
 
         this._http

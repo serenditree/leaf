@@ -1,10 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation, inject} from '@angular/core';
 import {MenuService} from '../service/menu.service';
-import {OnDestroy} from '@angular/core';
-import {OnInit} from '@angular/core';
 import {StAnimations} from '../../../utils/st-animations';
 import {Subscription} from 'rxjs';
-import {ViewEncapsulation} from '@angular/core';
 
 @Component(
     {
@@ -15,16 +12,15 @@ import {ViewEncapsulation} from '@angular/core';
         animations: [
             StAnimations.enterFade,
             StAnimations.fabToggle
-        ]
+        ],
+        standalone: false
     }
 )
 export class MenuFabDialComponent implements OnInit, OnDestroy {
+    private _menuService = inject(MenuService);
 
     private _fabToggleState = StAnimations.STATE_INACTIVE;
     private _fabToggleActiveSubscription: Subscription;
-
-    constructor(private _menuService: MenuService) {
-    }
 
     get fabToggleState(): string {
         return this._fabToggleState;
@@ -35,7 +31,7 @@ export class MenuFabDialComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this._fabToggleActiveSubscription = this._menuService.isBottomSheetActiveObservable.subscribe(
+        this._fabToggleActiveSubscription = this._menuService.isMenuMobileActiveObservable.subscribe(
             (active) => {
                 if (active) {
                     this._hideItems();
@@ -53,7 +49,7 @@ export class MenuFabDialComponent implements OnInit, OnDestroy {
     }
 
     private _showItems(): void {
-        this._menuService.closeBottomSheet();
+        this._menuService.closeMenuMobile();
         this._fabToggleState = StAnimations.STATE_ACTIVE;
     }
 

@@ -5,7 +5,8 @@ import {Seed} from '../model/seed';
     {
         selector: 'st-seed-trail',
         templateUrl: './seed-trail.component.html',
-        styleUrls: ['./seed-trail.component.scss']
+        styleUrls: ['./seed-trail.component.scss'],
+        standalone: false
     }
 )
 export class SeedTrailComponent {

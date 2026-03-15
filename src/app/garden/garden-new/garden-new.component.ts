@@ -1,30 +1,36 @@
 import {AbstractSeedNewComponent} from '../../seed/seed-new/abstract-seed-new.component';
-import {Component} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {Component, OnDestroy, OnInit, inject} from '@angular/core';
 import {GardenService} from '../service/garden.service';
 import {Garden} from '../model/garden';
 import {IndicatorService} from '../../ui/indicator/service/indicator.service';
 import {Location} from '@angular/common';
 import {MapService} from '../../map/service/map.service';
-import {OnDestroy} from '@angular/core';
-import {OnInit} from '@angular/core';
+import {UntypedFormGroup} from '@angular/forms';
 import {finalize} from 'rxjs/operators';
 
 @Component(
     {
         selector: 'st-garden-new',
         templateUrl: './garden-new.component.html',
-        styleUrls: ['./garden-new.component.scss']
+        styleUrls: ['./garden-new.component.scss'],
+        standalone: false
     }
 )
 export class GardenNewComponent extends AbstractSeedNewComponent<Garden> implements OnInit, OnDestroy {
+    protected _location: Location;
+    protected _mapService: MapService;
+    private _indicator = inject(IndicatorService);
+    private _gardenService = inject(GardenService);
 
-    constructor(protected _location: Location,
-                protected _mapService: MapService,
-                private _indicator: IndicatorService,
-                private _gardenService: GardenService) {
+    constructor() {
+        const _location = inject(Location);
+        const _mapService = inject(MapService);
+
         super(_location, _mapService);
-        this._formGroup = new FormGroup({});
+        this._location = _location;
+        this._mapService = _mapService;
+
+        this._formGroup = new UntypedFormGroup({});
     }
 
     ngOnInit(): void {

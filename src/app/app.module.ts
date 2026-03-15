@@ -6,7 +6,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BrowserModule} from '@angular/platform-browser';
 import {ConfirmModule} from './ui/confirm/confirm.module';
 import {DevModule} from './utils/dev/dev.module';
-import {FenceGuard} from './fence/feature/fence.guard';
 import {FenceInterceptor} from './fence/feature/fence.interceptor';
 import {FenceModule} from './fence/fence.module';
 import {GardenModule} from './garden/garden.module';
@@ -26,6 +25,7 @@ import {SeedModule} from './seed/seed.module';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {ToggleModule} from './ui/toggle/toggle.module';
 import {UserModule} from './user/user.module';
+import {WorkerModule} from './worker/worker.module';
 import {environment} from '../environments/environment';
 
 @NgModule(
@@ -56,6 +56,7 @@ import {environment} from '../environments/environment';
             SeedModule,
             ToggleModule,
             UserModule,
+            WorkerModule,
             ServiceWorkerModule.register(
                 'ngsw-worker.js',
                 {
@@ -64,7 +65,6 @@ import {environment} from '../environments/environment';
             )
         ],
         providers: [
-            FenceGuard,
             {
                 provide: HTTP_INTERCEPTORS,
                 useClass: FenceInterceptor,

@@ -1,6 +1,6 @@
 import {BehaviorSubject} from 'rxjs';
 import {FilterService} from './filter.service';
-import {Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {Observable} from 'rxjs/internal/Observable';
 import {SeedService} from '../../seed/service/seed.service';
 import {UserService} from '../../user/service/user.service';
@@ -8,15 +8,13 @@ import {User} from '../../user/model/user';
 
 @Injectable({providedIn: 'root'})
 export class SearchService {
+    private _filterService = inject(FilterService);
+    private _userService = inject(UserService);
+    private _seedService = inject(SeedService);
 
     public static readonly MIN_TERM_LENGTH = 3;
 
     private _isFocusedSubject = new BehaviorSubject<boolean>(false);
-
-    constructor(private _filterService: FilterService,
-                private _userService: UserService,
-                private _seedService: SeedService) {
-    }
 
     get isFocusedObservable(): Observable<boolean> {
         return this._isFocusedSubject.asObservable();
