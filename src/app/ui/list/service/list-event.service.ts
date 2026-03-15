@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ListEvent} from '../model/list-event';
 import {ListItemEvent} from '../model/list-item-event';
-import {Observable} from 'rxjs';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class ListEventService {

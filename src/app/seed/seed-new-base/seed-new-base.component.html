@@ -1,6 +1,6 @@
 <form [formGroup]="formGroup">
     <div formGroupName="location">
-        <mat-form-field appearance="standard" class="small">
+        <mat-form-field class="small">
             <mat-label>Longitude</mat-label>
             <input [matTooltip]="isLocationMutable() ?
                    'please set the location by moving the map' :
@@ -9,7 +9,7 @@
                    matInput
                    matTooltipShowDelay="400">
         </mat-form-field>
-        <mat-form-field appearance="standard" class="small">
+        <mat-form-field class="small">
             <mat-label>Latitude</mat-label>
             <input [matTooltip]="isLocationMutable() ?
                    'please set the location by moving the map' :
@@ -20,25 +20,35 @@
         </mat-form-field>
     </div>
     <br>
-    <mat-form-field appearance="standard">
+    <mat-form-field>
         <mat-label>Title</mat-label>
         <input class="st-input" formControlName="title" matInput>
-        <mat-error *ngIf="formGroup.hasError('required', ['title'])">required</mat-error>
-        <mat-error *ngIf="formGroup.hasError('html', ['title'])">contains &lt;tag&gt;</mat-error>
+        @if (formGroup.hasError('required', ['title'])) {
+            <mat-error>required</mat-error>
+        }
+        @if (formGroup.hasError('html', ['title'])) {
+            <mat-error>contains &lt;tag&gt;</mat-error>
+        }
     </mat-form-field>
     <br>
-    <mat-form-field appearance="standard">
+    <mat-form-field>
         <mat-label>Text</mat-label>
-        <textarea formControlName="text"
-                  matInput
-                  matTextareaAutosize>
-                      </textarea>
-        <mat-hint align="end">(auto resize)</mat-hint>
-        <mat-error *ngIf="formGroup.hasError('required', ['text'])">required</mat-error>
-        <mat-error *ngIf="formGroup.hasError('html', ['text'])">contains &lt;tag&gt;</mat-error>
+        <textarea #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMaxRows="10"
+                  cdkAutosizeMinRows="1"
+                  cdkTextareaAutosize
+                  formControlName="text"
+                  matInput>
+        </textarea>
+        @if (formGroup.hasError('required', ['text'])) {
+            <mat-error>required</mat-error>
+        }
+        @if (formGroup.hasError('html', ['text'])) {
+            <mat-error>contains &lt;tag&gt;</mat-error>
+        }
     </mat-form-field>
     <br>
-    <mat-form-field appearance="standard">
+    <mat-form-field>
         <mat-label>Tags</mat-label>
         <input (keyup.enter)="addTag()"
                [matAutocomplete]="autocomplete"
@@ -52,20 +62,24 @@
         </mat-icon>
         <mat-error>duplicated or invalid tag</mat-error>
     </mat-form-field>
-    <mat-autocomplete #autocomplete>
-        <mat-option *ngFor="let result of tags | async"
-                    [innerHTML]="result | highlight:term"
-                    [value]="result">
-        </mat-option>
+    <mat-autocomplete #autocomplete class="opaque">
+        @for (result of tags | async; track result) {
+            <mat-option
+                [innerHTML]="result | highlight:term"
+                [value]="result">
+            </mat-option>
+        }
     </mat-autocomplete>
     <ul>
-        <li *ngFor="let tag of tagsArray.controls; index as tagIndex" [@enterSlideVertical]>
-            <a (click)="removeTag(tagIndex)"
-               matTooltip="remove tag"
-               matTooltipShowDelay="700">
-                <mat-icon fontIcon="fa-minus-circle" fontSet="fa"></mat-icon>
-            </a>
-            #{{tag.value}}
-        </li>
+        @for (tag of tagsArray.controls; track tag; let tagIndex = $index) {
+            <li animate.enter="st-slide-vertical-enter" animate.leave="st-slide-vertical-leave">
+                <a (click)="removeTag(tagIndex)"
+                   matTooltip="remove tag"
+                   matTooltipShowDelay="700">
+                    <mat-icon fontIcon="fa-minus-circle" fontSet="fa"></mat-icon>
+                </a>
+                #{{ tag.value }}
+            </li>
+        }
     </ul>
 </form>

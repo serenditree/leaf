@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
-import {Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {IsActiveMatchOptions} from '@angular/router';
 
 @Component(
     {
         selector: 'st-nav-item',
         templateUrl: './nav-item.component.html',
-        styleUrls: ['./nav-item.component.scss']
+        styleUrls: ['./nav-item.component.scss'],
+        standalone: false
     }
 )
 export class NavItemComponent {
@@ -75,12 +75,12 @@ export class NavItemComponent {
         this._routerLink = value;
     }
 
-    get routerLinkActiveOptions(): {exact: boolean}  | IsActiveMatchOptions {
+    get routerLinkActiveOptions(): {exact: boolean} | IsActiveMatchOptions {
         return this._routerLinkActiveOptions;
     }
 
     @Input()
-    set routerLinkActiveOptions(value: {exact: boolean}  | IsActiveMatchOptions) {
+    set routerLinkActiveOptions(value: {exact: boolean} | IsActiveMatchOptions) {
         this._routerLinkActiveOptions = value;
     }
 

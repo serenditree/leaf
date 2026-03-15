@@ -1,6 +1,6 @@
 import {FenceService} from '../../fence/service/fence.service';
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {MessageService} from '../../ui/message/service/message.service';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
@@ -10,14 +10,12 @@ import {environment} from '../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
+    private _http = inject(HttpClient);
+    private _fenceService = inject(FenceService);
+    private _router = inject(Router);
+    private _messageService = inject(MessageService);
 
     private readonly BASE_URL_USER = environment.API_BASE_URL_USER;
-
-    constructor(private _http: HttpClient,
-                private _fenceService: FenceService,
-                private _router: Router,
-                private _messageService: MessageService) {
-    }
 
     public retrieveByUsername(username: string): Observable<User> {
 
@@ -56,17 +54,20 @@ export class UserService {
         });
     }
 
-    public delete(): void {
+    public delete(includeContributions: boolean): void {
 
         const id = this._fenceService.getUserId();
 
         this._http
-            .delete<void>(StMaple.joinUrl(this.BASE_URL_USER, 'delete', id), {observe: 'response'})
+            .delete<void>(
+                StMaple.joinUrl(this.BASE_URL_USER, id, String(includeContributions)),
+                {observe: 'response'}
+            )
             .subscribe(
                 () => {
                     console.log(`Successfully deleted user ${id}`);
                     this._fenceService.signOut();
-                    void this._router.navigate(['']).then(
+                    this._router.navigate(['']).then(
                         () => this._messageService.info('Successfully deleted')
                     );
 

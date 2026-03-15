@@ -1,8 +1,8 @@
 {
   "name": "serenditree",
   "short_name": "serenditree",
-  "theme_color": "#fff",
-  "background_color": "#fff",
+  "theme_color": "#fafafa",
+  "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

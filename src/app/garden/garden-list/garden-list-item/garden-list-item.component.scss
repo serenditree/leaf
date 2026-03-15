@@ -1,4 +1,7 @@
-@import "../../../seed/seed-list/seed-list-item/seed-list-item.component";
+@use "../../../seed/seed-list/seed-list-item/seed-list-item.component";
+@use "assets/styles/animations";
+
+@include animations.st-slide-enter(horizontal);
 
 .st-seed-list-item-pointer {
     color: inherit !important;

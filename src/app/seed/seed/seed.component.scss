@@ -1,1 +1,4 @@
-@import "abstract-seed.component";
+@use "./abstract-seed.component";
+@use "assets/styles/animations";
+
+@include animations.st-stagger();

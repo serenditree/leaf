@@ -1,6 +1,4 @@
-@import "styles";
-@import "assets/styles/list";
+@use "assets/styles/list";
+@use "assets/styles/animations";
 
-.poll-container {
-    overflow: hidden;
-}
+@include animations.st-slide-enter(vertical);

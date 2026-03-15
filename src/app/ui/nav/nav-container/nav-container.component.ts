@@ -1,26 +1,25 @@
-import {Component} from '@angular/core';
-import {Input} from '@angular/core';
-import {ViewEncapsulation} from '@angular/core';
+import {Component, Input, ViewEncapsulation} from '@angular/core';
 
 @Component(
     {
         selector: 'st-nav-container',
         templateUrl: './nav-container.component.html',
         styleUrls: ['./nav-container.component.scss'],
-        encapsulation: ViewEncapsulation.None
+        encapsulation: ViewEncapsulation.None,
+        standalone: false
     }
 )
 export class NavContainerComponent {
 
-    private _responsive = 'column';
+    private _responsive = true;
     private _align: string;
 
-    get responsive(): string {
+    get responsive(): boolean {
         return this._responsive;
     }
 
     @Input()
-    set responsive(value: string) {
+    set responsive(value: boolean) {
         this._responsive = value;
     }
 

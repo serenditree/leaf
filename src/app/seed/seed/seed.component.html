@@ -1,6 +1,6 @@
 <st-menu-sub decentralized="true">
     <div class="st-seed-actions">
-        <st-nav-container align="right" responsive="row">
+        <st-nav-container [responsive]="false" align="right">
             <st-nav-item (click)="water()"
                          [disabled]="!waterOrPruneAllowed"
                          [iconClassList]="['st-tint-blue']"
@@ -20,13 +20,14 @@
                          set="material"
                          text="Prune">
             </st-nav-item>
-            <st-nav-item (click)="delete()"
-                         *ngIf="isOwner"
-                         [iconClassList]="['st-prune-gray']"
-                         icon="delete"
-                         set="material"
-                         text="Remove">
-            </st-nav-item>
+            @if (isOwner) {
+                <st-nav-item (click)="delete()"
+                             [iconClassList]="['st-prune-gray']"
+                             icon="delete"
+                             set="material"
+                             text="Remove">
+                </st-nav-item>
+            }
         </st-nav-container>
     </div>
 </st-menu-sub>
@@ -35,6 +36,8 @@
                  [disabled]="!waterOrPruneAllowed"
                  [fab]="true"
                  [iconClassList]="['st-tint-blue']"
+                 animate.enter="st-stagger"
+                 style="--st-index: 1"
                  icon="fa-tint"
                  text="Water">
     </st-nav-item>
@@ -42,6 +45,8 @@
                  [disabled]="!nubitAllowed"
                  [fab]="true"
                  [iconClassList]="['st-tint-green']"
+                 animate.enter="st-stagger"
+                 style="--st-index: 2"
                  icon="fa-tint"
                  text="Nub&apos;it">
     </st-nav-item>
@@ -49,73 +54,102 @@
                  [disabled]="!waterOrPruneAllowed"
                  [fab]="true"
                  [iconClassList]="['st-prune-gray']"
+                 animate.enter="st-stagger"
+                 style="--st-index: 3"
                  icon="content_cut"
                  set="material"
                  text="Prune">
     </st-nav-item>
-    <st-nav-item (click)="delete()"
-                 *ngIf="isOwner"
+    <st-nav-item (click)="share()"
                  [fab]="true"
                  [iconClassList]="['st-prune-gray']"
-                 icon="delete"
+                 animate.enter="st-stagger"
+                 style="--st-index: 4"
+                 icon="share"
                  set="material"
-                 text="Remove">
+                 text="Share">
     </st-nav-item>
+    @if (isOwner) {
+        <st-nav-item (click)="delete()"
+                     [fab]="true"
+                     [iconClassList]="['st-prune-gray']"
+                     animate.enter="st-stagger"
+                     style="--st-index: 5"
+                     icon="delete"
+                     set="material"
+                     text="Remove">
+        </st-nav-item>
+    }
 </st-menu-fab-dial>
 <!----------------------------------------------------------------------------------------------------------------------
 -- Text
 ----------------------------------------------------------------------------------------------------------------------->
 <section class="st-seed-text">
     <article>
-        <h1>{{seed?.title}}</h1>
+        <h1>{{ seed?.title }}</h1>
         <p [innerHTML]="seed?.text | html"></p>
         <p class="st-seed-meta">
-            <span *ngIf="seed?.username">{{seed?.username}} on </span>
-            {{seed?.created | date : 'yyyy-MM-dd'}}
+            @if (seed?.username) {
+                <span>{{ seed?.username }} on </span>
+            }
+            {{ seed?.created | date : 'yyyy-MM-dd' }}
             <br>
-            {{seed?.tags | tags}}
+            {{ seed?.tags | tags }}
         </p>
+        <st-json [object]="seed"></st-json>
     </article>
 </section>
 <!----------------------------------------------------------------------------------------------------------------------
 -- Polls
 ----------------------------------------------------------------------------------------------------------------------->
-<section *ngIf="seed?.poll">
-    <h2>Polls</h2>
-    <div *ngFor="let poll of seed?.polls">
-        <st-chart [poll]="poll"></st-chart>
-    </div>
-    <div style="clear: both">&nbsp;</div>
-</section>
+@if (seed?.poll) {
+    <section>
+        <h2>Polls</h2>
+        @for (poll of seed?.polls; track poll) {
+            <div>
+                <st-chart [poll]="poll"></st-chart>
+            </div>
+        }
+        <div style="clear: both">&nbsp;</div>
+    </section>
+}
 <!----------------------------------------------------------------------------------------------------------------------
 -- Root/Garden/Trail
 ----------------------------------------------------------------------------------------------------------------------->
-<section *ngIf="seed?.parent || seed?.trail">
-    <h2>Navigation</h2>
-    <st-nav-item *ngIf="seed?.parent && !(seed?.garden === seed?.parent)"
-                 [iconClassList]="['st-leaf-green']"
-                 [routerLink]="'/seeds/' + seed.parent"
-                 [state]="seedState"
-                 icon="fa-leaf"
-                 text="To root">
-    </st-nav-item>
-    <st-nav-item *ngIf="seed?.garden"
-                 [iconClassList]="['st-garden-gray']"
-                 [routerLink]="'/gardens/' + seed.garden"
-                 [state]="seedState"
-                 icon="fa-tag"
-                 style="margin-top: 14px"
-                 text="To garden">
-    </st-nav-item>
-    <st-nav-item *ngIf="seed?.trail"
-                 [iconClassList]="['st-trail-orange']"
-                 [routerLink]="'/trail/' + (seed.parent || seed.id)"
-                 icon="gesture"
-                 set="material"
-                 style="margin-top: 14px"
-                 text="To trail">
-    </st-nav-item>
-</section>
+@if (seed?.parentId || seed?.gardenId || seed?.trail) {
+    <section>
+        <h2>Navigation</h2>
+        @if (seed?.parentId && !(seed?.gardenId === seed?.parentId)) {
+            <st-nav-item
+                [iconClassList]="['st-leaf-green']"
+                [routerLink]="'/seeds/' + seed.parentId"
+                [state]="seedState"
+                icon="fa-leaf"
+                text="To root">
+            </st-nav-item>
+        }
+        @if (seed?.gardenId) {
+            <st-nav-item
+                [iconClassList]="['st-garden-gray']"
+                [routerLink]="'/gardens/' + seed.gardenId"
+                [state]="seedState"
+                icon="fa-tag"
+                style="margin-top: 14px"
+                text="To garden">
+            </st-nav-item>
+        }
+        @if (seed?.trail) {
+            <st-nav-item
+                [iconClassList]="['st-trail-orange']"
+                [routerLink]="'/trail/' + (seed.trailId || seed.id)"
+                icon="gesture"
+                set="material"
+                style="margin-top: 14px"
+                text="To trail">
+            </st-nav-item>
+        }
+    </section>
+}
 <!----------------------------------------------------------------------------------------------------------------------
 -- Comments
 ----------------------------------------------------------------------------------------------------------------------->

@@ -1,14 +1,22 @@
-@import "styles";
+@use "assets/styles/media";
 
 .st-chart {
     margin-right: 70px;
 }
 
 .st-chart-canvas {
+    width: 120px;
+    height: 120px;
+    position: relative;
     margin-bottom: 20px;
 }
 
-@include gt-xs  {
+.st-chart-canvas canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+@include media.gt-xs {
     .st-chart-canvas {
         float: left;
         margin-bottom: 0;
@@ -20,7 +28,7 @@
     float: none !important;
 }
 
-@include gt-xs {
+@include media.gt-xs {
     .st-chart-vote {
         float: right;
         margin-left: 40px;

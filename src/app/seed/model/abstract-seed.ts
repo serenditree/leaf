@@ -1,4 +1,4 @@
-import {LngLat} from 'mapbox-gl';
+import {LngLat} from 'maplibre-gl';
 
 export class AbstractSeed {
     public id: string;
@@ -9,7 +9,7 @@ export class AbstractSeed {
     public text: string;
     public username: string;
     public userId: number;
-    public anonymous: boolean;
     public tags: string[];
-    public parent: string;
+    public parentId: string;
+    public anonymous: boolean;
 }

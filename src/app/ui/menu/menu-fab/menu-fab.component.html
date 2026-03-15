@@ -1,15 +1,32 @@
-<button (click)="menuService.toggleBottomSheet(isMain)"
-        [ngClass]="{'st-fab': true, 'filter': !isMain, 'no-filter': !filterService.isModified() && !isMain,
-        'no-shadow': !isElevated}"
+<button (click)="onClick()"
+        [ngClass]="{
+        'st-fab': true,
+        'filter': action !== 'main' && action !== 'back',
+        'filter-active': filterService.isModified() && action !== 'main' && action !== 'back',
+        'back': action === 'back',
+        'no-shadow': !isElevated
+        }"
         mat-mini-fab>
-    <mat-icon *ngIf="isMain && !menuService.isMainActive" class="st-fab-icon">menu</mat-icon>
-    <mat-icon *ngIf="!isMain && !menuService.isFilterActive"
-              [ngClass]="{'st-fab-icon': true, 'no-filter': !filterService.isModified()}"
-              fontSet="fa"
-              fontIcon="fa-filter">
-    </mat-icon>
-    <mat-icon *ngIf="isMain && menuService.isMainActive || !isMain && menuService.isFilterActive"
-              [ngClass]="{'st-fab-icon': true, 'no-filter': !filterService.isModified() && !isMain}">
-        close
-    </mat-icon>
+    @if (action === 'main' && !menuService.isMainActive) {
+        <mat-icon class="st-fab-icon">
+            menu
+        </mat-icon>
+    }
+    @if (action === 'filter' && !menuService.isFilterActive) {
+        <mat-icon
+            [ngClass]="{'st-fab-icon': true, 'filter': filterService.isModified()}">
+            search
+        </mat-icon>
+    }
+    @if (action === 'main' && menuService.isMainActive || action === 'filter' && menuService.isFilterActive) {
+        <mat-icon
+            [ngClass]="{'st-fab-icon': true, 'filter': filterService.isModified() && action !== 'main'}">
+            close
+        </mat-icon>
+    }
+    @if (action === 'back') {
+        <mat-icon class="st-fab-icon">
+            arrow_back
+        </mat-icon>
+    }
 </button>

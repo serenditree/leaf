@@ -1,15 +1,15 @@
-import {FormGroup} from '@angular/forms';
+import {UntypedFormGroup} from '@angular/forms';
 
 export abstract class AbstractFenceComponent {
 
     private static readonly VISIBLE = 'visibility';
     private static readonly INVISIBLE = 'visibility_off';
 
-    protected _formGroup: FormGroup;
+    protected _formGroup: UntypedFormGroup;
     protected _submitted = false;
     private _passwordVisible = AbstractFenceComponent.INVISIBLE;
 
-    get formGroup(): FormGroup {
+    get formGroup(): UntypedFormGroup {
         return this._formGroup;
     }
 

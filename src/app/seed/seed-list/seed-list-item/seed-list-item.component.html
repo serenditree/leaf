@@ -1,17 +1,32 @@
 <article [id]="seed.id" class="st-seed-list-item">
     <p>
-        <em *ngIf="active" [@enterSlideHorizontal] class="fa fa-arrow-right st-seed-list-item-pointer">&nbsp;</em>
-        <strong>{{seed.title}}</strong>
-        <span *ngIf="!seed.anonymous"> by {{seed.username}}</span>
+        @if (active) {
+            <em animate.enter="st-slide-enter-horizontal"
+                animate.leave="st-slide-leave-horizontal"
+                class="fa fa-arrow-right st-seed-list-item-pointer">&nbsp;</em>
+        }
+        <strong>{{ seed.title }}</strong>
+        @if (!seed.anonymous) {
+            <span> by {{ seed.username }}</span>
+        }
         <span class="st-seed-list-item-badges st-secondary-gray">
-            <mat-icon *ngIf="seed.trail" matTooltip="trail">gesture</mat-icon>
-            <mat-icon *ngIf="seed.poll" matTooltip="has poll">donut_large</mat-icon>
-            <mat-icon *ngIf="seed.garden"
-                      fontIcon="fa-tag"
-                      fontSet="fa"
-                      matTooltip="in garden">
-            </mat-icon>
+            @if (seed.trail) {
+                <mat-icon matTooltip="trail">gesture</mat-icon>
+            }
+            @if (seed.poll) {
+                <mat-icon matTooltip="has poll">donut_large</mat-icon>
+            }
+            @if (seed.gardenId) {
+                <mat-icon
+                    fontIcon="fa-tag"
+                    fontSet="fa"
+                    matTooltip="in garden">
+                </mat-icon>
+            }
         </span>
     </p>
-    <p [innerHTML]="seed.text | ellipsis:ST_PREVIEW_LENGTH | html"></p>
+    <p [innerHTML]="seed.text | ellipsis:maxWords:maxLines | html"></p>
+    @if (!environment.production) {
+        <st-json [object]="seed"></st-json>
+    }
 </article>

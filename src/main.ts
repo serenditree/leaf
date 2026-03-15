@@ -1,12 +1,13 @@
 import {AppModule} from './app/app.module';
-import {enableProdMode} from '@angular/core';
+import {enableProdMode, provideZoneChangeDetection} from '@angular/core';
 import {environment} from './environments/environment';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {platformBrowser} from '@angular/platform-browser';
 
 if (environment.production) {
     enableProdMode();
 }
 
-void platformBrowserDynamic()
-    .bootstrapModule(AppModule)
-    .then(() => console.log(`Serenditree started using ${environment.id}-environment.`));
+void platformBrowser()
+    .bootstrapModule(AppModule, { applicationProviders: [provideZoneChangeDetection()], })
+    .then(() => console.log(`Serenditree started using ${environment.id}-environment.`))
+    .catch((error) => console.error('Application bootstrap failed:', error));

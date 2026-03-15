@@ -1,15 +1,11 @@
-import {HttpClient} from '@angular/common/http';
-import {HttpHeaders} from '@angular/common/http';
-import {HttpParams} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Injectable, inject} from '@angular/core';
 import {StMaple} from '../../st-maple';
 import {environment} from '../../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class DevService {
-
-    constructor(private _http: HttpClient) {
-    }
+    private _http = inject(HttpClient);
 
     public echo(status: number, headerKey: string, headerValue: string): void {
         let headers = new HttpHeaders();

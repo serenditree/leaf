@@ -1,20 +1,20 @@
 import {BREAKPOINTS} from '../../../utils/st-const';
-import {BreakpointObserver} from '@angular/cdk/layout';
-import {Injectable} from '@angular/core';
-import {MediaMatcher} from '@angular/cdk/layout';
-import {OnDestroy} from '@angular/core';
+import {BreakpointObserver, MediaMatcher} from '@angular/cdk/layout';
+import {Injectable, OnDestroy, inject} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class LayoutService implements OnDestroy {
+    private _breakpointObserver = inject(BreakpointObserver);
+    private _mediaMatcher = inject(MediaMatcher);
 
     public static readonly MOBILE = BREAKPOINTS.LT_MD;
+    public static readonly STANDALONE = '(display-mode: standalone)';
 
     private readonly _breakpointSubscription: Subscription;
 
-    constructor(private _breakpointObserver: BreakpointObserver,
-                private _mediaMatcher: MediaMatcher) {
+    constructor() {
 
         if (!environment.production) {
             this._breakpointSubscription = this._breakpointObserver
@@ -76,5 +76,9 @@ export class LayoutService implements OnDestroy {
 
     public isMobile(): boolean {
         return this.matchesMedia(LayoutService.MOBILE);
+    }
+
+    public isStandalone(): boolean {
+        return this.matchesMedia(LayoutService.STANDALONE);
     }
 }

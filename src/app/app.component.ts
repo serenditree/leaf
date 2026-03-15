@@ -1,22 +1,12 @@
 import {EXACT_MATCH_TRUE} from './utils/st-const';
-import {AfterViewInit} from '@angular/core';
-import {Component} from '@angular/core';
-import {ElementRef} from '@angular/core';
-import {HostListener} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnDestroy, inject} from '@angular/core';
 import {LayoutService} from './ui/layout/service/layout.service';
-import {ListEventService} from './ui/list/service/list-event.service';
-import {MapComponent} from './map/map/map.component';
-import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {MapService} from './map/service/map.service';
 import {MatIconRegistry} from '@angular/material/icon';
-import {MenuTopComponent} from './ui/menu/menu-top/menu-top.component';
-import {NavigationEnd} from '@angular/router';
-import {OnDestroy} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {SearchService} from './search/service/search.service';
-import {StLogging} from './utils/aspects/st-logging';
 import {Subscription} from 'rxjs';
-import {ViewChild} from '@angular/core';
+import {UpdateService} from './worker/service/update.service';
 import {environment} from '../environments/environment';
 import {filter} from 'rxjs/operators';
 
@@ -24,33 +14,37 @@ import {filter} from 'rxjs/operators';
     {
         selector: 'st-root',
         templateUrl: './app.component.html',
-        styleUrls: ['./app.component.scss']
+        styleUrls: ['./app.component.scss'],
+        standalone: false
     }
 )
 export class AppComponent implements AfterViewInit, OnDestroy {
+    private _updateService = inject(UpdateService);
 
-    private static readonly ST_LOGGING_ASPECT = new StLogging();
+    private _router = inject(Router);
+    private _matIconRegistry = inject(MatIconRegistry);
+    private _layoutService = inject(LayoutService);
+    private _searchService = inject(SearchService);
+    private _mapService = inject(MapService);
+    private _mapNavigation = false;
 
-    @ViewChild(MenuTopComponent, {read: ElementRef})
-    private _menuTop: ElementRef;
-    @ViewChild(MapComponent, {read: ElementRef})
-    private _map: ElementRef;
-    private _mapHeight: number;
     private _routerEventSubscription: Subscription;
-    private _listEventSubscription: Subscription;
+    private _mapNavigationSubscription: Subscription;
 
-    constructor(private _router: Router,
-                private _matIconRegistry: MatIconRegistry,
-                private _bottomSheet: MatBottomSheet,
-                private _layoutService: LayoutService,
-                private _searchService: SearchService,
-                private _listEventService: ListEventService) {
-
+    constructor() {
         this._matIconRegistry.registerFontClassAlias('fa');
     }
 
     get isProduction(): boolean {
         return environment.production;
+    }
+
+    get mapNavigation(): boolean {
+        return this._mapNavigation;
+    }
+
+    get isMobile(): boolean {
+        return this._layoutService.isMobile();
     }
 
     get isHomeActive(): boolean {
@@ -61,20 +55,12 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
     ngAfterViewInit(): void {
         this._registerGlobalRouterActions();
-        const map = this._map.nativeElement.firstChild;
-        this._mapHeight = map.offsetHeight;
-        this._listEventSubscription = this._listEventService.listEventObservable.subscribe(
-            (listEvent) => {
-                if (listEvent.offset < this._mapHeight) {
-                    map.classList.remove('st-slide');
-                    // TODO eslint false-negative
-                    /* eslint-disable @typescript-eslint/restrict-plus-operands */
-                    const height = map.offsetHeight + listEvent.delta;
-                    map.style.height = (height < this._mapHeight ? height : this._mapHeight) + 'px';
-                    /* eslint-disable @typescript-eslint/restrict-plus-operands */
-                } else {
-                    map.classList.add('st-slide');
-                    map.style.height = '0px';
+        this._mapNavigationSubscription = this._mapService.mapNavigationObservable.subscribe(
+            (mapNavigates) => {
+                if (this._layoutService.isMobile()) {
+                    if (mapNavigates) {
+                        this._mapNavigation = true;
+                    }
                 }
             }
         );
@@ -82,11 +68,20 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
     ngOnDestroy(): void {
         this._routerEventSubscription.unsubscribe();
-        this._listEventSubscription.unsubscribe();
+        this._mapNavigationSubscription.unsubscribe();
     }
 
-    public hasSubmenu(routerState: RouterOutlet): boolean {
-        return !!routerState.activatedRouteData['submenu'];
+    public contentClass(routerState: RouterOutlet): string {
+        let stContent = 'st-content';
+        if (this.hasSubmenu(routerState)) {
+            stContent = 'st-content-sub';
+        } else if (this._layoutService.isMobile()) {
+            if (routerState.activatedRouteData['nomap']) {
+                stContent = 'st-content-no-map';
+            }
+        }
+
+        return stContent;
     }
 
     public showSubmenu(routerState: RouterOutlet): boolean {
@@ -94,26 +89,17 @@ export class AppComponent implements AfterViewInit, OnDestroy {
                !routerState.activatedRouteData['decentralized'];
     }
 
+    private hasSubmenu(routerState: RouterOutlet): boolean {
+        return !!routerState.activatedRouteData['submenu'];
+    }
+
     private _registerGlobalRouterActions(): void {
         this._routerEventSubscription = this._router.events
             .pipe(filter(event => event instanceof NavigationEnd))
-            .subscribe(
-                () => {
-                    window.scrollTo(0, 0);
-                    setTimeout(
-                        () => {
-                            this._resetView();
-                        },
-                        42
-                    );
-                }
-            );
-    }
-
-    private _resetView(): void {
-        const map = this._map.nativeElement.firstChild;
-        map.classList.add('st-slide');
-        map.style.height = this._mapHeight.toString() + 'px';
+            .subscribe(() => {
+                window.scrollTo(0, 0);
+                this._mapNavigation = false;
+            });
     }
 
     @HostListener('window:keydown', ['$event'])
@@ -130,12 +116,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
                    event.key.trim().length === 1) {
 
             this._searchService.setSearchFocus(true);
-            this._resetView();
         }
-    }
-
-    @HostListener('window:resize')
-    private _onViewportChange(): void {
-        this._resetView();
     }
 }

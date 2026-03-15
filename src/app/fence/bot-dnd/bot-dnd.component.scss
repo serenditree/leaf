@@ -1,19 +1,20 @@
-@import "styles";
+@use "styles";
+@use "assets/styles/media";
 
 .st-dnd-list {
     display: flex;
     flex-direction: row;
-    width: $st-input-width !important;
-    border: solid 1px $st-color-gray-light;
+    width: styles.$st-input-width !important;
+    border: solid 1px styles.$st-color-gray-light;
     min-height: 60px;
     background: white;
     border-radius: 4px;
     overflow: hidden;
 }
 
-@include gt-xs {
+@include media.gt-xs {
     .st-dnd-list {
-        width: $st-input-width-gt-sm * .5 !important;
+        width: styles.$st-input-width-gt-sm * .5 !important;
     }
 }
 
@@ -29,7 +30,7 @@
     flex-basis: 0;
     background: white;
     padding: 20px 10px;
-    border-right: solid 1px $st-color-gray-light;
+    border-right: solid 1px styles.$st-color-gray-light;
 }
 
 .cdk-drag-preview {

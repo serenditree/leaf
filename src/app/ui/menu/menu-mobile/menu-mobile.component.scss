@@ -1,0 +1,31 @@
+@use "styles";
+
+.st-menu-mobile-container {
+    position: relative;
+}
+
+.st-menu-mobile {
+    position: fixed;
+    top: styles.$st-menu-top-height;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: styles.$st-menu-mobile-z-index;
+    background-color: styles.$st-background-color;
+    display: flex;
+    flex-direction: column;
+    @include styles.st-transparency(.8);
+}
+
+.st-menu-mobile-inner-menu, .st-menu-mobile-inner-filter {
+    padding: 10px;
+}
+
+.st-menu-mobile-inner-menu {
+    margin-top: auto;
+    margin-bottom: styles.$st-menu-fab-bottom + styles.$st-menu-fab-size + 40px;
+}
+
+.st-menu-mobile-inner-filter {
+    margin-top: 20px;
+}

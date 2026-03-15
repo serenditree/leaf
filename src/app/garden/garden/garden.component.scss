@@ -1,5 +1,4 @@
-@import "styles";
-@import "app/seed/seed/seed.component";
+@use "app/seed/seed/seed.component";
 
 st-garden-tag {
     margin: 0 0 20px 20px;

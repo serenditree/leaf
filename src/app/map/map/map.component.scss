@@ -1,4 +1,9 @@
-@import "styles";
+@use "styles";
+@use "assets/styles/media";
+@use "assets/styles/utils";
+@use "assets/styles/animations";
+
+@include animations.st-fade-enter();
 
 #st-map {
     position: absolute;
@@ -8,37 +13,41 @@
 
 .st-map-container {
     position: fixed;
-    z-index: $st-menu-z-index - 1;
-    top: $st-menu-top-height;
+    z-index: styles.$st-map-z-index;
+    top: styles.$st-menu-top-height;
     width: 100%;
-    height: $st-map-height;
-    @include st-shadow(bottom);
+    height: styles.$st-map-height;
 }
 
-@include gt-sm {
+@include media.lt-md {
     .st-map-container {
-        top: $st-menu-top-height-gt-sm;
-        @include st-shadow(none);
+        @include styles.st-shadow(bottom);
+    }
+}
+
+@include media.gt-sm {
+    .st-map-container {
+        top: styles.$st-menu-top-height-gt-sm;
     }
 }
 
 .st-map-container-overlay {
     position: absolute;
-    z-index: $st-menu-z-index + 1;
-    width: $st-content-margin;
-    height: $st-map-height;
-    background-color: rgba(255, 255, 255, .5);
+    z-index: styles.$st-map-z-index + 1;
+    width: styles.$st-content-margin;
+    height: styles.$st-map-height;
+    @include styles.st-transparency(.5);
 }
 
-@include gt-sm {
+@include media.gt-sm {
     .st-map-container-overlay {
-        width: $st-content-margin-gt-sm;
+        width: styles.$st-content-margin-gt-sm;
     }
 }
 
-@include gt-lg {
+@include media.gt-lg {
     .st-map-container-overlay {
-        width: $st-content-margin-gt-lg;
+        width: styles.$st-content-margin-gt-lg;
     }
 }
 
@@ -48,42 +57,42 @@
 
 .st-map-container-overlay-search {
     position: absolute;
-    z-index: $st-menu-z-index + 1;
+    z-index: styles.$st-map-z-index + 1;
     top: 0;
-    right: $st-content-margin;
-    width: $st-map-search-width;
-    height: $st-map-height;
-    background-color: rgba(255, 255, 255, 0.8);
+    right: styles.$st-content-margin;
+    width: styles.$st-map-search-width;
+    height: styles.$st-map-height;
     border-top: 1px dotted #ccc;
+    @include styles.st-transparency(.8);
 }
 
 .st-map-container-overlay-filter {
     position: absolute;
-    z-index: $st-menu-z-index + 1;
+    z-index: styles.$st-map-z-index + 1;
     top: 0;
-    left: $st-content-margin;
-    height: $st-map-height;
+    left: styles.$st-content-margin;
+    height: styles.$st-map-height;
     padding: 0 14px;
-    background-color: rgba(255, 255, 255, 0.8);
+    @include styles.st-transparency(.8);
 }
 
-@include gt-sm {
+@include media.gt-sm {
     .st-map-container-overlay-search {
-        right: $st-content-margin-gt-sm;
+        right: styles.$st-content-margin-gt-sm;
     }
 
     .st-map-container-overlay-filter {
-        left: $st-content-margin-gt-sm;
+        left: styles.$st-content-margin-gt-sm;
     }
 }
 
-@include gt-lg {
+@include media.gt-lg {
     .st-map-container-overlay-search {
-        right: $st-content-margin-gt-lg;
+        right: styles.$st-content-margin-gt-lg;
     }
 
     .st-map-container-overlay-filter {
-        left: $st-content-margin-gt-lg;
+        left: styles.$st-content-margin-gt-lg;
     }
 }
 
@@ -94,17 +103,17 @@ $st-marker-size: 50px;
     height: $st-marker-size;
     border: 1px solid rgba(0, 0, 0, 0);
     text-align: center;
-    @include st-polyfill-property(border-radius, 50%);
+    @include utils.st-polyfill-property(border-radius, 50%);
 }
 
 .st-marker.mouseover {
-    background-color: rgba(255, 255, 255, .3) !important;
     border: 1px solid rgba(153, 153, 153, .7) !important;
+    @include styles.st-transparency(.3);
 }
 
 .st-marker.click {
-    background-color: rgba(255, 255, 255, .7) !important;
     border: 1px solid rgba(153, 153, 153, .7) !important;
+    @include styles.st-transparency(.7);
 }
 
 .st-marker-icon {
@@ -118,20 +127,20 @@ $st-map-control-left: -$st-map-control-size - $st-map-control-margin;
 
 .st-map-control {
     position: absolute;
-    z-index: $st-menu-z-index + 1;
-    top: $st-map-height - $st-map-control-size - $st-map-control-margin;
+    z-index: styles.$st-map-z-index + 1;
+    top: styles.$st-map-height - $st-map-control-size - $st-map-control-margin;
     left: $st-map-control-left;
     width: $st-map-control-size;
     height: $st-map-control-size;
     cursor: pointer;
     font-size: 16px;
     text-align: center;
-    background-color: rgba(255, 255, 255, .5);
-    @include st-polyfill-property(border-radius, 50%);
+    @include styles.st-transparency(.5);
+    @include utils.st-polyfill-property(border-radius, 50%);
 }
 
 .st-map-control:hover {
-    background-color: rgba(255, 255, 255, .7);
+    @include styles.st-transparency(.7);
 }
 
 .st-map-control-icon {
@@ -139,7 +148,7 @@ $st-map-control-left: -$st-map-control-size - $st-map-control-margin;
 }
 
 .st-map-control-icon:hover {
-    color: $st-color-green-leaf;
+    color: styles.$st-color-green-leaf;
 }
 
 .st-map-control-info {

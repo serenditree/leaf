@@ -1,13 +1,12 @@
-import {PipeTransform} from '@angular/core';
-import {Pipe} from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
-@Pipe({name: 'regex'})
+@Pipe({name: 'regex', standalone: false})
 export class StRegexReplacePipe implements PipeTransform {
 
     transform(string: string,
               pattern: string,
               replacement: string,
-              modifier: string = ''): string {
+              modifier = ''): string {
 
         return string.replace(new RegExp(pattern, modifier), replacement);
     }

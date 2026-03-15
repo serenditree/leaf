@@ -1,25 +1,169 @@
-@import "utils";
+@use "./utils";
 
+$st-animation-duration: 400ms;
+
+$st-animation-standard-curve: cubic-bezier(0.4, 0.0, 0.2, 1);
+$st-animation-deceleration-curve: cubic-bezier(0.0, 0.0, 0.2, 1);
+$st-animation-acceleration-curve: cubic-bezier(0.4, 0.0, 1, 1);
+$st-animation-sharp-curve: cubic-bezier(0.4, 0.0, 0.6, 1);
+/**********************************************************************************************************************
+ * PULSE
+ **********************************************************************************************************************/
 @mixin st-pulse($scale) {
     .st-pulse {
-        @include st-polyfill-property(animation, "st-pulse 1600ms infinite ease-out")
+        @include utils.st-polyfill-property(animation, st-pulse 1600ms infinite ease-out)
     }
 
-    @include st-polyfill-keyframes("st-pulse") {
+    @include utils.st-polyfill-keyframes(st-pulse) {
         0% {
-            @include st-polyfill-property(transform, scale(1));
+            @include utils.st-polyfill-property(transform, scale(1));
         }
         50% {
-            @include st-polyfill-property(transform, scale($scale));
+            @include utils.st-polyfill-property(transform, scale($scale));
         }
         100% {
-            @include st-polyfill-property(transform, scale(1));
+            @include utils.st-polyfill-property(transform, scale(1));
         }
     }
 }
 
-.st-slide {
-    @include st-polyfill-property(transition-property, height);
-    @include st-polyfill-property(transition-duration, 420ms);
-    @include st-polyfill-property(transition-timing-function, 'ease-out');
+/**********************************************************************************************************************
+ * SLIDE
+ **********************************************************************************************************************/
+@mixin st-slide($direction) {
+    $property: '';
+    @if $direction == vertical {
+        $property: max-height;
+    } @else if $direction == horizontal {
+        $property: max-width;
+    } @else {
+        @error "st-slide expects $direction to be 'vertical' or 'horizontal'";
+    }
+
+    .st-slide-#{$direction} {
+        overflow: hidden;
+        #{$property}: 0;
+    }
+
+    .st-slide-#{$direction}.is-active {
+        #{$property}: 1000px;
+        @include utils.st-polyfill-property(
+                transition,
+                #{$property} $st-animation-duration $st-animation-acceleration-curve
+        );
+    }
+
+    .st-slide-#{$direction}.is-inactive {
+        #{$property}: 0;
+        @include utils.st-polyfill-property(
+                transition,
+                #{$property} $st-animation-duration $st-animation-deceleration-curve
+        );
+    }
+}
+
+/**********************************************************************************************************************
+ * SLIDE ENTER
+ **********************************************************************************************************************/
+@mixin st-slide-enter($direction, $duration: $st-animation-duration, $max-size: 1000px) {
+    $property: '';
+    @if $direction == vertical {
+        $property: max-height;
+    } @else if $direction == horizontal {
+        $property: max-width;
+    } @else {
+        @error "st-slide-enter expects $direction to be 'vertical' or 'horizontal'";
+    }
+
+    .st-slide-enter-#{$direction} {
+        @include utils.st-polyfill-property(
+                animation,
+                st-slide-enter-#{$direction} $duration $st-animation-acceleration-curve
+        );
+    }
+
+    @include utils.st-polyfill-keyframes(st-slide-enter-#{$direction}) {
+        from {
+            #{$property}: 0;
+        }
+        to {
+            #{$property}: $max-size;
+        }
+    }
+
+    .st-slide-leave-#{$direction} {
+        @include utils.st-polyfill-property(
+                animation,
+                st-slide-leave-#{$direction} calc($duration * 0.7) $st-animation-deceleration-curve
+        );
+    }
+
+    @include utils.st-polyfill-keyframes(st-slide-leave-#{$direction}) {
+        from {
+            #{$property}: $max-size;
+        }
+        to {
+            #{$property}: 0;
+        }
+    }
+}
+
+/**********************************************************************************************************************
+ * FADE ENTER
+ **********************************************************************************************************************/
+@mixin st-fade-enter() {
+    .st-fade-enter {
+        @include utils.st-polyfill-property(
+                animation,
+                st-fade-enter $st-animation-duration $st-animation-acceleration-curve
+        );
+    }
+
+    @include utils.st-polyfill-keyframes(st-fade-enter) {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .st-fade-leave {
+        @include utils.st-polyfill-property(
+                animation,
+                st-fade-leave $st-animation-duration $st-animation-deceleration-curve
+        );
+    }
+
+    @include utils.st-polyfill-keyframes(st-fade-leave) {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+        }
+    }
+}
+
+/**********************************************************************************************************************
+ * STAGGER
+ **********************************************************************************************************************/
+@mixin st-stagger() {
+    .st-stagger {
+        @include utils.st-polyfill-property(
+                animation,
+                st-stagger $st-animation-duration $st-animation-deceleration-curve
+        );
+    }
+
+    @include utils.st-polyfill-keyframes(st-stagger) {
+        from {
+            opacity: 0;
+            @include utils.st-polyfill-property(transform, translateY(calc(40px * var(--st-index))));
+        }
+        to {
+            opacity: 1;
+            @include utils.st-polyfill-property(transform, translateY(0));
+        }
+    }
 }

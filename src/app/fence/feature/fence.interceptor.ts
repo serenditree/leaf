@@ -1,20 +1,13 @@
 import {HTTP_STATUS} from '../../utils/st-const';
 import {FenceService} from '../service/fence.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {HttpEvent} from '@angular/common/http';
-import {HttpHandler} from '@angular/common/http';
-import {HttpInterceptor} from '@angular/common/http';
-import {HttpRequest} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Injectable, inject} from '@angular/core';
+import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
-import {throwError} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class FenceInterceptor implements HttpInterceptor {
-
-    constructor(private _fenceService: FenceService) {
-    }
+    private _fenceService = inject(FenceService);
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const token = localStorage.getItem(FenceService.TOKEN_KEY);

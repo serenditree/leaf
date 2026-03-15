@@ -1,37 +1,73 @@
-@import "styles";
+@use "styles";
+@use "assets/styles/media";
 
 header {
     position: relative;
 }
 
 .st-content,
-.st-content-sub {
+.st-content-sub,
+.st-content-no-map {
     position: relative;
-    width: $st-content-width;
-    margin: $st-content-start auto 4200px auto; // margin-bottom to enable scrolling on every page
+    width: styles.$st-content-width;
+    margin: styles.$st-content-start auto styles.$st-content-bottom-spacer auto;
 }
 
-@include gt-sm {
+@include media.gt-sm {
     .st-content,
-    .st-content-sub {
-        width: $st-content-width-gt-sm;
-        margin-top: $st-content-start-gt-sm;
+    .st-content-sub,
+    .st-content-no-map {
+        width: styles.$st-content-width-gt-sm;
+        margin-top: styles.$st-content-start-gt-sm;
     }
 }
 
-@include gt-lg {
+@include media.gt-lg {
     .st-content,
-    .st-content-sub {
-        width: $st-content-width-gt-lg;
+    .st-content-sub,
+    .st-content-no-map {
+        width: styles.$st-content-width-gt-lg;
     }
 }
 
 .st-content-sub {
-    margin-top: $st-content-start-sub;
+    margin-top: styles.$st-content-start-sub;
 }
 
-@include gt-sm {
+@include media.gt-sm {
     .st-content-sub {
-        margin-top: $st-content-start-sub-gt-sm;
+        margin-top: styles.$st-content-start-sub-gt-sm;
+    }
+}
+
+.st-content-no-map {
+    margin-top: styles.$st-content-start-no-map;
+}
+
+@include media.gt-sm {
+    .st-content-no-map {
+        margin-top: styles.$st-content-start-no-map-gt-sm;
+    }
+}
+
+.st-content-elevator {
+    position: relative;
+    background-color: styles.$st-background-color;
+    padding: 10px;
+    height: styles.$st-content-bottom-spacer;
+}
+
+.st-content-elevator-enabled {
+    z-index: styles.$st-menu-z-index + 10;
+}
+
+.st-content-elevator-disabled {
+    z-index: 0;
+}
+
+@include media.gt-sm {
+    .st-content-elevator {
+        z-index: 0;
+        padding: 0;
     }
 }

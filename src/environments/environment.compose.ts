@@ -1,6 +1,7 @@
 export const environment = {
     id: 'compose',
     production: true,
+    HOSTNAME: 'localhost',
     API_BASE_URL_USER: 'http://localhost:8081/api/v1/user',
     API_BASE_URL_SEED: 'http://localhost:8082/api/v1/seed',
     API_BASE_URL_GARDEN: 'http://localhost:8082/api/v1/garden',
