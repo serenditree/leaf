@@ -1,13 +1,22 @@
-@import "styles";
+@use "styles";
+@use "assets/styles/media";
+@use "assets/styles/animations";
+
+@include animations.st-slide-enter(horizontal);
 
 .st-seed-list-item {
     margin-top: 40px;
-    //border-top: $st-line;
     cursor: pointer;
 }
 
+@include media.lt-md {
+    .st-seed-list-item:first-of-type {
+        margin-top: 20px;
+    }
+}
+
 .st-seed-list-item-pointer {
-    color: $st-color-green-leaf;
+    color: styles.$st-color-green-leaf;
     overflow: hidden;
     vertical-align: -10%
 }
@@ -17,5 +26,5 @@
 }
 
 mat-icon {
-    vertical-align: middle !important;;
+    vertical-align: middle !important;
 }

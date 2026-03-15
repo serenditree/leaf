@@ -1,40 +1,46 @@
 import {ActivatedRoute} from '@angular/router';
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit, inject} from '@angular/core';
 import {ConfirmComponent} from '../../ui/confirm/confirm/confirm.component';
 import {FenceService} from '../../fence/service/fence.service';
-import {FormControl} from '@angular/forms';
 import {Issuer} from '../model/issuer';
 import {MatDialog} from '@angular/material/dialog';
-import {OnDestroy} from '@angular/core';
-import {OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
+import {UntypedFormControl, Validators} from '@angular/forms';
 import {UserService} from '../service/user.service';
-import {Validators} from '@angular/forms';
 import {environment} from '../../../environments/environment';
 
 @Component(
     {
         selector: 'st-settings',
         templateUrl: './settings.component.html',
-        styleUrls: ['./settings.component.scss']
+        styleUrls: ['./settings.component.scss'],
+        standalone: false
     }
 )
 export class SettingsComponent implements OnInit, OnDestroy {
+    protected _route = inject(ActivatedRoute);
+    protected _confirmDialog = inject(MatDialog);
+    private _userService = inject(UserService);
+    private _fenceService = inject(FenceService);
 
     private _queryParamsSubscription: Subscription;
 
-    public countryControl = new FormControl('AT', Validators.required);
+    public countryControl = new UntypedFormControl('AT', Validators.required);
     public countries: Issuer[] = [
-        {code: 'at', enabled: !environment.production},
-        {code: 'de', enabled: !environment.production},
-        {code: 'ch', enabled: false}
+        {
+            code: 'at',
+            enabled: true
+        },
+        {
+            code: 'de',
+            enabled: true
+        },
+        {
+            code: 'ch',
+            enabled: false
+        }
     ];
-
-    constructor(private _userService: UserService,
-                private _fenceService: FenceService,
-                protected _route: ActivatedRoute,
-                protected _confirmDialog: MatDialog) {
-    }
+    public includeContributions = false;
 
     ngOnInit(): void {
         this._queryParamsSubscription = this._route.queryParams.subscribe((params) => {
@@ -50,9 +56,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
 
     get verifyCallback(): string {
-        return environment.production ? '' : environment.API_BASE_URL_USER
+        return environment.API_BASE_URL_USER
                + '/verify/callback/' + String(this.countryControl.value)
                + '?id=' + String(this._fenceService.getUserId());
+    }
+
+    get isVerified(): boolean {
+        return this._fenceService.verified();
     }
 
     get isProduction(): boolean {
@@ -60,9 +70,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
 
     public delete(): void {
+        let text = 'Do you really want to delete your account';
+        if (this.includeContributions) {
+            text += ' and all contributions';
+        }
+
         const dialogRef = this._confirmDialog.open(ConfirmComponent, {
             data: {
-                text: 'Do you really want to delete your account?',
+                text: text + '? This action cannot be undone.',
                 ok: 'yes',
                 cancel: 'no'
             }
@@ -70,7 +85,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
         dialogRef.afterClosed().subscribe((confirmed) => {
             if (confirmed) {
-                this._userService.delete();
+                this._userService.delete(this.includeContributions);
             }
         });
     }

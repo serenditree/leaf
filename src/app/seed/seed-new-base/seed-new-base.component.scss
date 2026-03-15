@@ -1,2 +1,19 @@
-@import "styles";
-@import "assets/styles/list";
+@use "styles";
+@use "assets/styles/list";
+@use "assets/styles/media";
+@use "assets/styles/animations";
+
+
+.flex-row {
+    display: flex;
+    gap: 40px;
+    flex-direction: row;
+}
+
+@include media.lt-md {
+    .flex-row {
+        gap: 0;
+        flex-grow: 1;
+        flex-direction: column;
+    }
+}

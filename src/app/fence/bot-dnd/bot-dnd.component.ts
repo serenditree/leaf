@@ -1,19 +1,17 @@
-import {CdkDragDrop} from '@angular/cdk/drag-drop';
-import {Component} from '@angular/core';
-import {EventEmitter} from '@angular/core';
-import {Output} from '@angular/core';
-import {moveItemInArray} from '@angular/cdk/drag-drop';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component(
     {
         selector: 'st-dnd',
         templateUrl: './bot-dnd.component.html',
-        styleUrls: ['./bot-dnd.component.scss']
+        styleUrls: ['./bot-dnd.component.scss'],
+        standalone: false
     }
 )
 export class BotDndComponent {
 
-    private _onTuring: EventEmitter<boolean> = new EventEmitter();
+    private _onTuring = new EventEmitter<boolean>();
     private _words = [
         'am',
         'I',

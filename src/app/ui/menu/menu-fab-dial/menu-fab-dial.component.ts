@@ -1,10 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation, inject} from '@angular/core';
 import {MenuService} from '../service/menu.service';
-import {OnDestroy} from '@angular/core';
-import {OnInit} from '@angular/core';
-import {StAnimations} from '../../../utils/st-animations';
 import {Subscription} from 'rxjs';
-import {ViewEncapsulation} from '@angular/core';
+import {Input} from '@angular/core';
 
 @Component(
     {
@@ -12,30 +9,41 @@ import {ViewEncapsulation} from '@angular/core';
         templateUrl: './menu-fab-dial.component.html',
         styleUrls: ['./menu-fab-dial.component.scss'],
         encapsulation: ViewEncapsulation.None,
-        animations: [
-            StAnimations.enterFade,
-            StAnimations.fabToggle
-        ]
+        standalone: false
     }
 )
 export class MenuFabDialComponent implements OnInit, OnDestroy {
+    private _menuService = inject(MenuService);
 
-    private _fabToggleState = StAnimations.STATE_INACTIVE;
+    private _fabToggleActive = false;
     private _fabToggleActiveSubscription: Subscription;
+    private _icon = 'menu';
+    private _right = 10;
 
-    constructor(private _menuService: MenuService) {
+    @Input()
+    set icon(value: string) {
+        this._icon = value;
     }
 
-    get fabToggleState(): string {
-        return this._fabToggleState;
+    get icon(): string {
+        return this._icon;
+    }
+
+    @Input()
+    set right(value: number) {
+        this._right = value;
+    }
+
+    get right(): number {
+        return this._right;
     }
 
     get fabToggleActive(): boolean {
-        return this._fabToggleState === StAnimations.STATE_ACTIVE;
+        return this._fabToggleActive;
     }
 
     ngOnInit(): void {
-        this._fabToggleActiveSubscription = this._menuService.isBottomSheetActiveObservable.subscribe(
+        this._fabToggleActiveSubscription = this._menuService.isMenuMobileActiveObservable.subscribe(
             (active) => {
                 if (active) {
                     this._hideItems();
@@ -49,15 +57,15 @@ export class MenuFabDialComponent implements OnInit, OnDestroy {
     }
 
     public toggleFab(): void {
-        this._fabToggleState === StAnimations.STATE_ACTIVE ? this._hideItems() : this._showItems();
+        this._fabToggleActive ? this._hideItems() : this._showItems();
     }
 
     private _showItems(): void {
-        this._menuService.closeBottomSheet();
-        this._fabToggleState = StAnimations.STATE_ACTIVE;
+        this._menuService.closeMenuMobile();
+        this._fabToggleActive = true;
     }
 
     private _hideItems(): void {
-        this._fabToggleState = StAnimations.STATE_INACTIVE;
+        this._fabToggleActive = false;
     }
 }

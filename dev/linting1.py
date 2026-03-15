@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
+import functools
 import os
 import re
-import functools
 
 
 class ImportCompare(object):

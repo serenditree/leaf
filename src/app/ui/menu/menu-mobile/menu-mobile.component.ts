@@ -1,31 +1,24 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit, inject} from '@angular/core';
 import {FenceService} from '../../../fence/service/fence.service';
 import {MenuService} from '../service/menu.service';
-import {OnDestroy} from '@angular/core';
-import {OnInit} from '@angular/core';
 import {SearchService} from '../../../search/service/search.service';
-import {StAnimations} from '../../../utils/st-animations';
 import {Subscription} from 'rxjs';
 
 @Component(
     {
-        selector: 'st-nav-bottom',
-        templateUrl: './menu-bottom.component.html',
-        styleUrls: ['./menu-bottom.component.scss'],
-        animations: [
-            StAnimations.fade(.1)
-        ]
+        selector: 'st-menu-mobile',
+        templateUrl: './menu-mobile.component.html',
+        styleUrls: ['./menu-mobile.component.scss'],
+        standalone: false
     }
 )
-export class MenuBottomComponent implements OnInit, OnDestroy {
+export class MenuMobileComponent implements OnInit, OnDestroy {
+    private _fenceService = inject(FenceService);
+    private _menuService = inject(MenuService);
+    private _searchService = inject(SearchService);
 
     private _isSearchFocused = false;
     private _isSearchFocusedSubscription: Subscription;
-
-    constructor(private _fenceService: FenceService,
-                private _menuService: MenuService,
-                private _searchService: SearchService) {
-    }
 
     get fenceService(): FenceService {
         return this._fenceService;
@@ -37,10 +30,6 @@ export class MenuBottomComponent implements OnInit, OnDestroy {
 
     get isSearchFocused(): boolean {
         return this._isSearchFocused;
-    }
-
-    get fadeState(): string {
-        return this._isSearchFocused ? StAnimations.STATE_INACTIVE : StAnimations.STATE_ACTIVE;
     }
 
     ngOnInit(): void {
@@ -57,9 +46,11 @@ export class MenuBottomComponent implements OnInit, OnDestroy {
         this._isSearchFocusedSubscription.unsubscribe();
     }
 
-    public close(): void {
-        if (!this._isSearchFocused) {
-            this._menuService.toggleBottomSheet(true);
+    public close(event: PointerEvent): void {
+        if (this._menuService.isMainActive ||
+            !this._isSearchFocused &&
+            event.target['classList'].contains('st-menu-mobile')) {
+            this._menuService.closeMenuMobile();
         }
     }
 }

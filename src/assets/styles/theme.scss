@@ -1,11 +1,14 @@
 /**********************************************************************************************************************
  * ANGULAR MATERIAL THEME
  **********************************************************************************************************************/
-@use '~@angular/material' as mat;
-@import '../../../node_modules/@angular/material/theming';
+@use '@angular/material' as mat;
 
-@include mat.core();
-
+@include mat.all-component-typographies();
+@include mat.elevation-classes();
+@include mat.app-background();
+/**********************************************************************************************************************
+ * COLORS
+ **********************************************************************************************************************/
 $serenditree-accent: (
     50 : #f2f5ec,
     100 : #dee6ce,
@@ -39,9 +42,40 @@ $serenditree-accent: (
     )
 );
 
-$serenditree-primary: mat.define-palette(mat.$grey-palette);
-$serenditree-accent: mat.define-palette($serenditree-accent);
-$serenditree-warn: mat.define-palette(mat.$grey-palette);
+$serenditree-primary: mat.m2-define-palette(mat.$m2-grey-palette);
+$serenditree-accent: mat.m2-define-palette($serenditree-accent);
+$serenditree-warn: mat.m2-define-palette(mat.$m2-grey-palette);
 
-@include mat.all-component-themes(mat.define-light-theme($serenditree-primary, $serenditree-accent, $serenditree-warn));
-@include mat.all-component-typographies(mat.define-typography-config($font-family: 'Quicksand, sans-serif'));
+$serenditree-light: mat.m2-define-light-theme((
+    color: (
+        primary: $serenditree-primary,
+        accent: $serenditree-accent,
+        warn: $serenditree-warn,
+    )
+));
+
+@include mat.all-component-themes($serenditree-light);
+/**********************************************************************************************************************
+ * TYPOGRAPHY
+ **********************************************************************************************************************/
+$st-font-family: 'Quicksand', sans-serif;
+$st-font-size-h1: 20px;
+$st-font-size-h2: 18px;
+$st-font-size-p: 16px;
+
+$serenditree-typography-config: mat.m2-define-typography-config(
+    $font-family: 'Quicksand, sans-serif',
+    $headline-5: mat.m2-define-typography-level($font-size: $st-font-size-h1),
+    $headline-6: mat.m2-define-typography-level($font-size: $st-font-size-h2),
+    $subtitle-1: mat.m2-define-typography-level($font-size: $st-font-size-h2),
+    $subtitle-2: mat.m2-define-typography-level($font-size: $st-font-size-p),
+    $body-2: mat.m2-define-typography-level($font-size: $st-font-size-p),
+    $body-1: mat.m2-define-typography-level($font-size: $st-font-size-p),
+    $button: mat.m2-define-typography-level($font-size: $st-font-size-p),
+);
+
+@include mat.all-component-typographies($serenditree-typography-config);
+/**********************************************************************************************************************
+ * INDIVIDUAL
+ **********************************************************************************************************************/
+@include mat.radio-density(-3);

@@ -1,12 +1,11 @@
 import {AbstractSeedComponent} from './abstract-seed.component';
 import {ActivatedRoute} from '@angular/router';
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit, inject} from '@angular/core';
 import {FenceService} from '../../fence/service/fence.service';
 import {FenceType} from '../../fence/model/fence-type.enum';
 import {MapService} from '../../map/service/map.service';
 import {MatDialog} from '@angular/material/dialog';
-import {OnDestroy} from '@angular/core';
-import {OnInit} from '@angular/core';
+import {MessageService} from '../../ui/message/service/message.service';
 import {PollService} from '../../poll/service/poll.service';
 import {SeedFilter} from '../model/seed-filter';
 import {SeedService} from '../service/seed.service';
@@ -18,22 +17,39 @@ import {Subscription} from 'rxjs';
     {
         selector: 'st-seed',
         templateUrl: './seed.component.html',
-        styleUrls: ['./seed.component.scss']
+        styleUrls: ['./seed.component.scss'],
+        standalone: false
     }
 )
 export class SeedComponent extends AbstractSeedComponent<Seed> implements OnInit, OnDestroy {
+    protected _route: ActivatedRoute;
+    protected _mapService: MapService;
+    protected _seedService: SeedService;
+    protected _fenceService: FenceService;
+    protected _confirmDialog: MatDialog;
+    protected _messageService: MessageService;
+    private _pollService = inject(PollService);
 
     private _waterOrPruneAllowed = false;
     private _nubitAllowed = false;
     private _pollsSubscription: Subscription;
 
-    constructor(protected _route: ActivatedRoute,
-                protected _mapService: MapService,
-                protected _seedService: SeedService,
-                protected _fenceService: FenceService,
-                protected _confirmDialog: MatDialog,
-                private _pollService: PollService) {
-        super(_route, _mapService, _seedService, _fenceService, _confirmDialog, SeedType.SEED);
+    constructor() {
+        const _route = inject(ActivatedRoute);
+        const _mapService = inject(MapService);
+        const _seedService = inject(SeedService);
+        const _fenceService = inject(FenceService);
+        const _confirmDialog = inject(MatDialog);
+        const _messageService = inject(MessageService);
+
+        super(_route, _mapService, _seedService, _fenceService, _confirmDialog, _messageService, SeedType.SEED);
+
+        this._route = _route;
+        this._mapService = _mapService;
+        this._seedService = _seedService;
+        this._fenceService = _fenceService;
+        this._confirmDialog = _confirmDialog;
+        this._messageService = _messageService;
     }
 
     get seed(): Seed {
@@ -70,8 +86,13 @@ export class SeedComponent extends AbstractSeedComponent<Seed> implements OnInit
 
     public water(): void {
         if (this.waterOrPruneAllowed) {
-            this._seedService.water(this._seed.id).subscribe((success) => {
+            this._seedService.water(this._seed).subscribe((success) => {
                 this._waterOrPruneAllowed = !success;
+                if (success) {
+                    this._messageService.info('Watered');
+                } else {
+                    this._messageService.error('Could not water Seed');
+                }
             });
         }
     }
@@ -85,7 +106,14 @@ export class SeedComponent extends AbstractSeedComponent<Seed> implements OnInit
 
     public prune(): void {
         if (this.waterOrPruneAllowed) {
-            this._waterOrPruneAllowed = false;
+            this._seedService.prune(this._seed).subscribe((success) => {
+                this._waterOrPruneAllowed = !success;
+                if (success) {
+                    this._messageService.info('Pruned');
+                } else {
+                    this._messageService.error('Could not prune Seed');
+                }
+            });
         }
     }
 
@@ -103,7 +131,7 @@ export class SeedComponent extends AbstractSeedComponent<Seed> implements OnInit
         }
 
         const filter = new SeedFilter();
-        filter.parent = seed.id;
+        filter.parentId = seed.id;
         this._seedService.retrieveByFilter(filter);
     }
 }

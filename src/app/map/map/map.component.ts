@@ -1,31 +1,27 @@
 import {EXACT_MATCH_TRUE} from '../../utils/st-const';
-import * as GeoViewport from '@mapbox/geo-viewport';
-import {AfterViewInit} from '@angular/core';
-import {Component} from '@angular/core';
-import {ElementRef} from '@angular/core';
+
+import {viewport, Bounds} from '@placemarkio/geo-viewport';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+    ViewEncapsulation,
+    inject
+} from '@angular/core';
 import {FilterService} from '../../search/service/filter.service';
 import {LayoutService} from '../../ui/layout/service/layout.service';
-import {LineLayer} from 'mapbox-gl';
-import {ListEventService} from '../../ui/list/service/list-event.service';
-import {LngLatBounds} from 'mapbox-gl';
-import {LngLat} from 'mapbox-gl';
+import {AddLayerObject, LngLat, LngLatBounds, Map, Point} from 'maplibre-gl';
 import {MapService} from '../service/map.service';
-import {Map} from 'mapbox-gl';
 import {MarkerContainer} from '../model/marker-container';
-import {OnDestroy} from '@angular/core';
-import {OnInit} from '@angular/core';
-import {Point} from 'mapbox-gl';
 import {Router} from '@angular/router';
 import {SearchService} from '../../search/service/search.service';
 import {Seed} from '../../seed/model/seed';
-import {StAnimations} from '../../utils/st-animations';
 import {Subscription} from 'rxjs';
-import {ViewChild} from '@angular/core';
-import {ViewEncapsulation} from '@angular/core';
-import {bbox} from '@turf/turf';
-import {bezierSpline} from '@turf/turf';
+import {bbox, bezierSpline, lineString} from '@turf/turf';
 import {environment} from '../../../environments/environment';
-import {lineString} from '@turf/turf';
 
 @Component(
     {
@@ -33,12 +29,15 @@ import {lineString} from '@turf/turf';
         templateUrl: './map.component.html',
         styleUrls: ['./map.component.scss'],
         encapsulation: ViewEncapsulation.None, // styles for markers in MarkerService
-        animations: [
-            StAnimations.enterFade
-        ]
+        standalone: false
     }
 )
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
+    private _mapService = inject(MapService);
+    private _searchService = inject(SearchService);
+    private _filterService = inject(FilterService);
+    private _layoutService = inject(LayoutService);
+    private _router = inject(Router);
 
     public static readonly MARKER_FLY_TO_DURATION = 1400;
     public static readonly MARKER_FLY_TO_ZOOM = 16;
@@ -51,7 +50,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     private static readonly MAP_VIEWPORT_OFFSET = 10;
     private static readonly MAP_TILE_SIZE = 512;
     private static readonly TRAIL_LAYER_ID = 'trail';
-    private static readonly TRAIL_LAYER: LineLayer = {
+    private static readonly TRAIL_LAYER: AddLayerObject = {
         id: MapComponent.TRAIL_LAYER_ID,
         source: MapComponent.TRAIL_LAYER_ID,
         type: 'line',
@@ -72,16 +71,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     private _isSearchFocusedSubscription: Subscription;
     private _isFilterFocused: boolean;
     private _isFilterFocusedSubscription: Subscription;
-    private _showControl = true;
-    private _listEventSubscription: Subscription;
-
-    constructor(private _mapService: MapService,
-                private _searchService: SearchService,
-                private _filterService: FilterService,
-                private _layoutService: LayoutService,
-                private _listEventService: ListEventService,
-                private _router: Router) {
-    }
 
     get showSearchOverlay(): boolean {
         return !this._layoutService.isMobile() && this._isSearchFocused;
@@ -92,12 +81,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     get showIndicator(): boolean {
-        return this._router.isActive('seed', EXACT_MATCH_TRUE)
-               || this._router.isActive('cultivate', EXACT_MATCH_TRUE);
-    }
-
-    get showControl(): boolean {
-        return this._showControl;
+        return this._router.isActive('seed', EXACT_MATCH_TRUE) ||
+               this._router.isActive('cultivate', EXACT_MATCH_TRUE);
     }
 
     ngOnInit(): void {
@@ -126,13 +111,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                     this._isFilterFocused = state;
                 }
             );
-
-        this._listEventSubscription = this._listEventService.listEventObservable
-            .subscribe(
-                (listEvent) => {
-                    this._showControl = listEvent.offset <= 0;
-                }
-            );
     }
 
     ngAfterViewInit(): void {
@@ -142,7 +120,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     ngOnDestroy(): void {
         this._isSearchFocusedSubscription.unsubscribe();
         this._isFilterFocusedSubscription.unsubscribe();
-        this._listEventSubscription.unsubscribe();
     }
 
     public locate(): void {
@@ -194,8 +171,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         const mapOverlay = this._mapOverlay.nativeElement;
 
         const sw = new Point(
-            // TODO eslint false-negative
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             mapOverlay.offsetWidth + MapComponent.MAP_VIEWPORT_OFFSET,
             mapContainer.offsetHeight - MapComponent.MAP_VIEWPORT_OFFSET
         );
@@ -207,22 +182,24 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         return new LngLatBounds(this._map.unproject(sw), this._map.unproject(ne));
     }
 
-    public fitBounds(boundingBox: number[]): void {
+    public fitBounds(boundingBox: Bounds): void {
         const mapContainer = this._mapContainer.nativeElement;
         const mapOverlay = this._mapOverlay.nativeElement;
 
-        const viewport = GeoViewport.viewport(
+        const vp = viewport(
             boundingBox,
             [
                 mapContainer.offsetWidth - MapComponent.MAP_VIEWPORT_OFFSET * 2 - mapOverlay.offsetWidth * 2,
                 mapContainer.offsetHeight - MapComponent.MAP_VIEWPORT_OFFSET * 2
             ],
-            this._map.getMinZoom(),
-            this._map.getMaxZoom(),
-            MapComponent.MAP_TILE_SIZE
+            {
+                minzoom: this._map.getMinZoom(),
+                maxzoom: this._map.getMaxZoom(),
+                tileSize: MapComponent.MAP_TILE_SIZE
+            }
         );
 
-        this.flyTo(new LngLat(viewport.center[0], viewport.center[1]), viewport.zoom);
+        this.flyTo(new LngLat(vp.center[0], vp.center[1]), vp.zoom);
     }
 
     public flyTo(center: LngLat, zoom: number): void {
@@ -259,24 +236,34 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         this._markers = [];
     }
 
-    public addTrail(seeds: Seed[]): void {
-        const trail = lineString(seeds.map(seed => [seed.location.lng, seed.location.lat]));
+    public addTrail(seeds: Seed[]): boolean {
+        let isTrailOnMap = false;
+        if (seeds.length > 1) {
+            const trail = lineString(
+                seeds.map(seed => [seed.location.lng, seed.location.lat])
+            );
 
-        this._map.addSource(
-            MapComponent.TRAIL_LAYER_ID,
-            {
-                type: 'geojson',
-                data: bezierSpline(trail, {sharpness: .8})
+            this._map.addSource(
+                MapComponent.TRAIL_LAYER_ID,
+                {
+                    type: 'geojson',
+                    data: bezierSpline(trail, {sharpness: .8})
 
-            }
-        );
-        this._map.addLayer(MapComponent.TRAIL_LAYER);
+                }
+            );
+            this._map.addLayer(MapComponent.TRAIL_LAYER);
+            isTrailOnMap = true;
 
-        this.fitBounds(bbox(trail));
+            this.fitBounds(bbox(trail) as Bounds);
+        }
+
+        return isTrailOnMap;
     }
 
     public removeTrail(): void {
-        this._map.removeLayer(MapComponent.TRAIL_LAYER_ID);
-        this._map.removeSource(MapComponent.TRAIL_LAYER_ID);
+        if (this._map.getLayer(MapComponent.TRAIL_LAYER_ID)) {
+            this._map.removeLayer(MapComponent.TRAIL_LAYER_ID);
+            this._map.removeSource(MapComponent.TRAIL_LAYER_ID);
+        }
     }
 }

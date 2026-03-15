@@ -1,19 +1,20 @@
-@import "styles";
+@use "styles";
+@use "assets/styles/media";
 
 .st-menu {
     position: relative;
-    width: $st-content-width;
+    width: styles.$st-content-width;
     margin: auto;
 }
 
-@include gt-sm {
+@include media.gt-sm {
     .st-menu {
-        width: $st-content-width-gt-sm;
+        width: styles.$st-content-width-gt-sm;
     }
 }
 
-@include gt-lg {
+@include media.gt-lg {
     .st-menu {
-        width: $st-content-width-gt-lg;
+        width: styles.$st-content-width-gt-lg;
     }
 }

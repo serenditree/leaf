@@ -1,7 +1,6 @@
 import {ChartComponent} from './chart/chart.component';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -10,21 +9,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {NgModule} from '@angular/core';
 import {PollNewComponent} from './poll-new/poll-new.component';
 import {PollService} from './service/poll.service';
-import {ReactiveFormsModule} from '@angular/forms';
+import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 
 @NgModule(
     {
-        imports: [
-            CommonModule,
-            FormsModule,
-            HttpClientModule,
-            MatButtonModule,
-            MatIconModule,
-            MatInputModule,
-            MatRadioModule,
-            MatTooltipModule,
-            ReactiveFormsModule
-        ],
         declarations: [
             ChartComponent,
             PollNewComponent
@@ -33,8 +21,19 @@ import {ReactiveFormsModule} from '@angular/forms';
             ChartComponent,
             PollNewComponent
         ],
+        imports: [
+            CommonModule,
+            FormsModule,
+            MatButtonModule,
+            MatIconModule,
+            MatInputModule,
+            MatRadioModule,
+            MatTooltipModule,
+            ReactiveFormsModule
+        ],
         providers: [
-            PollService
+            PollService,
+            provideHttpClient(withInterceptorsFromDi())
         ]
     }
 )

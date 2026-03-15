@@ -1,21 +1,24 @@
 <st-menu [ngClass]="{'st-menu-sub': true, 'decentralized': decentralized}">
-    <st-nav-container *ngIf="!decentralized && isActive('discover'); else user" align="left" responsive="row">
-        <st-nav-item [routerLinkActiveOptions]="{exact: true}"
-                     routerLink="/seeds"
-                     text="Seeds">
-        </st-nav-item>
-        <st-nav-item [routerLinkActiveOptions]="{exact: true}"
-                     routerLink="/gardens"
-                     text="Gardens">
-        </st-nav-item>
-        <st-nav-item *ngIf="!isMobile" (click)="toggleFilter()"
-                     [icon]="isFilterFocused ? 'fa-close' : 'fa-filter'"
-                     [class.st-warning-orange]="!isFilterFocused && isFilterModified"
-                     style="margin-right: 5px !important;">
-        </st-nav-item>
-    </st-nav-container>
-    <ng-template #user>
-        <st-nav-container *ngIf="!decentralized && isActive('user'); else ngContent" align="left" responsive="row">
+    @if (!decentralized && isActive('discover')) {
+        <st-nav-container align="left" [responsive]="false">
+            <st-nav-item [routerLinkActiveOptions]="{exact: true}"
+                         routerLink="/seeds"
+                         text="Seeds">
+            </st-nav-item>
+            <st-nav-item [routerLinkActiveOptions]="{exact: true}"
+                         routerLink="/gardens"
+                         text="Gardens">
+            </st-nav-item>
+            @if (!isMobile) {
+                <st-nav-item (click)="toggleFilter()"
+                             [icon]="isFilterFocused ? 'fa-close' : 'fa-filter'"
+                             [class.st-warning-orange]="!isFilterFocused && isFilterModified"
+                             style="margin-right: 5px !important;">
+                </st-nav-item>
+            }
+        </st-nav-container>
+    } @else if (!decentralized && isActive('user')) {
+        <st-nav-container align="left" [responsive]="false">
             <st-nav-item [routerLinkActiveOptions]="{exact: true}"
                          routerLink="/user/garden"
                          text="Garden">
@@ -25,8 +28,7 @@
                          text="Settings">
             </st-nav-item>
         </st-nav-container>
-    </ng-template>
-    <ng-template #ngContent>
+    } @else {
         <ng-content></ng-content>
-    </ng-template>
+    }
 </st-menu>

@@ -1,22 +1,30 @@
-import {Component} from '@angular/core';
+import {Component, Input, inject} from '@angular/core';
 import {FilterService} from '../../../search/service/filter.service';
-import {Input} from '@angular/core';
+import {Location} from '@angular/common';
 import {MenuService} from '../service/menu.service';
 
 @Component(
     {
         selector: 'st-menu-fab',
         templateUrl: './menu-fab.component.html',
-        styleUrls: ['./menu-fab.component.scss']
+        styleUrls: ['./menu-fab.component.scss'],
+        standalone: false
     }
 )
 export class MenuFabComponent {
+    private _menuService = inject(MenuService);
+    private _filterService = inject(FilterService);
+    private _location = inject(Location);
 
-    private _isMain = true;
     private _isElevated = true;
+    private _action = '';
 
-    constructor(private _menuService: MenuService,
-                private _filterService: FilterService) {
+    onClick(): void {
+        if (this._action === 'back') {
+            this._location.back();
+        } else {
+            this._menuService.toggleMenuMobile(this.action === 'main');
+        }
     }
 
     get menuService(): MenuService {
@@ -27,17 +35,13 @@ export class MenuFabComponent {
         return this._filterService;
     }
 
-    set filterService(value: FilterService) {
-        this._filterService = value;
-    }
-
-    get isMain(): boolean {
-        return this._isMain;
+    get action(): string {
+        return this._action;
     }
 
     @Input()
-    set isMain(value: boolean) {
-        this._isMain = value;
+    set action(action: string) {
+        this._action = action;
     }
 
     get isElevated(): boolean {

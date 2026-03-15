@@ -6,7 +6,7 @@ export class StMaple {
      * @param {T} to Target object.
      * @returns {T} Target object with property values from the original object.
      */
-    public static map<T>(from: {[key: string]: any}, to: T): T {
+    public static map<T>(from: Record<string, any>, to: T): T {
         Object.keys(from).forEach((key) => {
             // eslint-disable-next-line no-prototype-builtins
             if (from.hasOwnProperty(key) && to.hasOwnProperty(key)) {
@@ -22,7 +22,7 @@ export class StMaple {
      * @param urlComponents Variable number of url component arguments.
      * @return {string} Joined url.
      */
-    public static joinUrl(...urlComponents: Array<string | number>): string {
+    public static joinUrl(...urlComponents: (string | number)[]): string {
         urlComponents = urlComponents.map((component) => {
             return component
                 .toString()

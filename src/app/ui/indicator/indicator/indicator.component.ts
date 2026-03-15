@@ -1,9 +1,6 @@
 import {EXACT_MATCH_FALSE} from '../../../utils/st-const';
-import {Component} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, inject} from '@angular/core';
 import {IndicatorService} from '../service/indicator.service';
-import {Input} from '@angular/core';
-import {OnDestroy} from '@angular/core';
-import {OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 
@@ -11,20 +8,19 @@ import {Subscription} from 'rxjs';
     {
         selector: 'st-indicator',
         templateUrl: './indicator.component.html',
-        styleUrls: ['./indicator.component.scss']
+        styleUrls: ['./indicator.component.scss'],
+        standalone: false
     }
 )
 export class IndicatorComponent implements OnInit, OnDestroy {
+    private _indicator = inject(IndicatorService);
+    private _router = inject(Router);
 
     private _tooltip: string;
     private _show: boolean;
 
     private _showProgressSubscription: Subscription;
     private _progressActive = true;
-
-    constructor(private _indicator: IndicatorService,
-                private _router: Router) {
-    }
 
     get show(): boolean {
         return this._show;

@@ -1,13 +1,10 @@
-import {DomSanitizer} from '@angular/platform-browser';
-import {PipeTransform} from '@angular/core';
-import {Pipe} from '@angular/core';
-import {SafeHtml} from '@angular/platform-browser';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {Pipe, PipeTransform, inject} from '@angular/core';
 
-@Pipe({name: 'html'})
+@Pipe({name: 'html', standalone: false})
 export class StHtmlPipe implements PipeTransform {
+    private _sanitizer = inject(DomSanitizer);
 
-    constructor(private _sanitizer: DomSanitizer) {
-    }
 
     transform(text: string): SafeHtml {
         if (text) {
@@ -18,7 +15,8 @@ export class StHtmlPipe implements PipeTransform {
                 .replace(
                     /((https?:)|(www.))(\S+)/g,
                     (match: string, g0: string, g1: string, g2: string, g3: string) =>
-                        `<a class="underline" target="_blank" href="${g1 || 'https://'}${g2 || ''}${g3}">${match}</a>`
+                        `<a class="st-underline" target="_blank" href="${g1 || 'https://'}${g2 ||
+                                                                                            ''}${g3}">${match}</a>`
                 );
         } else {
             text = '';

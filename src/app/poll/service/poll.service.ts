@@ -1,20 +1,17 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Injectable, inject} from '@angular/core';
+import {Observable, Subject} from 'rxjs';
 import {Poll} from '../model/poll';
 import {StMaple} from '../../utils/st-maple';
-import {Subject} from 'rxjs';
 import {environment} from '../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class PollService {
+    private _http = inject(HttpClient);
 
     private readonly BASE_URL_POLL = environment.API_BASE_URL_POLL;
 
-    private _pollsSubject: Subject<Poll[]> = new Subject();
-
-    constructor(private _http: HttpClient) {
-    }
+    private _pollsSubject = new Subject<Poll[]>();
 
     get pollsObservable(): Observable<Poll[]> {
         return this._pollsSubject.asObservable();
@@ -33,7 +30,7 @@ export class PollService {
             );
     }
 
-    public vote(pollId: number, optionId: number): Observable<boolean> {
+    public vote(pollId: string, optionId: number): Observable<boolean> {
 
         return new Observable((observer) => {
             this._http

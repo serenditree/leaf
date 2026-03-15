@@ -1,27 +1,27 @@
-import {ChangeDetectorRef} from '@angular/core';
-import {Component} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {HostListener} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit, inject} from '@angular/core';
 import {LayoutService} from '../../ui/layout/service/layout.service';
 import {MatOptionSelectionChange} from '@angular/material/core';
-import {OnDestroy} from '@angular/core';
-import {OnInit} from '@angular/core';
 import {SearchService} from '../service/search.service';
+import {StUtils} from '../../utils/st-utils';
 import {Subscription} from 'rxjs';
+import {UntypedFormControl} from '@angular/forms';
 import {User} from '../../user/model/user';
-import {debounceTime} from 'rxjs/operators';
-import {tap} from 'rxjs/operators';
+import {debounceTime, tap} from 'rxjs/operators';
 
 @Component(
     {
         selector: 'st-search',
         templateUrl: './search.component.html',
-        styleUrls: ['./search.component.scss']
+        styleUrls: ['./search.component.scss'],
+        standalone: false
     }
 )
 export class SearchComponent implements OnInit, OnDestroy {
+    private _searchService = inject(SearchService);
+    private _layoutService = inject(LayoutService);
+    private _changeDetection = inject(ChangeDetectorRef);
 
-    private _formControl = new FormControl();
+    private _formControl = new UntypedFormControl();
     private _term = '';
     private _users: User[];
     private _isUserSearch = false;
@@ -31,16 +31,11 @@ export class SearchComponent implements OnInit, OnDestroy {
     private _isSearchFocused: boolean;
     private _isSearchFocusedSubscription: Subscription;
 
-    constructor(private _searchService: SearchService,
-                private _layoutService: LayoutService,
-                private _changeDetection: ChangeDetectorRef) {
-    }
-
     get isMobile(): boolean {
         return this._layoutService.isMobile();
     }
 
-    get formControl(): FormControl {
+    get formControl(): UntypedFormControl {
         return this._formControl;
     }
 
@@ -72,7 +67,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         this._searchTermSubscription = this._formControl.valueChanges
             .pipe(
                 tap(this._checkView.bind(this)),
-                debounceTime(200)
+                debounceTime(1000)
             )
             .subscribe(this._search.bind(this));
 
@@ -96,13 +91,14 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     public onTagSelectionChange(selectionChange: MatOptionSelectionChange): void {
-        this._searchService.searchByTags([selectionChange.source.value])
+        this._searchService.searchByTags([selectionChange.source.value]);
         this._searchService.setSearchFocus(false);
     }
 
     public onFocus(event: FocusEvent): void {
-        this._isSearchFocused = event.returnValue;
-        this._searchService.setSearchFocus(event.returnValue);
+        const focused = event.type === 'focus';
+        this._isSearchFocused = focused;
+        this._searchService.setSearchFocus(focused);
     }
 
     private _search(term: string): void {
@@ -162,8 +158,10 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     @HostListener('window:click', ['$event'])
     private _clickWhenSearchFocusedHandler(event: MouseEvent): void {
-        if (event.target['id'] !== 'st-search-input') {
-            this._searchService.setSearchFocus(false);
+        if (this.isSearchFocused) {
+            if (!StUtils.isChildNode(event.target as HTMLElement, 'st-search-top', 'st-search-bottom')) {
+                this._searchService.setSearchFocus(false);
+            }
         }
     }
 }

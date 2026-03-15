@@ -1,5 +1,3 @@
-@import 'styles';
+@use "assets/styles/animations";
 
-.st-toggle-content {
-    overflow: hidden;
-}
+@include animations.st-slide(vertical);

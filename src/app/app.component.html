@@ -2,12 +2,83 @@
     <st-menu-top></st-menu-top>
     <st-map></st-map>
 </header>
-<st-menu-sub *ngIf="showSubmenu(routerOutlet)"></st-menu-sub>
-<main [class]="hasSubmenu(routerOutlet) ? 'st-content-sub' : 'st-content'">
-    <router-outlet #routerOutlet="outlet"></router-outlet>
-    <st-dev *ngIf="!isProduction"></st-dev>
+@if (!isMobile && showSubmenu(routerOutlet)) {
+    <st-menu-sub></st-menu-sub>
+}
+@if (isMobile) {
+    <st-menu-mobile></st-menu-mobile>
+}
+<main [class]="contentClass(routerOutlet)">
+    <div [class]="{
+    'st-content-elevator': true,
+    'st-content-elevator-enabled': !mapNavigation,
+    'st-content-elevator-disabled': mapNavigation
+    }">
+        <router-outlet #routerOutlet="outlet"></router-outlet>
+        @if (!isProduction) {
+            <st-tool></st-tool>
+        }
+    </div>
 </main>
 <footer>
-    <st-menu-fab [isElevated]="!showSubmenu(routerOutlet)"></st-menu-fab>
-    <st-menu-fab [isElevated]="false" [isMain]="false" *ngIf="isHomeActive"></st-menu-fab>
+    <st-menu-fab-dial [right]="20">
+        <st-nav-item
+            [fab]="true"
+            [iconClassList]="['st-leaf-green']"
+            animate.enter="st-stagger"
+            style="--st-index: 1"
+            set="material"
+            icon="add"
+            text="Seed">
+        </st-nav-item>
+        <st-nav-item
+            [fab]="true"
+            [iconClassList]="['st-leaf-green']"
+            animate.enter="st-stagger"
+            style="--st-index: 2"
+            icon="fa-leaf"
+            text="Seeds">
+        </st-nav-item>
+        <st-nav-item
+            [fab]="true"
+            [iconClassList]="['st-garden-gray']"
+            animate.enter="st-stagger"
+            style="--st-index: 3"
+            set="material"
+            icon="add"
+            text="Cultivate">
+        </st-nav-item>
+        <st-nav-item
+            [fab]="true"
+            [iconClassList]="['st-garden-gray']"
+            animate.enter="st-stagger"
+            style="--st-index: 4"
+            icon="fa-tag"
+            text="Gardens">
+        </st-nav-item>
+        <st-nav-item
+            [fab]="true"
+            [iconClassList]="['st-garden-gray', 'st-flip-vertically']"
+            set="material"
+            animate.enter="st-stagger"
+            style="--st-index: 5"
+            icon="priority_high"
+            text="About">
+        </st-nav-item>
+        <st-nav-item
+            [fab]="true"
+            [iconClassList]="['st-garden-gray']"
+            animate.enter="st-stagger"
+            style="--st-index: 6"
+            set="material"
+            icon="settings"
+            text="Settings">
+        </st-nav-item>
+    </st-menu-fab-dial>
+    @if (isHomeActive) {
+        <st-menu-fab [isElevated]="true" [action]="'filter'"></st-menu-fab>
+    }
+    @if (!isHomeActive) {
+        <st-menu-fab [isElevated]="true" [action]="'back'"></st-menu-fab>
+    }
 </footer>

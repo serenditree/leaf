@@ -1,21 +1,12 @@
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {MatBottomSheetRef} from '@angular/material/bottom-sheet';
-import {MatBottomSheet} from '@angular/material/bottom-sheet';
-import {MenuBottomComponent} from '../menu-bottom/menu-bottom.component';
-import {Observable} from 'rxjs';
-import {StAnimations} from '../../../utils/st-animations';
 
 @Injectable({providedIn: 'root'})
 export class MenuService {
 
-    private _bottomSheetRef: MatBottomSheetRef;
     private _isMainActive = false;
     private _isFilterActive = false;
-    private _bottomSheetActiveSubject = new BehaviorSubject<boolean>(false);
-
-    constructor(private _bottomSheet: MatBottomSheet) {
-    }
+    private _isMenuMobileActiveSubject = new BehaviorSubject<boolean>(false);
 
     get isMainActive(): boolean {
         return this._isMainActive;
@@ -25,47 +16,31 @@ export class MenuService {
         return this._isFilterActive;
     }
 
-    get isBottomSheetActiveObservable(): Observable<boolean> {
-        return this._bottomSheetActiveSubject.asObservable();
+    get isMenuMobileActive(): boolean {
+        return this._isMenuMobileActiveSubject.getValue();
     }
 
-    public toggleBottomSheet(main: boolean): void {
+    get isMenuMobileActiveObservable(): Observable<boolean> {
+        return this._isMenuMobileActiveSubject.asObservable();
+    }
+
+    public toggleMenuMobile(main: boolean): void {
         if (main && this._isMainActive || !main && this._isFilterActive) {
-            this.closeBottomSheet();
+            this.closeMenuMobile();
         } else {
-            if (!this._isMainActive && !this._isFilterActive) {
-                this.openBottomSheet(main);
-            } else {
-                this.closeBottomSheet();
-                setTimeout(
-                    () => {
-                        this.openBottomSheet(main);
-                    },
-                    StAnimations.COMPLEX_DURATION
-                );
-            }
+            this.openMenuMobile(main);
         }
     }
 
-    public openBottomSheet(main: boolean): void {
+    public openMenuMobile(main: boolean): void {
         this._isMainActive = main;
         this._isFilterActive = !main;
-        this._bottomSheetRef = this._bottomSheet.open(MenuBottomComponent);
-        this._bottomSheetRef
-            .backdropClick()
-            .subscribe(this.closeBottomSheet.bind(this));
-        this._bottomSheetActiveSubject.next(true);
+        this._isMenuMobileActiveSubject.next(true);
     }
 
-    public closeBottomSheet(): void {
-        this._bottomSheet.dismiss();
-        this._bottomSheetActiveSubject.next(false);
-        setTimeout(
-            () => {
-                this._isMainActive = false;
-                this._isFilterActive = false;
-            },
-            StAnimations.COMPLEX_DURATION
-        );
+    public closeMenuMobile(): void {
+        this._isMenuMobileActiveSubject.next(false);
+        this._isMainActive = false;
+        this._isFilterActive = false;
     }
 }
