@@ -1,32 +1,27 @@
-import {Component} from '@angular/core';
+import {Component, HostListener, inject} from '@angular/core';
 import {FenceService} from '../../fence/service/fence.service';
 import {FilterService} from '../service/filter.service';
-import {HostListener} from '@angular/core';
 import {MatRadioChange} from '@angular/material/radio';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 import {SearchService} from '../service/search.service';
 import {SeedFilter} from '../../seed/model/seed-filter';
 import {SeedSortingType} from '../../seed/model/seed-sorting-type.enum';
-import {StAnimations} from '../../utils/st-animations';
+import {StUtils} from '../../utils/st-utils';
 
 @Component(
     {
         selector: 'st-filter',
         templateUrl: './filter.component.html',
         styleUrls: ['./filter.component.scss'],
-        animations: [
-            StAnimations.enterSlideVertical
-        ]
+        standalone: false
     }
 )
 export class FilterComponent {
+    private _filterService = inject(FilterService);
+    private _searchService = inject(SearchService);
+    private _fenceService = inject(FenceService);
 
     private _isInitialClick = true;
-
-    constructor(private _filterService: FilterService,
-                private _searchService: SearchService,
-                private _fenceService: FenceService) {
-    }
 
     get filter(): SeedFilter {
         return this._filterService.getFilter();
@@ -133,17 +128,7 @@ export class FilterComponent {
         if (this._isInitialClick) {
             this._isInitialClick = false;
         } else {
-            let isFilterComponent = false;
-            for (let element = event.target as HTMLElement;
-                 element && !isFilterComponent;
-                 element = element.parentElement) {
-                if (element.classList.contains('st-map-container-overlay-filter') ||
-                    element.id === 'st-filter-reset') {
-                    isFilterComponent = true;
-                }
-            }
-
-            this._filterService.setFilterFocus(isFilterComponent);
+            this._filterService.setFilterFocus(StUtils.isChildNode(event.target as HTMLElement, 'st-overlay-filter'));
         }
     }
 }

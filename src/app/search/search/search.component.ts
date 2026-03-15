@@ -1,46 +1,43 @@
-import {ChangeDetectorRef} from '@angular/core';
-import {Component} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {HostListener} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit, inject} from '@angular/core';
 import {LayoutService} from '../../ui/layout/service/layout.service';
 import {MatOptionSelectionChange} from '@angular/material/core';
-import {OnDestroy} from '@angular/core';
-import {OnInit} from '@angular/core';
 import {SearchService} from '../service/search.service';
+import {StUtils} from '../../utils/st-utils';
 import {Subscription} from 'rxjs';
+import {UntypedFormControl} from '@angular/forms';
 import {User} from '../../user/model/user';
-import {debounceTime} from 'rxjs/operators';
-import {tap} from 'rxjs/operators';
+import {debounceTime, tap} from 'rxjs/operators';
 
 @Component(
     {
         selector: 'st-search',
         templateUrl: './search.component.html',
-        styleUrls: ['./search.component.scss']
+        styleUrls: ['./search.component.scss'],
+        standalone: false
     }
 )
 export class SearchComponent implements OnInit, OnDestroy {
+    private static readonly MAX_TOTAL_RESULTS = 10;
 
-    private _formControl = new FormControl();
+    private _searchService = inject(SearchService);
+    private _layoutService = inject(LayoutService);
+    private _changeDetection = inject(ChangeDetectorRef);
+
+    private _formControl = new UntypedFormControl();
     private _term = '';
-    private _users: User[];
+    private _users: User[] = [];
     private _isUserSearch = false;
-    private _tags: string[];
+    private _tags: string[] = [];
     private _isTagSearch = false;
     private _searchTermSubscription: Subscription;
     private _isSearchFocused: boolean;
     private _isSearchFocusedSubscription: Subscription;
 
-    constructor(private _searchService: SearchService,
-                private _layoutService: LayoutService,
-                private _changeDetection: ChangeDetectorRef) {
-    }
-
     get isMobile(): boolean {
         return this._layoutService.isMobile();
     }
 
-    get formControl(): FormControl {
+    get formControl(): UntypedFormControl {
         return this._formControl;
     }
 
@@ -72,7 +69,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         this._searchTermSubscription = this._formControl.valueChanges
             .pipe(
                 tap(this._checkView.bind(this)),
-                debounceTime(200)
+                debounceTime(1000)
             )
             .subscribe(this._search.bind(this));
 
@@ -96,13 +93,14 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     public onTagSelectionChange(selectionChange: MatOptionSelectionChange): void {
-        this._searchService.searchByTags([selectionChange.source.value])
+        this._searchService.searchByTags([selectionChange.source.value]);
         this._searchService.setSearchFocus(false);
     }
 
     public onFocus(event: FocusEvent): void {
-        this._isSearchFocused = event.returnValue;
-        this._searchService.setSearchFocus(event.returnValue);
+        const focused = event.type === 'focus';
+        this._isSearchFocused = focused;
+        this._searchService.setSearchFocus(focused);
     }
 
     private _search(term: string): void {
@@ -111,30 +109,17 @@ export class SearchComponent implements OnInit, OnDestroy {
             if (this._term.length >= SearchService.MIN_TERM_LENGTH) {
                 // User search:
                 if (term.startsWith('/') || term === this._term) {
-                    this._isUserSearch = true;
-                    this._searchService.searchUsers(this._term)
-                        .subscribe(
-                            (users) => {
-                                this._users = users;
-                                this._checkView();
-                            }
-                        );
+                   this._userSearch();
                 } else {
                     this._resetUsers();
                 }
                 // Tag search:
                 if (term.startsWith('#') || term === this._term) {
-                    this._isTagSearch = true;
-                    this._searchService.searchTags(this._term)
-                        .subscribe(
-                            (tags) => {
-                                this._tags = tags;
-                                this._checkView();
-                            }
-                        );
+                    this._tagSearch();
                 } else {
                     this._resetTags();
                 }
+                this._balanceResults();
             }
         } else {
             this._term = '';
@@ -142,6 +127,39 @@ export class SearchComponent implements OnInit, OnDestroy {
             this._resetTags();
         }
         this._checkView();
+    }
+
+    private _userSearch(): void {
+        this._isUserSearch = true;
+        this._searchService.searchUsers(this._term)
+            .subscribe(
+                (users) => {
+                    this._users = users;
+                    this._checkView();
+                }
+            );
+    }
+
+    private _tagSearch(): void {
+        this._isTagSearch = true;
+        this._searchService.searchTags(this._term)
+            .subscribe(
+                (tags) => {
+                    this._tags = tags;
+                    this._checkView();
+                }
+            );
+    }
+
+    private _balanceResults(): void {
+        if (this._users.length > 5 && this._tags.length > 5) {
+            this._users = this._users.slice(0, 5);
+            this._tags = this._tags.slice(0, 5);
+        } else if (this._users.length > 5 && this._tags.length <= 5) {
+            this._users = this._users.slice(0, SearchComponent.MAX_TOTAL_RESULTS - this._tags.length);
+        } else if (this._users.length <= 5 && this._tags.length > 5) {
+            this._tags = this._tags.slice(0, SearchComponent.MAX_TOTAL_RESULTS - this._users.length);
+        }
     }
 
     private _resetUsers(): void {
@@ -162,8 +180,10 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     @HostListener('window:click', ['$event'])
     private _clickWhenSearchFocusedHandler(event: MouseEvent): void {
-        if (event.target['id'] !== 'st-search-input') {
-            this._searchService.setSearchFocus(false);
+        if (this.isSearchFocused) {
+            if (!StUtils.isChildNode(event.target as HTMLElement, 'st-search-top', 'st-search-bottom')) {
+                this._searchService.setSearchFocus(false);
+            }
         }
     }
 }

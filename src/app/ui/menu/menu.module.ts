@@ -1,11 +1,10 @@
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BrowserModule} from '@angular/platform-browser';
 import {CommonModule} from '@angular/common';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {MenuBottomComponent} from './menu-bottom/menu-bottom.component';
+import {MenuMobileComponent} from './menu-mobile/menu-mobile.component';
 import {MenuComponent} from './menu/menu.component';
 import {MenuFabComponent} from './menu-fab/menu-fab.component';
 import {MenuFabDialComponent} from './menu-fab-dial/menu-fab-dial.component';
@@ -20,7 +19,6 @@ import {SearchModule} from '../../search/search.module';
 @NgModule(
     {
         imports: [
-            BrowserAnimationsModule,
             BrowserModule,
             CommonModule,
             MatBottomSheetModule,
@@ -32,7 +30,7 @@ import {SearchModule} from '../../search/search.module';
             SearchModule
         ],
         declarations: [
-            MenuBottomComponent,
+            MenuMobileComponent,
             MenuComponent,
             MenuSubComponent,
             MenuTopComponent,
@@ -40,7 +38,7 @@ import {SearchModule} from '../../search/search.module';
             MenuFabDialComponent
         ],
         exports: [
-            MenuBottomComponent,
+            MenuMobileComponent,
             MenuComponent,
             MenuSubComponent,
             MenuTopComponent,

@@ -1,4 +1,6 @@
-@import "styles";
+@use "styles";
+@use "assets/styles/utils";
+@use "assets/styles/animations";
 
 $st-indicator-size: 50px; // div
 $st-indicator-total-size: $st-indicator-size + 2; // div + border * 2
@@ -8,7 +10,7 @@ $st-indicator-radius: 50%;
 .st-indicator {
     display: block;
     position: absolute;
-    z-index: $st-menu-z-index + 1;
+    z-index: styles.$st-menu-z-index + 1;
     top: 50%;
     left: 50%;
     width: $st-indicator-size;
@@ -17,10 +19,10 @@ $st-indicator-radius: 50%;
     margin-left: $st-indicator-offset;
     line-height: $st-indicator-size;
     text-align: center;
-    font-size: $st-font-size-h1;
-    background-color: rgba(255, 255, 255, .3);
+    font-size: styles.$st-font-size-h1;
     border: 1px solid rgba(153, 153, 153, .7);
-    @include st-polyfill-property(border-radius, $st-indicator-radius)
+    @include styles.st-transparency(.3);
+    @include utils.st-polyfill-property(border-radius, $st-indicator-radius)
 }
 
-@include st-pulse(1.4)
+@include animations.st-pulse(1.4)

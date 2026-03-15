@@ -1,32 +1,25 @@
 import {AbstractSeed} from '../../seed/model/abstract-seed';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
 import {GardenService} from '../../garden/service/garden.service';
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy, inject} from '@angular/core';
 import {ListEventService} from '../../ui/list/service/list-event.service';
-import {LngLat} from 'mapbox-gl';
+import {LngLat, Marker} from 'maplibre-gl';
 import {MapComponent} from '../map/map.component';
 import {MarkerContainer} from '../model/marker-container';
 import {MarkerContext} from '../model/marker-context';
 import {MarkerEvent} from '../model/marker-event';
 import {MarkerType} from '../model/marker-type.enum';
-import {Marker} from 'mapbox-gl';
-import {NavigationStart} from '@angular/router';
-import {Observable} from 'rxjs';
-import {OnDestroy} from '@angular/core';
-import {Router} from '@angular/router';
+import {MessageService} from '../../ui/message/service/message.service';
+import {NavigationStart, Router} from '@angular/router';
 import {SeedService} from '../../seed/service/seed.service';
-import {StLoggingAspect} from '../../utils/aspects/st-logging';
-import {Subject} from 'rxjs';
-import {Subscription} from 'rxjs';
 
-@StLoggingAspect(
-    {
-        logBefore: false,
-        logAfter: false
-    }
-)
 @Injectable({providedIn: 'root'})
 export class MapService implements OnDestroy {
+    private _router = inject(Router);
+    private _seedService = inject(SeedService);
+    private _gardenService = inject(GardenService);
+    private _listEventService = inject(ListEventService);
+    private _messageService = inject(MessageService);
 
     private readonly MARKER_UPDATE_TIMEOUT = 700;
     private readonly MARKER_FONT_SIZE_DEFAULT = 18;
@@ -37,6 +30,7 @@ export class MapService implements OnDestroy {
     private readonly GARDEN_PATH_REGEX = /\/gardens\/\S+/;
 
     private _mapComponent: MapComponent;
+    private _mapNavigationSubject = new BehaviorSubject<boolean>(false);
     private _singleMarker: MarkerContainer;
     private _seedMarkers: MarkerContainer[] = [];
     private _seedMarkerSubject = new BehaviorSubject<MarkerEvent>(new MarkerEvent());
@@ -55,10 +49,8 @@ export class MapService implements OnDestroy {
     private _centerSubject = new Subject<LngLat>();
     private _zoom: number;
 
-    constructor(private _router: Router,
-                private _seedService: SeedService,
-                private _gardenService: GardenService,
-                private _listEventService: ListEventService) {
+    get mapNavigationSubject(): BehaviorSubject<boolean> {
+        return this._mapNavigationSubject;
     }
 
     get seedMarkerObservable(): Observable<MarkerEvent> {
@@ -110,8 +102,14 @@ export class MapService implements OnDestroy {
                         );
                     }
                 },
-                (error) => console.log(error),
-                {enableHighAccuracy: true}
+                (error) => {
+                    console.log(error);
+                    this._messageService.error(error.message);
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 2000
+                }
             );
         }
     }
@@ -146,6 +144,10 @@ export class MapService implements OnDestroy {
         }
     }
 
+    public removeTrail(): void {
+        this._mapComponent.removeTrail();
+    }
+
     public lock(): void {
         this._mapComponent.lock();
     }
@@ -159,9 +161,9 @@ export class MapService implements OnDestroy {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private _subscribeToRouterEvents(): void {
-        void this._router.events.forEach((event) => {
+        this._router.events.forEach((event) => {
             if (event instanceof NavigationStart) {
-                this._markerContext.from = this._router.getCurrentNavigation().extras;
+                this._markerContext.from = this._router.currentNavigation().extras;
                 if (['/', '/seeds', '/gardens'].includes(event.url)) {
                     this._onMultiRoute(event.url);
                 } else if (event.url.startsWith('/trail')) {
@@ -224,7 +226,7 @@ export class MapService implements OnDestroy {
         this._markerContext.type = MarkerType.TRAIL;
         this._markerContext.update = false;
         this._markerContext.persistent = false;
-        this._trail = url.split('/').reverse()[0];
+        this._trail = url.split('/').at(-1);
         this._mapComponent.clearMarkers();
         this._showMarkers(MarkerType.TRAIL);
     }
@@ -245,8 +247,7 @@ export class MapService implements OnDestroy {
         this._trailSubscription = this._seedService.trailObservable.subscribe((seeds) => {
             this._trailMarkers = [];
             this._addMarkers(seeds, this._trailMarkers, MarkerType.TRAIL);
-            this._mapComponent.addTrail(seeds);
-            this._isTrailOnMap = true;
+            this._isTrailOnMap = this._mapComponent.addTrail(seeds);
         });
 
         this._gardensSubscription = this._gardenService.seedsObservable.subscribe((gardens) => {
@@ -270,14 +271,20 @@ export class MapService implements OnDestroy {
         );
     }
 
-    private _onItemEvent(id: string, scroll: boolean = false, navigate: boolean = false): void {
-        let markerSubject;
+    private _onItemEvent(id: string, scroll = false, navigate = false): void {
+        let markerSubject: BehaviorSubject<MarkerEvent>;
         if (this._markerContext.type === MarkerType.SEED || this._markerContext.type === MarkerType.TRAIL) {
             markerSubject = this._seedMarkerSubject;
         } else {
             markerSubject = this._gardenMarkerSubject;
         }
-        markerSubject.next({id: id, scroll: scroll, navigate: navigate});
+        markerSubject.next(
+            {
+                id: id,
+                scroll: scroll,
+                navigate: navigate
+            }
+        );
 
         if (navigate) {
             this._navigateTo(id);
@@ -301,7 +308,7 @@ export class MapService implements OnDestroy {
         }
     }
 
-    private _onBoundsChangeEnd(timeout: boolean = true): void {
+    private _onBoundsChangeEnd(timeout = true): void {
         if (this._markerContext.update) {
             this._updateMarkers(timeout);
         }
@@ -336,10 +343,9 @@ export class MapService implements OnDestroy {
         }
     }
 
-    private _updateMarkers(timeout: boolean = true): void {
+    private _updateMarkers(timeout = true): void {
         this._updateMarkersTimeout = setTimeout(
             () => {
-                console.log('Update...');
                 this._mapComponent.clearMarkers();
 
                 if (this._markerContext.type === MarkerType.SEED || this._markerContext.type === MarkerType.GARDEN) {
@@ -448,8 +454,7 @@ export class MapService implements OnDestroy {
 
     private _deactivateMarker(marker: MarkerContainer): void {
         marker.element.setAttribute(this.MARKER_ATTR_ACTIVE_KEY, '');
-        marker.element.classList.remove('click');
-        marker.element.classList.remove('mouseover');
+        marker.element.classList.remove('click', 'mouseover');
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -460,9 +465,9 @@ export class MapService implements OnDestroy {
                           lngLat: LngLat,
                           size: number,
                           type: MarkerType,
-                          show: boolean = true): MarkerContainer {
+                          show = true): MarkerContainer {
         const markerElement = this._createMarkerElement(id, size, type);
-        const marker = new Marker(markerElement);
+        const marker = new Marker({element: markerElement});
         marker.setLngLat(lngLat);
         const markerContainer = new MarkerContainer(id, marker, markerElement);
 
@@ -500,6 +505,7 @@ export class MapService implements OnDestroy {
     private _addMarkerEventListeners(id: string, markerElement: HTMLElement, markerIcon: HTMLElement): void {
         markerIcon.addEventListener('click', () => {
             const navigate = markerElement.getAttribute(this.MARKER_ATTR_ACTIVE_KEY) === this.MARKER_ATTR_ACTIVE_VAL;
+            this._mapNavigationSubject.next(true);
             this._onItemEvent(id, !navigate, navigate);
         });
         markerIcon.addEventListener('mouseover', () => {

@@ -1,8 +1,7 @@
 import {CommonModule} from '@angular/common';
+import {DevModule} from '../utils/dev/dev.module';
 import {FenceModule} from '../fence/fence.module';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -14,7 +13,6 @@ import {MenuModule} from '../ui/menu/menu.module';
 import {NavModule} from '../ui/nav/nav.module';
 import {NgModule} from '@angular/core';
 import {PollModule} from '../poll/poll.module';
-import {ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {SeedComponent} from './seed/seed.component';
 import {SeedListComponent} from './seed-list/seed-list/seed-list.component';
@@ -23,32 +21,14 @@ import {SeedNewBaseComponent} from './seed-new-base/seed-new-base.component';
 import {SeedNewComponent} from './seed-new/seed-new.component';
 import {SeedService} from './service/seed.service';
 import {SeedTrailComponent} from './seed-trail/seed-trail.component';
-import {StPipesModule} from '../utils/pipes/st-pipes.module';
 import {ToggleModule} from '../ui/toggle/toggle.module';
+import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+import {StEllipsisPipe} from '../utils/pipes/st-ellipsis.pipe';
+import {StHighlightPipe} from '../utils/pipes/st-highlight.pipe';
+import {StTagsPipe} from '../utils/pipes/st-tags.pipe';
 
 @NgModule(
     {
-        imports: [
-            CommonModule,
-            FenceModule,
-            FlexLayoutModule,
-            FormsModule,
-            HttpClientModule,
-            MatAutocompleteModule,
-            MatButtonModule,
-            MatIconModule,
-            MatInputModule,
-            MatSlideToggleModule,
-            MatSnackBarModule,
-            MatTooltipModule,
-            MenuModule,
-            NavModule,
-            PollModule,
-            ReactiveFormsModule,
-            RouterModule,
-            StPipesModule,
-            ToggleModule
-        ],
         declarations: [
             SeedComponent,
             SeedListComponent,
@@ -65,8 +45,31 @@ import {ToggleModule} from '../ui/toggle/toggle.module';
             SeedNewComponent,
             SeedTrailComponent
         ],
+        imports: [
+            CommonModule,
+            DevModule,
+            FenceModule,
+            FormsModule,
+            MatAutocompleteModule,
+            MatButtonModule,
+            MatIconModule,
+            MatInputModule,
+            MatSlideToggleModule,
+            MatSnackBarModule,
+            MatTooltipModule,
+            MenuModule,
+            NavModule,
+            PollModule,
+            ReactiveFormsModule,
+            RouterModule,
+            StEllipsisPipe,
+            StHighlightPipe,
+            StTagsPipe,
+            ToggleModule
+        ],
         providers: [
-            SeedService
+            SeedService,
+            provideHttpClient(withInterceptorsFromDi())
         ]
     }
 )

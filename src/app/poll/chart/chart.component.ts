@@ -1,25 +1,28 @@
-import {Chart} from 'chart.js';
-import {Component} from '@angular/core';
-import {ElementRef} from '@angular/core';
+import {Chart} from 'chart.js/auto';
+import {Component, ElementRef, Input, OnInit, ViewChild, inject} from '@angular/core';
 import {FenceService} from '../../fence/service/fence.service';
 import {FenceType} from '../../fence/model/fence-type.enum';
-import {Input} from '@angular/core';
-import {OnInit} from '@angular/core';
 import {PollOption} from '../model/poll-option';
 import {PollService} from '../service/poll.service';
 import {Poll} from '../model/poll';
-import {ViewChild} from '@angular/core';
+import {StUtils} from '../../utils/st-utils';
 
 @Component(
     {
         selector: 'st-chart',
         templateUrl: './chart.component.html',
-        styleUrls: ['./chart.component.scss']
+        styleUrls: ['./chart.component.scss'],
+        standalone: false
     }
 )
 export class ChartComponent implements OnInit {
+    private _pollService = inject(PollService);
+    private _fenceService = inject(FenceService);
 
-    private static readonly DEFAULT_FONT_FAMILY = 'Quicksand';
+    private static readonly DEFAULT_FONT = {
+        family: 'Quicksand',
+        size: 12
+    };
     private static readonly TOOLTIPS_BACKGROUND_COLOR = 'rgba(97, 97, 97, 0.9)';
     private static readonly ANIMATION_DURATION = 1400;
     private static readonly DISPLAY_LEGEND = false;
@@ -43,23 +46,14 @@ export class ChartComponent implements OnInit {
     ];
 
     private _poll: Poll;
-    private _selectedOption: PollOption;
+    private _pollOptions: PollOption[];
+    private _selectedIndex = -1;
     private _totalVotes = 0;
     private _isVotingAllowed = false;
 
     @ViewChild('chartCanvas', {static: true})
     private _chartCanvas: ElementRef;
     private _chart: Chart;
-    private _data: number[] = [];
-    private _labels: string[] = [];
-
-    constructor(private _pollService: PollService,
-                private _fenceService: FenceService) {
-        Chart.defaults.global.defaultFontFamily = ChartComponent.DEFAULT_FONT_FAMILY;
-        Chart.defaults.global.tooltips.backgroundColor = ChartComponent.TOOLTIPS_BACKGROUND_COLOR;
-        Chart.defaults.global.animation.duration = ChartComponent.ANIMATION_DURATION;
-        Chart.defaults.global.legend.display = ChartComponent.DISPLAY_LEGEND;
-    }
 
     get poll(): Poll {
         return this._poll;
@@ -70,12 +64,16 @@ export class ChartComponent implements OnInit {
         this._poll = value;
     }
 
-    get selectedOption(): PollOption {
-        return this._selectedOption;
+    get pollOptions(): PollOption[] {
+        return this._pollOptions;
     }
 
-    set selectedOption(value: PollOption) {
-        this._selectedOption = value;
+    get selectedIndex(): number {
+        return this._selectedIndex;
+    }
+
+    set selectedIndex(value: number) {
+        this._selectedIndex = value;
     }
 
     get totalVotes(): number {
@@ -91,6 +89,8 @@ export class ChartComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this._pollOptions = this._poll.options.sort((opt1, opt2) => opt1.id - opt2.id);
+
         if (this._fenceService.isAuthenticated()) {
             this._fenceService.isAuthorized(FenceType.POLL, this._poll.id, 'vote')
                 .subscribe(
@@ -103,23 +103,19 @@ export class ChartComponent implements OnInit {
                 );
         }
 
+        this._initChart();
         this._setChartData();
-
-        if (this._totalVotes > 0) {
-            this._initChart();
-        }
     }
 
     public vote(): void {
-        Chart.defaults.global.animation.duration = 0;
         this._isVotingAllowed = false;
 
-        this._pollService.vote(this.poll.id, this.selectedOption.id)
+        this._pollService.vote(this.poll.id, this.pollOptions[this.selectedIndex].id)
             .subscribe(
                 () => {
-                    this.selectedOption.votes += 1;
+                    this.pollOptions[this.selectedIndex].votes += 1;
+                    this._totalVotes += 1;
                     this._setChartData(true);
-                    this._initChart();
                 },
                 (error) => {
                     // TODO feedback
@@ -134,51 +130,74 @@ export class ChartComponent implements OnInit {
     }
 
     private _initChart(): void {
-        this._chart = new Chart(this._chartCanvas.nativeElement, {
-            type: ChartComponent.CHART_TYPE,
-            data: {
-                labels: this._labels,
-                datasets: [
-                    {
-                        data: this._data,
-                        backgroundColor: ChartComponent.COLOR_SCHEME,
-                        hoverBackgroundColor: ChartComponent.COLOR_SCHEME_HOVER,
-                        hoverBorderColor: ChartComponent.HOVER_BORDER_COLOR
-                    }
-                ]
-            },
-            options: {
-                tooltips: {
-                    displayColors: false,
-                    callbacks: {
-                        label: this._setChartLabel.bind(this)
+        this._chart = new Chart(
+            this._chartCanvas.nativeElement,
+            {
+                type: ChartComponent.CHART_TYPE,
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            data: [],
+                            backgroundColor: ChartComponent.COLOR_SCHEME,
+                            hoverBackgroundColor: ChartComponent.COLOR_SCHEME_HOVER,
+                            hoverBorderColor: ChartComponent.HOVER_BORDER_COLOR
+                        }
+                    ]
+                },
+                options: {
+                    animation: {
+                        animateRotate: true,
+                        animateScale: false,
+                        duration: ChartComponent.ANIMATION_DURATION,
+                        easing: 'easeOutQuart'
+                    },
+                    plugins: {
+                        legend: {
+                            display: ChartComponent.DISPLAY_LEGEND
+                        },
+                        tooltip: {
+                            enabled: true,
+                            displayColors: false,
+                            backgroundColor: ChartComponent.TOOLTIPS_BACKGROUND_COLOR,
+                            titleFont: ChartComponent.DEFAULT_FONT,
+                            bodyFont: ChartComponent.DEFAULT_FONT,
+                            callbacks: {
+                                title: this._setTooltipTitle.bind(this),
+                                label: this._setTooltipLabel.bind(this)
+                            }
+                        }
                     }
                 }
-            }
-        });
-    }
-
-    private _setChartData(update: boolean = false): void {
-        if (update) {
-            this._data = [];
-            this._labels = [];
-            this._totalVotes = 0;
-        }
-        this._poll.options.forEach(
-            (option) => {
-                this._labels.push(option.text);
-                this._data.push(option.votes);
-                this._totalVotes += option.votes;
             }
         );
     }
 
-    private _setChartLabel(item: any): string {
-        const label = this._labels[item.index];
-        const votes = this._data[item.index];
-        const percentage = Math.round(votes / this._totalVotes * 100);
-
-        return `${label}: ${percentage}% (${votes})`;
+    private _setChartData(update = false): void {
+        if (update) {
+            this._chart.data.datasets[0].data[this.selectedIndex] = this._pollOptions[this.selectedIndex].votes;
+        } else {
+            this._pollOptions.forEach(
+                (option) => {
+                    this._chart.data.labels.push(option.text);
+                    this._chart.data.datasets[0].data.push(option.votes);
+                    this._totalVotes += option.votes;
+                }
+            );
+        }
+        this._chart.update();
     }
 
+    private _setTooltipTitle(data: any): string {
+        const label = this._chart.data.labels[data[0].dataIndex] as string;
+
+        return StUtils.ellipsis(label, 16);
+    }
+
+    private _setTooltipLabel(data: any): string {
+        const votes = this._chart.data.datasets[0].data[data.dataIndex] as number;
+        const percentage = Math.round(votes / this._totalVotes * 100);
+
+        return `${percentage}% (${votes})`;
+    }
 }

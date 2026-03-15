@@ -1,7 +1,5 @@
-import {EXACT_MATCH_FALSE} from '../../../utils/st-const';
-import {EXACT_MATCH_TRUE} from '../../../utils/st-const';
-import {Component} from '@angular/core';
-import {Input} from '@angular/core';
+import {EXACT_MATCH_FALSE, EXACT_MATCH_TRUE} from '../../../utils/st-const';
+import {Component, Input, inject} from '@angular/core';
 import {LayoutService} from '../../layout/service/layout.service';
 import {Router} from '@angular/router';
 
@@ -9,16 +7,15 @@ import {Router} from '@angular/router';
     {
         selector: 'st-menu-main',
         templateUrl: './menu-main.component.html',
-        styleUrls: ['./menu-main.component.scss']
+        styleUrls: ['./menu-main.component.scss'],
+        standalone: false
     }
 )
 export class MenuMainComponent {
+    private _layoutService = inject(LayoutService);
+    private _router = inject(Router);
 
     private _align: string;
-
-    constructor(private _layoutService: LayoutService,
-                private _router: Router) {
-    }
 
     get align(): string {
         return this._align;

@@ -1,45 +1,35 @@
 import {HTTP_STATUS} from '../../utils/st-const';
-import {AbstractControl} from '@angular/forms';
+import {AbstractControl, UntypedFormBuilder, ValidationErrors, Validators} from '@angular/forms';
 import {AbstractFenceComponent} from '../abstract/abstract-fence.component';
-import {Component} from '@angular/core';
+import {Component, OnInit, inject} from '@angular/core';
 import {FenceService} from '../service/fence.service';
-import {FormBuilder} from '@angular/forms';
 import {IndicatorService} from '../../ui/indicator/service/indicator.service';
 import {MatCheckboxChange} from '@angular/material/checkbox';
 import {MessageService} from '../../ui/message/service/message.service';
-import {Observable} from 'rxjs';
-import {OnInit} from '@angular/core';
+import {Observable, of, timer} from 'rxjs';
 import {Principal} from '../model/principal';
 import {StMaple} from '../../utils/st-maple';
 import {StOak} from '../../utils/st-oak';
 import {UserService} from '../../user/service/user.service';
-import {ValidationErrors} from '@angular/forms';
-import {Validators} from '@angular/forms';
-import {finalize} from 'rxjs/operators';
-import {map} from 'rxjs/operators';
-import {of} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
-import {timer} from 'rxjs';
+import {finalize, map, switchMap} from 'rxjs/operators';
 
 @Component(
     {
         selector: 'st-sign-on',
         templateUrl: './sign-up.component.html',
-        styleUrls: ['./sign-up.component.scss']
+        styleUrls: ['./sign-up.component.scss'],
+        standalone: false
     }
 )
 export class SignUpComponent extends AbstractFenceComponent implements OnInit {
+    private _fenceService = inject(FenceService);
+    private _userService = inject(UserService);
+    private _formBuilder = inject(UntypedFormBuilder);
+    private _indicator = inject(IndicatorService);
+    private _messageService = inject(MessageService);
 
     private _turing = false;
-    private _agreed = false
-
-    constructor(private _fenceService: FenceService,
-                private _userService: UserService,
-                private _formBuilder: FormBuilder,
-                private _indicator: IndicatorService,
-                private _messageService: MessageService) {
-        super();
-    }
+    private _agreed = false;
 
     get turing(): boolean {
         return this._turing;

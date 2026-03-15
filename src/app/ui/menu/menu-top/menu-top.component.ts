@@ -1,13 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation, inject} from '@angular/core';
 import {FenceService} from '../../../fence/service/fence.service';
 import {LayoutService} from '../../layout/service/layout.service';
-import {OnDestroy} from '@angular/core';
-import {OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {SearchService} from '../../../search/service/search.service';
-import {StAnimations} from '../../../utils/st-animations';
 import {Subscription} from 'rxjs/internal/Subscription';
-import {ViewEncapsulation} from '@angular/core';
+import {MenuService} from '../service/menu.service';
 
 @Component(
     {
@@ -15,21 +12,18 @@ import {ViewEncapsulation} from '@angular/core';
         templateUrl: './menu-top.component.html',
         styleUrls: ['./menu-top.component.scss'],
         encapsulation: ViewEncapsulation.None,
-        animations: [
-            StAnimations.enterFade
-        ]
+        standalone: false
     }
 )
 export class MenuTopComponent implements OnInit, OnDestroy {
+    private _fenceService = inject(FenceService);
+    private _searchService = inject(SearchService);
+    private _layoutService = inject(LayoutService);
+    private _menuService = inject(MenuService);
+    private _router = inject(Router);
 
     private _showSearch = false;
     private _isSearchFocusedSubscription: Subscription;
-
-    constructor(private _fenceService: FenceService,
-                private _searchService: SearchService,
-                private _layoutService: LayoutService,
-                private _router: Router) {
-    }
 
     get username(): string {
         return this._fenceService.getUsername() || '';
@@ -37,6 +31,10 @@ export class MenuTopComponent implements OnInit, OnDestroy {
 
     get showSearch(): boolean {
         return !this._layoutService.isMobile() && this._showSearch;
+    }
+
+    get showShadow(): boolean {
+        return ! this._menuService.isMenuMobileActive;
     }
 
     get fenceService(): FenceService {

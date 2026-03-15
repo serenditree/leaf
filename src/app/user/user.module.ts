@@ -1,26 +1,25 @@
 import {CommonModule} from '@angular/common';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {NgModule} from '@angular/core';
-import {ReactiveFormsModule} from '@angular/forms';
 import {SettingsComponent} from './settings/settings.component';
-import {StPipesModule} from '../utils/pipes/st-pipes.module';
 import {UserComponent} from './user/user.component';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {StGreetingPipe} from '../utils/pipes/st-greeting.pipe';
 
 @NgModule(
     {
         imports: [
             CommonModule,
-            FlexLayoutModule,
             FormsModule,
             MatButtonModule,
             MatInputModule,
             ReactiveFormsModule,
-            StPipesModule,
-            MatSelectModule
+            MatSelectModule,
+            MatCheckbox,
+            StGreetingPipe
         ],
         declarations: [
             SettingsComponent,

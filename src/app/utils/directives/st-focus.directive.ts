@@ -1,16 +1,11 @@
-import {AfterContentChecked} from '@angular/core';
-import {Directive} from '@angular/core';
-import {ElementRef} from '@angular/core';
-import {Input} from '@angular/core';
+import {AfterContentChecked, Directive, ElementRef, Input, inject} from '@angular/core';
 
 @Directive({selector: '[stFocus]'})
 export class StFocusDirective implements AfterContentChecked {
+    private _elementRef = inject(ElementRef);
 
     private _focus = true;
     private _hasFocus = false;
-
-    constructor(private _elementRef: ElementRef) {
-    }
 
     @Input()
     set stFocus(value: boolean) {

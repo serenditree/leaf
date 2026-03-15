@@ -1,64 +1,64 @@
-<div class="container">
-    <div fxFlex
-         fxLayout="row"
-         fxLayoutGap="20px"
-         fxLayout.lt-sm="column"
-         fxLayoutGap.lt-sm="0">
-        <div fxFlex>
-            <h3>Filter</h3>
-            <mat-slide-toggle (change)="setStrongLocalAlignment($event)" disabled>
-                Strong local alignment
-            </mat-slide-toggle>
-            <br>
-            <mat-slide-toggle [checked]="filter.poll" (change)="setIsPoll($event)">
-                Is poll
-            </mat-slide-toggle>
-            <br>
-            <mat-slide-toggle [checked]="filter.trail" (change)="setIsTrail($event)">
-                Is part of a trail
-            </mat-slide-toggle>
-            <div *ngIf="showIsOwnerFilter">
+<div class="flex-row">
+    <div>
+        <h3>Filter</h3>
+        <mat-slide-toggle (change)="setStrongLocalAlignment($event)" [disabled]="true">
+            Strong local alignment
+        </mat-slide-toggle>
+        <br>
+        <mat-slide-toggle (change)="setIsPoll($event)" [checked]="filter.poll">
+            Is poll
+        </mat-slide-toggle>
+        <br>
+        <mat-slide-toggle (change)="setIsTrail($event)" [checked]="filter.trail">
+            Is part of a trail
+        </mat-slide-toggle>
+        @if (showIsOwnerFilter) {
+            <div>
                 <mat-slide-toggle [checked]="isOwnerFilterActive" (change)="setIsOwner($event)">
                     My seeds only
                 </mat-slide-toggle>
             </div>
-            <div *ngIf="showUserFilter" [@enterSlideVertical]>
+        }
+        @if (showUserFilter) {
+            <div animate.enter="st-slide-enter-vertical" animate.leave="st-slide-leave-vertical">
                 <mat-slide-toggle
-                    checked
+                    checked="true"
                     (change)="resetUser()">
-                    &#47;{{filter.username}}
+                    User: &#47;{{ filter.username }}
                 </mat-slide-toggle>
             </div>
-            <div *ngIf="filter.tags" [@enterSlideVertical]>
+        }
+        @if (filter.tags) {
+            <div animate.enter="st-slide-enter-vertical" animate.leave="st-slide-leave-vertical">
                 <mat-slide-toggle
-                    checked
+                    checked="true"
                     (change)="resetTags()">
-                    {{filter.tags | tags}}
+                    Tag: {{ filter.tags | tags }}
                 </mat-slide-toggle>
             </div>
-        </div>
-        <div fxFlex>
-            <h3>Sort</h3>
-            <mat-radio-group (change)="onSortChange($event)">
-                <mat-radio-button [value]="byWater" [checked]="filter.sort === byWater">
-                    Water
-                </mat-radio-button>
-                <br>
-                <mat-radio-button [value]="byNubits" [checked]="filter.sort == byNubits" disabled>
-                    Nubits
-                </mat-radio-button>
-                <br>
-                <mat-radio-button [value]="byDate" [checked]="filter.sort == byDate">
-                    Date
-                </mat-radio-button>
-                <br>
-                <mat-radio-button [value]="byChance" [checked]="filter.sort == byChance">
-                    Chance
-                </mat-radio-button>
-            </mat-radio-group>
-        </div>
+        }
+    </div>
+    <div>
+        <h3>Sort</h3>
+        <mat-radio-group (change)="onSortChange($event)">
+            <mat-radio-button [checked]="filter.sort === byWater" [value]="byWater">
+                Water
+            </mat-radio-button>
+            <br>
+            <mat-radio-button [checked]="filter.sort === byNubits" [value]="byNubits" [disabled]="true">
+                Nubits
+            </mat-radio-button>
+            <br>
+            <mat-radio-button [checked]="filter.sort === byDate" [value]="byDate">
+                Date
+            </mat-radio-button>
+            <br>
+            <mat-radio-button [checked]="filter.sort === byChance" [value]="byChance">
+                Chance
+            </mat-radio-button>
+        </mat-radio-group>
     </div>
 </div>
 <br>
 <button (click)="apply()" color="accent" mat-button>Apply</button>
-<a (click)="reset()" class="underline st-reset">Reset</a>
+<a (click)="reset()" class="st-underline st-reset">Reset</a>

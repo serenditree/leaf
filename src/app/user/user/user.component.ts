@@ -1,15 +1,16 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FenceService} from '../../fence/service/fence.service';
 
-@Component({
-               selector: 'st-user',
-               templateUrl: './user.component.html',
-               styleUrls: ['./user.component.scss']
-           })
-export class UserComponent {
-
-    constructor(private _fenceService: FenceService) {
+@Component(
+    {
+        selector: 'st-user',
+        templateUrl: './user.component.html',
+        styleUrls: ['./user.component.scss'],
+        standalone: false
     }
+)
+export class UserComponent {
+    private _fenceService = inject(FenceService);
 
     get username(): string {
         return this._fenceService.getUsername();

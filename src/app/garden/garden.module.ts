@@ -1,7 +1,7 @@
+import {QRCodeComponent} from 'angularx-qrcode';
 import {CommonModule} from '@angular/common';
 import {FenceModule} from '../fence/fence.module';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {GardenComponent} from './garden/garden.component';
 import {GardenListComponent} from './garden-list/garden-list/garden-list.component';
 import {GardenListItemComponent} from './garden-list/garden-list-item/garden-list-item.component';
@@ -18,17 +18,15 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MenuModule} from '../ui/menu/menu.module';
 import {NavModule} from '../ui/nav/nav.module';
 import {NgModule} from '@angular/core';
-import {ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {SeedModule} from '../seed/seed.module';
-import {StPipesModule} from '../utils/pipes/st-pipes.module';
+import {StEllipsisPipe} from '../utils/pipes/st-ellipsis.pipe';
 
 @NgModule(
     {
         imports: [
             CommonModule,
             FenceModule,
-            FlexLayoutModule,
             FormsModule,
             MatButtonModule,
             MatDialogModule,
@@ -41,7 +39,8 @@ import {StPipesModule} from '../utils/pipes/st-pipes.module';
             ReactiveFormsModule,
             RouterModule,
             SeedModule,
-            StPipesModule
+            StEllipsisPipe,
+            QRCodeComponent
         ],
         declarations: [
             GardenComponent,

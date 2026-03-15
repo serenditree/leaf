@@ -1,1 +1,12 @@
-@import "abstract-seed.component";
+@use "./abstract-seed.component";
+@use "assets/styles/animations";
+
+@include animations.st-stagger();
+
+.st-seed-clear {
+    clear: both;
+}
+
+.st-seed-navigation {
+    margin-top: 14px;
+}

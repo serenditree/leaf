@@ -1,4 +1,4 @@
-<st-menu-sub decentralized="true">
+<st-menu-sub [decentralized]="true">
     <div class="st-seed-actions">
         <st-nav-container align="right">
             <st-nav-item [iconClassList]="['st-leaf-green']"
@@ -10,4 +10,4 @@
         </st-nav-container>
     </div>
 </st-menu-sub>
-<st-seed-list (onSeedsUpdate)="onSeedsUpdate($event)"></st-seed-list>
+<st-seed-list (seedsUpdate)="onSeedsUpdate($event)"></st-seed-list>

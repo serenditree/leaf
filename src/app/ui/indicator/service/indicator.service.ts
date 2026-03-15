@@ -1,6 +1,5 @@
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class IndicatorService {

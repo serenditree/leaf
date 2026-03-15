@@ -1,27 +1,21 @@
-import {Component} from '@angular/core';
-import {EventEmitter} from '@angular/core';
-import {Input} from '@angular/core';
-import {Output} from '@angular/core';
-import {StAnimations} from '../../../utils/st-animations';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component(
     {
         selector: 'st-toggle',
         templateUrl: './toggle.component.html',
         styleUrls: ['./toggle.component.scss'],
-        animations: [
-            StAnimations.slideVertical
-        ]
+        standalone: false
     }
 )
 export class ToggleComponent {
 
-    private _state = StAnimations.STATE_INACTIVE;
+    private _isActive = false;
     private _name: string;
-    private _onToggle: EventEmitter<boolean> = new EventEmitter();
+    private _onToggle = new EventEmitter<boolean>();
 
-    get state(): string {
-        return this._state;
+    get isActive(): boolean {
+        return this._isActive;
     }
 
     get name(): string {
@@ -39,12 +33,8 @@ export class ToggleComponent {
     }
 
     public onSlideToggle(): void {
-        if (this._state === StAnimations.STATE_INACTIVE) {
-            this._state = StAnimations.STATE_ACTIVE;
-        } else {
-            this._state = StAnimations.STATE_INACTIVE;
-        }
+        this._isActive = !this._isActive;
 
-        this._onToggle.emit(this._state === StAnimations.STATE_ACTIVE);
+        this._onToggle.emit(this._isActive);
     }
 }

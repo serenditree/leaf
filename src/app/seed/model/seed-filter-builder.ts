@@ -1,4 +1,4 @@
-import {LngLatBounds} from 'mapbox-gl';
+import {LngLatBounds} from 'maplibre-gl';
 import {SeedFilter} from './seed-filter';
 import {SeedSortingType} from './seed-sorting-type.enum';
 import {Seed} from './seed';

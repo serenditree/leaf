@@ -1,9 +1,13 @@
 <article [id]="garden.id" class="st-seed-list-item">
     <p>
-        <em *ngIf="active" [@enterSlideHorizontal] class="fa fa-arrow-right st-seed-list-item-pointer">&nbsp;</em>
-        <strong>{{garden.title}}</strong> by {{garden.username}}
+        @if (active) {
+            <em animate.enter="st-slide-enter-horizontal"
+                animate.leave="st-slide-leave-horizontal"
+                class="fa fa-arrow-right st-seed-list-item-pointer">&nbsp;</em>
+        }
+        <strong>{{ garden.title }}</strong> by {{ garden.username }}
         <span class="st-seed-list-item-badges st-secondary-gray">
-        </span>
+    </span>
     </p>
-    <p [innerHTML]="garden.text | ellipsis:ST_PREVIEW_LENGTH | html"></p>
+    <p class="st-text">{{ garden.text | ellipsis:maxWords:maxLines }}</p>
 </article>

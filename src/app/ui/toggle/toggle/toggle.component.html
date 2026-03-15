@@ -1,8 +1,8 @@
 <div>
     <mat-slide-toggle (change)="onSlideToggle()">
-        {{name}}
+        {{ name }}
     </mat-slide-toggle>
 </div>
-<div [@slideVertical]="state" class="st-toggle-content">
+<div class="st-slide-vertical" [class.is-active]="isActive" [class.is-inactive]="!isActive">
     <ng-content></ng-content>
 </div>

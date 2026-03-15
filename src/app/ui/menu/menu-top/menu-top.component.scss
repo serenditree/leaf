@@ -1,19 +1,31 @@
-@import "styles";
+@use "styles";
+@use "assets/styles/media";
+@use "assets/styles/animations";
+
+@include animations.st-fade-enter();
 
 .st-menu-top {
     position: fixed;
-    z-index: $st-menu-z-index - 1;
+    z-index: styles.$st-menu-z-index + 20;
     top: 0;
     width: 100%;
-    height: $st-menu-top-height;
-    background-color: $st-background-color-body;
-    @include st-shadow(bottom);
+    height: styles.$st-menu-top-height;
+    background-color: styles.$st-background-color;
 }
 
-@include gt-sm {
+@include media.lt-md() {
     .st-menu-top {
-        height: $st-menu-top-height-gt-sm;
-        @include st-shadow(none)
+        @include styles.st-transparency();
+    }
+
+    .st-menu-top.st-shadow {
+        @include styles.st-shadow(bottom);
+    }
+}
+
+@include media.gt-sm {
+    .st-menu-top {
+        height: styles.$st-menu-top-height-gt-sm;
     }
 }
 
@@ -21,18 +33,20 @@ $st-menu-top-ref: 30px;
 
 .st-menu-top-home {
     position: absolute;
-    top: $st-menu-top-height - $st-menu-top-ref;
-    font-size: $st-font-size-h1;
+    top: styles.$st-menu-top-height - $st-menu-top-ref;
+    font-size: styles.$st-font-size-h1 + 2px;
     font-weight: bold;
+    margin-left: 10px;
 }
 
 .st-menu-top-home > a:hover {
     color: inherit !important;
 }
 
-@include gt-sm {
+@include media.gt-sm {
     .st-menu-top-home {
-        top: $st-menu-top-height-gt-sm - $st-menu-top-ref;
+        top: styles.$st-menu-top-height-gt-sm - $st-menu-top-ref;
+        margin-left: 0;
     }
 }
 
@@ -47,7 +61,7 @@ $st-menu-top-ref: 30px;
 
 .st-menu-top-nav,
 .st-menu-top-close-btn {
-    top: $st-menu-top-height - $st-menu-top-ref + 3px;
+    top: styles.$st-menu-top-height - $st-menu-top-ref + 3px;
     right: 0;
 }
 
@@ -63,10 +77,10 @@ $st-menu-top-ref: 30px;
     display: none;
 }
 
-@include gt-sm {
+@include media.gt-sm {
     .st-menu-top-nav,
     .st-menu-top-close-btn {
-        top: $st-menu-top-height-gt-sm - $st-menu-top-ref + 3px;
+        top: styles.$st-menu-top-height-gt-sm - $st-menu-top-ref + 3px;
     }
 
     .st-menu-top-top,
@@ -77,13 +91,13 @@ $st-menu-top-ref: 30px;
 }
 
 .st-menu-top-search-input {
-    top: $st-menu-top-height - $st-menu-top-ref - 25px;
+    top: styles.$st-menu-top-height - $st-menu-top-ref - 25px;
     right: 20px;
 }
 
-@include gt-sm {
+@include media.gt-sm {
     .st-menu-top-search-input {
-        top: $st-menu-top-height-gt-sm - $st-menu-top-ref - 25px;
+        top: styles.$st-menu-top-height-gt-sm - $st-menu-top-ref - 25px;
     }
 }
 

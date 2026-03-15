@@ -1,4 +1,15 @@
-@import "styles";
+@use "styles";
+@use "assets/styles/media";
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-row-static {
+    display: flex;
+    flex-direction: row;
+}
 
 .st-nav-item-container-left st-nav-item {
     text-align: left;
@@ -10,16 +21,22 @@
     margin-left: 20px;
 }
 
-@include lt-md {
+@include media.lt-md {
+    .flex-row {
+        gap: 0;
+        flex-grow: 1;
+        flex-direction: column;
+    }
+
     st-nav-item {
         line-height: 40px !important;
     }
 
-    st-nav-bottom st-nav-item {
+    st-menu-mobile st-nav-item {
         margin: 0 !important;
-        border-bottom: 1px solid $st-color-gray-secondary;
+        border-bottom: 1px solid styles.$st-color-gray-secondary;
     }
-    st-nav-bottom st-nav-item:last-of-type {
+    st-menu-mobile st-nav-item:last-of-type {
         border-bottom: none;
     }
 }

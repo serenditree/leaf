@@ -1,18 +1,17 @@
 import {CommonModule} from '@angular/common';
 import {FilterComponent} from './filter/filter.component';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {NgModule} from '@angular/core';
-import {ReactiveFormsModule} from '@angular/forms';
 import {SearchComponent} from './search/search.component';
 import {SearchService} from './service/search.service';
-import {StDirectivesModule} from '../utils/directives/st-directives.module';
-import {StPipesModule} from '../utils/pipes/st-pipes.module';
+import {StFocusDirective} from '../utils/directives/st-focus.directive';
+import {StHighlightPipe} from '../utils/pipes/st-highlight.pipe';
+import {StTagsPipe} from '../utils/pipes/st-tags.pipe';
 
 @NgModule(
     {
@@ -22,12 +21,12 @@ import {StPipesModule} from '../utils/pipes/st-pipes.module';
             MatAutocompleteModule,
             MatInputModule,
             ReactiveFormsModule,
-            StDirectivesModule,
-            StPipesModule,
+            StFocusDirective,
             MatSlideToggleModule,
-            FlexLayoutModule,
             MatRadioModule,
-            MatButtonModule
+            MatButtonModule,
+            StHighlightPipe,
+            StTagsPipe
         ],
         declarations: [
             SearchComponent,
