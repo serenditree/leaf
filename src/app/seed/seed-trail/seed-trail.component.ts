@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {Seed} from '../model/seed';
 
 @Component(
@@ -6,6 +6,7 @@ import {Seed} from '../model/seed';
         selector: 'st-seed-trail',
         templateUrl: './seed-trail.component.html',
         styleUrls: ['./seed-trail.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

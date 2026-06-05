@@ -1,6 +1,6 @@
 import {AbstractSeedComponent} from './abstract-seed.component';
 import {ActivatedRoute} from '@angular/router';
-import {Component, OnDestroy, OnInit, inject} from '@angular/core';
+import {Component, OnDestroy, OnInit, inject, ChangeDetectionStrategy} from '@angular/core';
 import {FenceService} from '../../fence/service/fence.service';
 import {FenceType} from '../../fence/model/fence-type.enum';
 import {MapService} from '../../map/service/map.service';
@@ -18,6 +18,7 @@ import {Subscription} from 'rxjs';
         selector: 'st-seed',
         templateUrl: './seed.component.html',
         styleUrls: ['./seed.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

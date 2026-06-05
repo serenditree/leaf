@@ -1,5 +1,5 @@
 import {AbstractSeedNewComponent} from './abstract-seed-new.component';
-import {Component, OnDestroy, OnInit, inject} from '@angular/core';
+import {Component, OnDestroy, OnInit, inject, ChangeDetectionStrategy} from '@angular/core';
 import {IndicatorService} from '../../ui/indicator/service/indicator.service';
 import {Location} from '@angular/common';
 import {MapService} from '../../map/service/map.service';
@@ -15,6 +15,7 @@ import {finalize} from 'rxjs/operators';
         selector: 'st-seed-new',
         templateUrl: './seed-new.component.html',
         styleUrls: ['./seed-new.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

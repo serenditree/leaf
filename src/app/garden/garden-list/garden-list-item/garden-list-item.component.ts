@@ -1,5 +1,5 @@
 import {AbstractListItem} from '../../../ui/list/list/abstract-list-item';
-import {Component, Input, inject} from '@angular/core';
+import {Component, Input, inject, ChangeDetectionStrategy} from '@angular/core';
 import {Garden} from '../../model/garden';
 import {LayoutService} from '../../../ui/layout/service/layout.service';
 import {ListEventService} from '../../../ui/list/service/list-event.service';
@@ -9,6 +9,7 @@ import {ListEventService} from '../../../ui/list/service/list-event.service';
         selector: 'st-garden-list-item',
         templateUrl: './garden-list-item.component.html',
         styleUrls: ['./garden-list-item.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

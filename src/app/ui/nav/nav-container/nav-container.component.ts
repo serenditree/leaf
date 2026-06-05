@@ -1,4 +1,4 @@
-import {Component, Input, ViewEncapsulation} from '@angular/core';
+import {Component, Input, ViewEncapsulation, ChangeDetectionStrategy} from '@angular/core';
 
 @Component(
     {
@@ -6,6 +6,7 @@ import {Component, Input, ViewEncapsulation} from '@angular/core';
         templateUrl: './nav-container.component.html',
         styleUrls: ['./nav-container.component.scss'],
         encapsulation: ViewEncapsulation.None,
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

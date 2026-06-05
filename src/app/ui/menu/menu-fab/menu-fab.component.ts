@@ -1,4 +1,4 @@
-import {Component, Input, inject} from '@angular/core';
+import {Component, Input, inject, ChangeDetectionStrategy} from '@angular/core';
 import {FilterService} from '../../../search/service/filter.service';
 import {Location} from '@angular/common';
 import {MenuService} from '../service/menu.service';
@@ -8,6 +8,7 @@ import {MenuService} from '../service/menu.service';
         selector: 'st-menu-fab',
         templateUrl: './menu-fab.component.html',
         styleUrls: ['./menu-fab.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

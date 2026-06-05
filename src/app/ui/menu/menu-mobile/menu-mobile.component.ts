@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, inject} from '@angular/core';
+import {Component, OnDestroy, OnInit, inject, ChangeDetectionStrategy} from '@angular/core';
 import {FenceService} from '../../../fence/service/fence.service';
 import {MenuService} from '../service/menu.service';
 import {SearchService} from '../../../search/service/search.service';
@@ -9,6 +9,7 @@ import {Subscription} from 'rxjs';
         selector: 'st-menu-mobile',
         templateUrl: './menu-mobile.component.html',
         styleUrls: ['./menu-mobile.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

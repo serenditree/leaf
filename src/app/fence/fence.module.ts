@@ -14,7 +14,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {SignInComponent} from './sign-in/sign-in.component';
 import {SignUpComponent} from './sign-up/sign-up.component';
-import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 @NgModule(
     {
@@ -36,7 +36,7 @@ import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
         providers: [
             FenceService,
             FenceInterceptor,
-            provideHttpClient(withInterceptorsFromDi())
+            provideHttpClient(withXhr(), withInterceptorsFromDi())
         ]
     }
 )

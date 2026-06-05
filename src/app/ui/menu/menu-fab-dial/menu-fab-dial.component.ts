@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewEncapsulation, inject} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation, inject, ChangeDetectionStrategy} from '@angular/core';
 import {MenuService} from '../service/menu.service';
 import {Subscription} from 'rxjs';
 
@@ -8,6 +8,7 @@ import {Subscription} from 'rxjs';
         templateUrl: './menu-fab-dial.component.html',
         styleUrls: ['./menu-fab-dial.component.scss'],
         encapsulation: ViewEncapsulation.None,
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

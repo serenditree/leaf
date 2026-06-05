@@ -1,5 +1,5 @@
 import {EXACT_MATCH_FALSE, EXACT_MATCH_TRUE} from '../../../utils/st-const';
-import {Component, Input, ViewEncapsulation, inject} from '@angular/core';
+import {Component, Input, ViewEncapsulation, inject, ChangeDetectionStrategy} from '@angular/core';
 import {FenceService} from '../../../fence/service/fence.service';
 import {FilterService} from '../../../search/service/filter.service';
 import {LayoutService} from '../../layout/service/layout.service';
@@ -13,6 +13,7 @@ import {SearchService} from '../../../search/service/search.service';
         templateUrl: './menu-sub.component.html',
         styleUrls: ['./menu-sub.component.scss'],
         encapsulation: ViewEncapsulation.None,
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

@@ -1,5 +1,5 @@
 import {EXACT_MATCH_FALSE} from '../../../utils/st-const';
-import {Component, Input, OnDestroy, OnInit, inject} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, inject, ChangeDetectionStrategy} from '@angular/core';
 import {IndicatorService} from '../service/indicator.service';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
@@ -9,6 +9,7 @@ import {Subscription} from 'rxjs';
         selector: 'st-indicator',
         templateUrl: './indicator.component.html',
         styleUrls: ['./indicator.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

@@ -1,5 +1,5 @@
 import {AbstractSeedNewComponent} from '../../seed/seed-new/abstract-seed-new.component';
-import {Component, OnDestroy, OnInit, inject} from '@angular/core';
+import {Component, OnDestroy, OnInit, inject, ChangeDetectionStrategy} from '@angular/core';
 import {GardenService} from '../service/garden.service';
 import {Garden} from '../model/garden';
 import {IndicatorService} from '../../ui/indicator/service/indicator.service';
@@ -13,6 +13,7 @@ import {finalize} from 'rxjs/operators';
         selector: 'st-garden-new',
         templateUrl: './garden-new.component.html',
         styleUrls: ['./garden-new.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

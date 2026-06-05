@@ -1,4 +1,4 @@
-import {Component, HostListener, inject} from '@angular/core';
+import {Component, HostListener, inject, ChangeDetectionStrategy} from '@angular/core';
 import {FenceService} from '../../fence/service/fence.service';
 import {FilterService} from '../service/filter.service';
 import {MatRadioChange} from '@angular/material/radio';
@@ -13,6 +13,7 @@ import {StUtils} from '../../utils/st-utils';
         selector: 'st-filter',
         templateUrl: './filter.component.html',
         styleUrls: ['./filter.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

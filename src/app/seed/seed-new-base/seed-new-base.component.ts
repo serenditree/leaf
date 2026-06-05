@@ -1,6 +1,6 @@
 import {AbstractSeed} from '../model/abstract-seed';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
-import {Component, Injector, Input, OnDestroy, OnInit, ViewChild, afterNextRender, inject} from '@angular/core';
+import {Component, Injector, Input, OnDestroy, OnInit, ViewChild, afterNextRender, inject, ChangeDetectionStrategy} from '@angular/core';
 import {MapService} from '../../map/service/map.service';
 import {Observable, Subscription} from 'rxjs';
 import {SearchService} from '../../search/service/search.service';
@@ -13,6 +13,7 @@ import {debounceTime} from 'rxjs/operators';
         selector: 'st-seed-new-base',
         templateUrl: './seed-new-base.component.html',
         styleUrls: ['./seed-new-base.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

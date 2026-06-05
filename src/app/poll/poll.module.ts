@@ -9,7 +9,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {NgModule} from '@angular/core';
 import {PollNewComponent} from './poll-new/poll-new.component';
 import {PollService} from './service/poll.service';
-import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 @NgModule(
     {
@@ -33,7 +33,7 @@ import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
         ],
         providers: [
             PollService,
-            provideHttpClient(withInterceptorsFromDi())
+            provideHttpClient(withXhr(), withInterceptorsFromDi())
         ]
     }
 )

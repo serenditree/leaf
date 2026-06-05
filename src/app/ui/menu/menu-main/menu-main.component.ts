@@ -1,5 +1,5 @@
 import {EXACT_MATCH_FALSE, EXACT_MATCH_TRUE} from '../../../utils/st-const';
-import {Component, Input, inject} from '@angular/core';
+import {Component, Input, inject, ChangeDetectionStrategy} from '@angular/core';
 import {LayoutService} from '../../layout/service/layout.service';
 import {Router} from '@angular/router';
 
@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
         selector: 'st-menu-main',
         templateUrl: './menu-main.component.html',
         styleUrls: ['./menu-main.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

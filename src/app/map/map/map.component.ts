@@ -1,14 +1,15 @@
 import {EXACT_MATCH_TRUE} from '../../utils/st-const';
 
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation,
-    inject
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {FilterService} from '../../search/service/filter.service';
 import {LayoutService} from '../../ui/layout/service/layout.service';
@@ -28,6 +29,7 @@ import {environment} from '../../../environments/environment';
         templateUrl: './map.component.html',
         styleUrls: ['./map.component.scss'],
         encapsulation: ViewEncapsulation.None, // styles for markers in MarkerService
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

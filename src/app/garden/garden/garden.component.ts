@@ -1,6 +1,6 @@
 import {AbstractSeedComponent} from '../../seed/seed/abstract-seed.component';
 import {ActivatedRoute} from '@angular/router';
-import {Component, OnDestroy, OnInit, inject} from '@angular/core';
+import {Component, OnDestroy, OnInit, inject, ChangeDetectionStrategy} from '@angular/core';
 import {FenceService} from '../../fence/service/fence.service';
 import {GardenService} from '../service/garden.service';
 import {Garden} from '../model/garden';
@@ -16,6 +16,7 @@ import {SeedType} from '../../seed/model/seed-type.enum';
         selector: 'st-garden',
         templateUrl: './garden.component.html',
         styleUrls: ['./garden.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

@@ -87,9 +87,9 @@
             @if (seed?.username) {
                 <span>{{ seed?.username }} on </span>
             }
-            {{ seed?.created | date : 'yyyy-MM-dd' }}
+            {{ $safeNavigationMigration(seed?.created) | date : 'yyyy-MM-dd' }}
             <br>
-            {{ seed?.tags | tags }}
+            {{ $safeNavigationMigration(seed?.tags) | tags }}
         </p>
         <st-json [object]="seed"></st-json>
     </article>

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, inject} from '@angular/core';
+import {Component, Input, OnInit, inject, ChangeDetectionStrategy} from '@angular/core';
 import {UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 
 @Component(
@@ -6,6 +6,7 @@ import {UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators} from
         selector: 'st-poll-new',
         templateUrl: './poll-new.component.html',
         styleUrls: ['./poll-new.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

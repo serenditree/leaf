@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {FenceService} from '../../fence/service/fence.service';
 
 @Component(
@@ -6,6 +6,7 @@ import {FenceService} from '../../fence/service/fence.service';
         selector: 'st-user',
         templateUrl: './user.component.html',
         styleUrls: ['./user.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

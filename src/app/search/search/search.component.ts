@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit, inject} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit, inject, ChangeDetectionStrategy} from '@angular/core';
 import {LayoutService} from '../../ui/layout/service/layout.service';
 import {MatOptionSelectionChange} from '@angular/material/core';
 import {SearchService} from '../service/search.service';
@@ -13,6 +13,7 @@ import {debounceTime, tap} from 'rxjs/operators';
         selector: 'st-search',
         templateUrl: './search.component.html',
         styleUrls: ['./search.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

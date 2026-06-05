@@ -1,15 +1,16 @@
 import {AbstractList} from '../../../ui/list/list/abstract-list';
 import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    ViewChildren,
-    inject
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  QueryList,
+  ViewChildren,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {MapService} from '../../../map/service/map.service';
 import {SeedListItemComponent} from '../seed-list-item/seed-list-item.component';
@@ -22,6 +23,7 @@ import {Subscription} from 'rxjs';
         selector: 'st-seed-list',
         templateUrl: './seed-list.component.html',
         styleUrls: ['./seed-list.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

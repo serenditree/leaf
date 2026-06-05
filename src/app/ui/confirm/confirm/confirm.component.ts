@@ -1,11 +1,12 @@
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 
 @Component(
     {
         selector: 'st-confirm',
         templateUrl: './confirm.component.html',
         styleUrls: ['./confirm.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

@@ -1,5 +1,5 @@
 import {HTTP_HEADERS, HTTP_STATUS} from '../../st-const';
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {DevService} from '../service/dev.service';
 import {Pair} from '../../model/pair';
 import {UntypedFormControl, Validators} from '@angular/forms';
@@ -9,6 +9,7 @@ import {UntypedFormControl, Validators} from '@angular/forms';
         selector: 'st-tool',
         templateUrl: './tools.component.html',
         styleUrls: ['./tools.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

@@ -1,4 +1,4 @@
-import {Component, HostBinding, HostListener, Input, OnInit, inject} from '@angular/core';
+import {Component, HostBinding, HostListener, Input, OnInit, inject, ChangeDetectionStrategy} from '@angular/core';
 import {GardenTagPrintComponent} from '../garden-tag-print/garden-tag-print.component';
 import {Garden} from '../../model/garden';
 import {MatDialog} from '@angular/material/dialog';
@@ -9,6 +9,7 @@ import {environment} from '../../../../environments/environment';
         selector: 'st-garden-tag',
         templateUrl: './garden-tag.component.html',
         styleUrls: ['./garden-tag.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

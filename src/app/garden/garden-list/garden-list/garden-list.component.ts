@@ -1,5 +1,5 @@
 import {AbstractList} from '../../../ui/list/list/abstract-list';
-import {Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren, inject} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren, inject, ChangeDetectionStrategy} from '@angular/core';
 import {GardenListItemComponent} from '../garden-list-item/garden-list-item.component';
 import {GardenService} from '../../service/garden.service';
 import {Garden} from '../../model/garden';
@@ -11,6 +11,7 @@ import {Subscription} from 'rxjs';
         selector: 'st-garden-list',
         templateUrl: './garden-list.component.html',
         styleUrls: ['./garden-list.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

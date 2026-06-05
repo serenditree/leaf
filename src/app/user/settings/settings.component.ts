@@ -1,5 +1,5 @@
 import {ActivatedRoute} from '@angular/router';
-import {Component, OnDestroy, OnInit, inject} from '@angular/core';
+import {Component, OnDestroy, OnInit, inject, ChangeDetectionStrategy} from '@angular/core';
 import {ConfirmComponent} from '../../ui/confirm/confirm/confirm.component';
 import {FenceService} from '../../fence/service/fence.service';
 import {Issuer} from '../model/issuer';
@@ -14,6 +14,7 @@ import {environment} from '../../../environments/environment';
         selector: 'st-settings',
         templateUrl: './settings.component.html',
         styleUrls: ['./settings.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

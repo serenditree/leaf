@@ -22,7 +22,7 @@ import {SeedNewComponent} from './seed-new/seed-new.component';
 import {SeedService} from './service/seed.service';
 import {SeedTrailComponent} from './seed-trail/seed-trail.component';
 import {ToggleModule} from '../ui/toggle/toggle.module';
-import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 import {StEllipsisPipe} from '../utils/pipes/st-ellipsis.pipe';
 import {StHighlightPipe} from '../utils/pipes/st-highlight.pipe';
 import {StTagsPipe} from '../utils/pipes/st-tags.pipe';
@@ -69,7 +69,7 @@ import {StTagsPipe} from '../utils/pipes/st-tags.pipe';
         ],
         providers: [
             SeedService,
-            provideHttpClient(withInterceptorsFromDi())
+            provideHttpClient(withXhr(), withInterceptorsFromDi())
         ]
     }
 )

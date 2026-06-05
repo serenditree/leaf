@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewEncapsulation, inject} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation, inject, ChangeDetectionStrategy} from '@angular/core';
 import {FenceService} from '../../../fence/service/fence.service';
 import {LayoutService} from '../../layout/service/layout.service';
 import {Router} from '@angular/router';
@@ -12,6 +12,7 @@ import {MenuService} from '../service/menu.service';
         templateUrl: './menu-top.component.html',
         styleUrls: ['./menu-top.component.scss'],
         encapsulation: ViewEncapsulation.None,
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

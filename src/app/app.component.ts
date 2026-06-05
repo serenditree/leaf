@@ -1,5 +1,5 @@
 import {EXACT_MATCH_TRUE} from './utils/st-const';
-import {AfterViewInit, Component, HostListener, OnDestroy, inject} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnDestroy, inject, ChangeDetectionStrategy} from '@angular/core';
 import {LayoutService} from './ui/layout/service/layout.service';
 import {MapService} from './map/service/map.service';
 import {MatIconRegistry} from '@angular/material/icon';
@@ -16,6 +16,7 @@ import {filter} from 'rxjs/operators';
         selector: 'st-root',
         templateUrl: './app.component.html',
         styleUrls: ['./app.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

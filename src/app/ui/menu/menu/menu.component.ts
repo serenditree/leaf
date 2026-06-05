@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, ViewEncapsulation, ChangeDetectionStrategy} from '@angular/core';
 
 @Component(
     {
@@ -6,6 +6,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
         templateUrl: './menu.component.html',
         styleUrls: ['./menu.component.scss'],
         encapsulation: ViewEncapsulation.None,
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

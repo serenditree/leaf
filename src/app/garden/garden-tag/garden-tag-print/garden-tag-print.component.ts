@@ -1,5 +1,5 @@
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {Garden} from '../../model/garden';
 import {LayoutService} from '../../../ui/layout/service/layout.service';
 
@@ -8,6 +8,7 @@ import {LayoutService} from '../../../ui/layout/service/layout.service';
         selector: 'st-garden-tag-print',
         templateUrl: './garden-tag-print.component.html',
         styleUrls: ['./garden-tag-print.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

@@ -1,5 +1,5 @@
 import {Chart} from 'chart.js/auto';
-import {Component, ElementRef, Input, OnInit, ViewChild, inject} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild, inject, ChangeDetectionStrategy} from '@angular/core';
 import {FenceService} from '../../fence/service/fence.service';
 import {FenceType} from '../../fence/model/fence-type.enum';
 import {PollOption} from '../model/poll-option';
@@ -12,6 +12,7 @@ import {StUtils} from '../../utils/st-utils';
         selector: 'st-chart',
         templateUrl: './chart.component.html',
         styleUrls: ['./chart.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

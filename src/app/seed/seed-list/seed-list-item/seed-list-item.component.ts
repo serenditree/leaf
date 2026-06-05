@@ -1,5 +1,5 @@
 import {AbstractListItem} from '../../../ui/list/list/abstract-list-item';
-import {Component, Input, inject} from '@angular/core';
+import {Component, Input, inject, ChangeDetectionStrategy} from '@angular/core';
 import {LayoutService} from '../../../ui/layout/service/layout.service';
 import {ListEventService} from '../../../ui/list/service/list-event.service';
 import {Seed} from '../../model/seed';
@@ -10,6 +10,7 @@ import {environment} from '../../../../environments/environment';
         selector: 'st-seed-list-item',
         templateUrl: './seed-list-item.component.html',
         styleUrls: ['./seed-list-item.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )

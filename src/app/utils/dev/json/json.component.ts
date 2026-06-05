@@ -1,10 +1,11 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 
 @Component(
     {
         selector: 'st-json',
         templateUrl: './json.component.html',
         styleUrls: ['./json.component.scss'],
+        changeDetection: ChangeDetectionStrategy.Eager,
         standalone: false
     }
 )
