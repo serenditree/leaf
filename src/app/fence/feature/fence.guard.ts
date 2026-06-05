@@ -14,8 +14,8 @@ import {Observable} from 'rxjs';
                 providedIn: 'root'
             })
 class FenceGuardService {
-    private _router = inject(Router);
-    private _fenceService = inject(FenceService);
+    private readonly _router = inject(Router);
+    private readonly _fenceService = inject(FenceService);
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         return this._isAuthenticated(state);

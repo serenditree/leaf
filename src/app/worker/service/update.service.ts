@@ -7,8 +7,8 @@ import {filter} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class UpdateService {
-    private _update = inject(SwUpdate);
-    private _confirmDialog = inject(MatDialog);
+    private readonly _update = inject(SwUpdate);
+    private readonly _confirmDialog = inject(MatDialog);
 
     constructor() {
         if (environment.production) {

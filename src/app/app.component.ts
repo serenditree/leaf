@@ -5,8 +5,7 @@ import {MapService} from './map/service/map.service';
 import {MatIconRegistry} from '@angular/material/icon';
 import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {SearchService} from './search/service/search.service';
-import {Subscription} from 'rxjs';
-import {BehaviorSubject} from 'rxjs';
+import {Subscription, BehaviorSubject} from 'rxjs';
 import {UpdateService} from './worker/service/update.service';
 import {environment} from '../environments/environment';
 import {filter} from 'rxjs/operators';
@@ -21,18 +20,18 @@ import {filter} from 'rxjs/operators';
     }
 )
 export class AppComponent implements AfterViewInit, OnDestroy {
-    private _updateService = inject(UpdateService);
+    private readonly _updateService = inject(UpdateService);
 
-    private _router = inject(Router);
-    private _matIconRegistry = inject(MatIconRegistry);
-    private _layoutService = inject(LayoutService);
-    private _searchService = inject(SearchService);
-    private _mapService = inject(MapService);
+    private readonly _router = inject(Router);
+    private readonly _matIconRegistry = inject(MatIconRegistry);
+    private readonly _layoutService = inject(LayoutService);
+    private readonly _searchService = inject(SearchService);
+    private readonly _mapService = inject(MapService);
     private _mapNavigation = false;
-    private _mapNavigationSubject: BehaviorSubject<boolean>;
+    private _mapNavigationSubject!: BehaviorSubject<boolean>;
 
-    private _routerEventSubscription: Subscription;
-    private _mapNavigationSubscription: Subscription;
+    private _routerEventSubscription!: Subscription;
+    private _mapNavigationSubscription!: Subscription;
 
     constructor() {
         this._matIconRegistry.registerFontClassAlias('fa');
@@ -122,8 +121,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
                    !event.ctrlKey &&
                    !event.metaKey &&
                    !event.shiftKey &&
-                   event.target['nodeName'] !== 'INPUT' &&
-                   event.target['nodeName'] !== 'TEXTAREA' &&
+                   (event.target as Element).nodeName !== 'INPUT' &&
+                   (event.target as Element).nodeName !== 'TEXTAREA' &&
                    event.key.trim().length === 1) {
 
             this._searchService.setSearchFocus(true);

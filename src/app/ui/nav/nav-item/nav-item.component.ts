@@ -11,16 +11,16 @@ import {IsActiveMatchOptions} from '@angular/router';
     }
 )
 export class NavItemComponent {
-    private _text: string;
-    private _textUnderline: false;
+    private _text!: string;
+    private _textUnderline!: false;
     private _set = 'fa';
-    private _icon: string;
-    private _iconClassList: string[];
-    private _routerLink: string;
+    private _icon!: string;
+    private _iconClassList!: string[];
+    private _routerLink!: string;
     private _routerLinkActiveOptions: {exact: boolean} | IsActiveMatchOptions = {exact: true};
     private _disabled = false;
-    private _active: boolean;
-    private _fab: boolean;
+    private _active!: boolean;
+    private _fab!: boolean;
 
     get text(): string {
         return this._text;

@@ -21,10 +21,10 @@ import {environment} from '../../../environments/environment';
 export class SettingsComponent implements OnInit, OnDestroy {
     protected _route = inject(ActivatedRoute);
     protected _confirmDialog = inject(MatDialog);
-    private _userService = inject(UserService);
-    private _fenceService = inject(FenceService);
+    private readonly _userService = inject(UserService);
+    private readonly _fenceService = inject(FenceService);
 
-    private _queryParamsSubscription: Subscription;
+    private _queryParamsSubscription!: Subscription;
 
     public countryControl = new UntypedFormControl('AT', Validators.required);
     public countries: Issuer[] = [

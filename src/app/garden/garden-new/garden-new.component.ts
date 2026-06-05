@@ -20,8 +20,8 @@ import {finalize} from 'rxjs/operators';
 export class GardenNewComponent extends AbstractSeedNewComponent<Garden> implements OnInit, OnDestroy {
     protected _location: Location;
     protected _mapService: MapService;
-    private _indicator = inject(IndicatorService);
-    private _gardenService = inject(GardenService);
+    private readonly _indicator = inject(IndicatorService);
+    private readonly _gardenService = inject(GardenService);
 
     constructor() {
         const _location = inject(Location);

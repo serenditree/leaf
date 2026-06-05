@@ -17,14 +17,14 @@ import {MenuService} from '../service/menu.service';
     }
 )
 export class MenuTopComponent implements OnInit, OnDestroy {
-    private _fenceService = inject(FenceService);
-    private _searchService = inject(SearchService);
-    private _layoutService = inject(LayoutService);
-    private _menuService = inject(MenuService);
-    private _router = inject(Router);
+    private readonly _fenceService = inject(FenceService);
+    private readonly _searchService = inject(SearchService);
+    private readonly _layoutService = inject(LayoutService);
+    private readonly _menuService = inject(MenuService);
+    private readonly _router = inject(Router);
 
     private _showSearch = false;
-    private _isSearchFocusedSubscription: Subscription;
+    private _isSearchFocusedSubscription!: Subscription;
 
     get username(): string {
         return this._fenceService.getUsername() || '';

@@ -18,12 +18,12 @@ import {SearchService} from '../../../search/service/search.service';
     }
 )
 export class MenuSubComponent {
-    private _router = inject(Router);
-    private _searchService = inject(SearchService);
-    private _filterService = inject(FilterService);
-    private _layoutService = inject(LayoutService);
-    private _menuService = inject(MenuService);
-    private _fenceService = inject(FenceService);
+    private readonly _router = inject(Router);
+    private readonly _searchService = inject(SearchService);
+    private readonly _filterService = inject(FilterService);
+    private readonly _layoutService = inject(LayoutService);
+    private readonly _menuService = inject(MenuService);
+    private readonly _fenceService = inject(FenceService);
 
     private _decentralized = false;
 
@@ -56,7 +56,7 @@ export class MenuSubComponent {
     }
 
     public isActive(component: string): boolean {
-        let active: boolean;
+        let active = false;
 
         if (component === 'discover') {
             active = this._router.isActive('/seeds', EXACT_MATCH_TRUE)

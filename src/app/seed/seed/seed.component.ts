@@ -29,11 +29,11 @@ export class SeedComponent extends AbstractSeedComponent<Seed> implements OnInit
     protected _fenceService: FenceService;
     protected _confirmDialog: MatDialog;
     protected _messageService: MessageService;
-    private _pollService = inject(PollService);
+    private readonly _pollService = inject(PollService);
 
     private _waterOrPruneAllowed = false;
     private _nubitAllowed = false;
-    private _pollsSubscription: Subscription;
+    private _pollsSubscription!: Subscription;
 
     constructor() {
         const _route = inject(ActivatedRoute);

@@ -8,13 +8,13 @@ import {User} from '../../user/model/user';
 
 @Injectable({providedIn: 'root'})
 export class SearchService {
-    private _filterService = inject(FilterService);
-    private _userService = inject(UserService);
-    private _seedService = inject(SeedService);
+    private readonly _filterService = inject(FilterService);
+    private readonly _userService = inject(UserService);
+    private readonly _seedService = inject(SeedService);
 
     public static readonly MIN_TERM_LENGTH = 3;
 
-    private _isFocusedSubject = new BehaviorSubject<boolean>(false);
+    private readonly _isFocusedSubject = new BehaviorSubject<boolean>(false);
 
     get isFocusedObservable(): Observable<boolean> {
         return this._isFocusedSubject.asObservable();

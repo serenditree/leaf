@@ -8,10 +8,10 @@ import {ListItemEvent} from '../model/list-item-event';
 export abstract class AbstractListItem<T extends AbstractSeed> {
 
     private _active = false;
+    private readonly _maxLines = 4;
     private _maxWords = 128;
-    private _maxLines = 4;
 
-    protected _seed: T;
+    protected _seed!: T;
 
     protected constructor(protected _layoutService: LayoutService,
                           protected _listEventService: ListEventService) {

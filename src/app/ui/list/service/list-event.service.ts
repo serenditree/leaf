@@ -5,8 +5,8 @@ import {Observable, Subject} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class ListEventService {
-    private _listEventSubject = new Subject<ListEvent>();
-    private _listItemEventSubject = new Subject<ListItemEvent>();
+    private readonly _listEventSubject = new Subject<ListEvent>();
+    private readonly _listItemEventSubject = new Subject<ListItemEvent>();
 
     get listEventObservable(): Observable<ListEvent> {
         return this._listEventSubject.asObservable();

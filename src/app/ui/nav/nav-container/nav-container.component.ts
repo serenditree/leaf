@@ -13,7 +13,7 @@ import {Component, Input, ViewEncapsulation, ChangeDetectionStrategy} from '@ang
 export class NavContainerComponent {
 
     private _responsive = true;
-    private _align: string;
+    private _align!: string;
 
     get responsive(): boolean {
         return this._responsive;

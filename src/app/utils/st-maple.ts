@@ -6,11 +6,11 @@ export class StMaple {
      * @param {T} to Target object.
      * @returns {T} Target object with property values from the original object.
      */
-    public static map<T>(from: Record<string, any>, to: T): T {
+    public static map<T extends object>(from: Record<string, any>, to: T): T {
         Object.keys(from).forEach((key) => {
             // eslint-disable-next-line no-prototype-builtins
-            if (from.hasOwnProperty(key) && to.hasOwnProperty(key)) {
-                to[key] = from[key];
+            if (from.hasOwnProperty(key) && (to as any).hasOwnProperty(key)) {
+                (to as any)[key] = from[key];
             }
         });
 

@@ -7,7 +7,7 @@ import {catchError} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class FenceInterceptor implements HttpInterceptor {
-    private _fenceService = inject(FenceService);
+    private readonly _fenceService = inject(FenceService);
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const token = localStorage.getItem(FenceService.TOKEN_KEY);

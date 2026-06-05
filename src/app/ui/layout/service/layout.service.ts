@@ -6,13 +6,13 @@ import {environment} from '../../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class LayoutService implements OnDestroy {
-    private _breakpointObserver = inject(BreakpointObserver);
-    private _mediaMatcher = inject(MediaMatcher);
+    private readonly _breakpointObserver = inject(BreakpointObserver);
+    private readonly _mediaMatcher = inject(MediaMatcher);
 
     public static readonly MOBILE = BREAKPOINTS.LT_MD;
     public static readonly STANDALONE = '(display-mode: standalone)';
 
-    private readonly _breakpointSubscription: Subscription;
+    private readonly _breakpointSubscription: Subscription | undefined;
 
     constructor() {
 

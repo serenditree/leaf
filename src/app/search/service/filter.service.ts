@@ -8,8 +8,7 @@ import {SeedFilter} from '../../seed/model/seed-filter';
 export class FilterService {
 
     private readonly _seedFilterBuilder: SeedFilterBuilder;
-
-    private _isFilterFocusedSubject = new BehaviorSubject<boolean>(false);
+    private readonly _isFilterFocusedSubject = new BehaviorSubject<boolean>(false);
 
     constructor() {
         this._seedFilterBuilder = new SeedFilterBuilder();

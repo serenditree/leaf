@@ -18,10 +18,10 @@ import {finalize} from 'rxjs/operators';
     }
 )
 export class SignInComponent extends AbstractFenceComponent implements OnInit {
-    private _fenceService = inject(FenceService);
-    private _messageService = inject(MessageService);
-    private _formBuilder = inject(UntypedFormBuilder);
-    private _indicator = inject(IndicatorService);
+    private readonly _fenceService = inject(FenceService);
+    private readonly _messageService = inject(MessageService);
+    private readonly _formBuilder = inject(UntypedFormBuilder);
+    private readonly _indicator = inject(IndicatorService);
 
     ngOnInit(): void {
         this._formGroup = this._formBuilder.group(

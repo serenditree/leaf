@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
 @Injectable({providedIn: 'root'})
 export class IndicatorService {
 
-    private _isVisibleSubject = new BehaviorSubject<boolean>(false);
+    private readonly _isVisibleSubject = new BehaviorSubject<boolean>(false);
     private _timeout: any;
 
     get isVisibleObservable(): Observable<boolean> {

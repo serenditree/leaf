@@ -28,18 +28,18 @@ import {Subscription} from 'rxjs';
     }
 )
 export class SeedListComponent extends AbstractList<Seed> implements OnInit, OnDestroy {
-    private _seedService = inject(SeedService);
-    private _mapService = inject(MapService);
+    private readonly _seedService = inject(SeedService);
+    private readonly _mapService = inject(MapService);
 
     @ViewChildren(SeedListItemComponent, {read: ElementRef})
-    protected _itemElements: QueryList<ElementRef>;
+    protected _itemElements!: QueryList<ElementRef>;
 
     private _emptyListMessage = 'Nothing planted around here...';
-    private _onSeedsUpdateEmitter = new EventEmitter<Seed[]>();
+    private readonly _onSeedsUpdateEmitter = new EventEmitter<Seed[]>();
 
-    private _seedsSubscription: Subscription;
-    private _trailSubscription: Subscription;
-    private _markerSubscription: Subscription;
+    private _seedsSubscription!: Subscription;
+    private _trailSubscription!: Subscription;
+    private _markerSubscription!: Subscription;
 
     get emptyListMessage(): string {
         return this._emptyListMessage;

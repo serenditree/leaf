@@ -14,24 +14,24 @@ import {environment} from '../../../../environments/environment';
     }
 )
 export class GardenTagComponent implements OnInit {
-    private _gardenTagPrintDialog = inject(MatDialog);
+    private readonly _gardenTagPrintDialog = inject(MatDialog);
 
     private static readonly TAG_FOREGROUND_ACTIVE = '#000';
     private static readonly TAG_FOREGROUND_INACTIVE = '#666';
 
-    private _garden: Garden;
-    private _size: number;
+    private _garden!: Garden;
+    private _size!: number;
     private _color = GardenTagComponent.TAG_FOREGROUND_INACTIVE;
     private _clickable = true;
 
     @HostListener('click')
-    private _clickListener = this._onClick;
+    private readonly _clickListener = this._onClick;
 
     @HostListener('mouseover')
-    private _mouseOverListener = this._onMouseOver;
+    private readonly _mouseOverListener = this._onMouseOver;
 
     @HostListener('mouseout')
-    private _mouseOutListener = this._onMouseOut;
+    private readonly _mouseOutListener = this._onMouseOut;
 
     @HostBinding('class.no-hover')
     private _noHover = false;

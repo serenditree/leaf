@@ -10,6 +10,6 @@ export class UiResponse {
     }
 
     public ok(): boolean {
-        return this.code && this.code === 200;
+        return !!this.code && this.code === 200;
     }
 }

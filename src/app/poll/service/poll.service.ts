@@ -7,11 +7,10 @@ import {environment} from '../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class PollService {
-    private _http = inject(HttpClient);
-
     private readonly BASE_URL_POLL = environment.API_BASE_URL_POLL;
 
-    private _pollsSubject = new Subject<Poll[]>();
+    private readonly _http = inject(HttpClient);
+    private readonly _pollsSubject = new Subject<Poll[]>();
 
     get pollsObservable(): Observable<Poll[]> {
         return this._pollsSubject.asObservable();

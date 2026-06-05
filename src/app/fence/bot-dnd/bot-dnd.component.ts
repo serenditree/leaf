@@ -12,8 +12,8 @@ import {Component, EventEmitter, Output, ChangeDetectionStrategy} from '@angular
 )
 export class BotDndComponent {
 
-    private _onTuring = new EventEmitter<boolean>();
-    private _words = [
+    private readonly _onTuring = new EventEmitter<boolean>();
+    private readonly _words = [
         'am',
         'I',
         'human'

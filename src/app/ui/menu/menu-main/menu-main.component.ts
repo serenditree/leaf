@@ -13,10 +13,10 @@ import {Router} from '@angular/router';
     }
 )
 export class MenuMainComponent {
-    private _layoutService = inject(LayoutService);
-    private _router = inject(Router);
+    private readonly _layoutService = inject(LayoutService);
+    private readonly _router = inject(Router);
 
-    private _align: string;
+    private _align!: string;
 
     get align(): string {
         return this._align;

@@ -15,11 +15,11 @@ import {SeedService} from '../../seed/service/seed.service';
 
 @Injectable({providedIn: 'root'})
 export class MapService implements OnDestroy {
-    private _router = inject(Router);
-    private _seedService = inject(SeedService);
-    private _gardenService = inject(GardenService);
-    private _listEventService = inject(ListEventService);
-    private _messageService = inject(MessageService);
+    private readonly _router = inject(Router);
+    private readonly _seedService = inject(SeedService);
+    private readonly _gardenService = inject(GardenService);
+    private readonly _listEventService = inject(ListEventService);
+    private readonly _messageService = inject(MessageService);
 
     private readonly MARKER_UPDATE_TIMEOUT = 700;
     private readonly MARKER_FONT_SIZE_DEFAULT = 18;
@@ -29,25 +29,25 @@ export class MapService implements OnDestroy {
     private readonly SEED_PATH_REGEX = /\/seeds\/\S+/;
     private readonly GARDEN_PATH_REGEX = /\/gardens\/\S+/;
 
-    private _mapComponent: MapComponent;
-    private _mapNavigationSubject = new BehaviorSubject<boolean>(false);
-    private _singleMarker: MarkerContainer;
+    private _mapComponent!: MapComponent;
+    private readonly _mapNavigationSubject = new BehaviorSubject<boolean>(false);
+    private _singleMarker: MarkerContainer | null = null;
     private _seedMarkers: MarkerContainer[] = [];
-    private _seedMarkerSubject = new BehaviorSubject<MarkerEvent>(new MarkerEvent());
-    private _seedsSubscription: Subscription;
+    private readonly _seedMarkerSubject = new BehaviorSubject<MarkerEvent>(new MarkerEvent());
+    private _seedsSubscription!: Subscription;
     private _trailMarkers: MarkerContainer[] = [];
-    private _trailSubscription: Subscription;
-    private _trail: string;
+    private _trailSubscription!: Subscription;
+    private _trail!: string;
     private _isTrailOnMap = false;
     private _gardenMarkers: MarkerContainer[] = [];
-    private _gardenMarkerSubject = new BehaviorSubject<MarkerEvent>(new MarkerEvent());
-    private _gardensSubscription: Subscription;
-    private _listItemEventSubscription: Subscription;
-    private _markerContext: MarkerContext = new MarkerContext();
+    private readonly _gardenMarkerSubject = new BehaviorSubject<MarkerEvent>(new MarkerEvent());
+    private _gardensSubscription!: Subscription;
+    private _listItemEventSubscription!: Subscription;
+    private readonly _markerContext: MarkerContext = new MarkerContext();
     private _updateMarkersTimeout: any;
-    private _center: LngLat;
-    private _centerSubject = new Subject<LngLat>();
-    private _zoom: number;
+    private _center!: LngLat;
+    private readonly _centerSubject = new Subject<LngLat>();
+    private _zoom!: number;
 
     get mapNavigationSubject(): BehaviorSubject<boolean> {
         return this._mapNavigationSubject;
@@ -163,7 +163,7 @@ export class MapService implements OnDestroy {
     private _subscribeToRouterEvents(): void {
         this._router.events.forEach((event) => {
             if (event instanceof NavigationStart) {
-                this._markerContext.from = this._router.currentNavigation().extras;
+                this._markerContext.from = this._router.currentNavigation()?.extras ?? {};
                 if (['/', '/seeds', '/gardens'].includes(event.url)) {
                     this._onMultiRoute(event.url);
                 } else if (event.url.startsWith('/trail')) {
@@ -226,7 +226,7 @@ export class MapService implements OnDestroy {
         this._markerContext.type = MarkerType.TRAIL;
         this._markerContext.update = false;
         this._markerContext.persistent = false;
-        this._trail = url.split('/').at(-1);
+        this._trail = url.split('/').at(-1) ?? '';
         this._mapComponent.clearMarkers();
         this._showMarkers(MarkerType.TRAIL);
     }
@@ -338,8 +338,10 @@ export class MapService implements OnDestroy {
         if (!this._markerContext.persistent) {
             this._markerContext.persistent = true;
             const targetMarker = markers.find((marker) => marker.id === id);
-            this._deactivateMarker(targetMarker);
-            this._mapComponent.flyTo(targetMarker.marker.getLngLat(), MapComponent.MARKER_FLY_TO_ZOOM);
+            if (targetMarker) {
+                this._deactivateMarker(targetMarker);
+                this._mapComponent.flyTo(targetMarker.marker.getLngLat(), MapComponent.MARKER_FLY_TO_ZOOM);
+            }
         }
     }
 

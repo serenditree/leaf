@@ -16,14 +16,14 @@ import {Subscription} from 'rxjs';
     }
 )
 export class GardenListComponent extends AbstractList<Garden> implements OnInit, OnDestroy {
-    private _gardenService = inject(GardenService);
-    private _mapService = inject(MapService);
+    private readonly _gardenService = inject(GardenService);
+    private readonly _mapService = inject(MapService);
 
     @ViewChildren(GardenListItemComponent, {read: ElementRef})
-    protected _itemElements: QueryList<ElementRef>;
+    protected _itemElements!: QueryList<ElementRef>;
 
-    private _gardensSubscription: Subscription;
-    private _markerSubscription: Subscription;
+    private _gardensSubscription!: Subscription;
+    private _markerSubscription!: Subscription;
 
     get gardens(): Garden[] {
         return this._items;

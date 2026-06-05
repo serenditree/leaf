@@ -6,7 +6,7 @@ import {Seed} from './seed';
 // TODO fluent api builder
 export class SeedFilterBuilder extends Seed {
 
-    private _filter: SeedFilter = null;
+    private _filter!: SeedFilter;
 
     constructor() {
         super();
@@ -18,18 +18,18 @@ export class SeedFilterBuilder extends Seed {
         return this;
     }
 
-    public setUserId(userId: number): SeedFilterBuilder {
-        this._filter.userId = userId;
+    public setUserId(userId: number | null): SeedFilterBuilder {
+        this._filter.userId = userId as number;
         return this;
     }
 
-    public setUsername(username: string): SeedFilterBuilder {
-        this._filter.username = username;
+    public setUsername(username: string | null): SeedFilterBuilder {
+        this._filter.username = username as string;
         return this;
     }
 
-    public setTags(tags: string[]): SeedFilterBuilder {
-        this._filter.tags = tags;
+    public setTags(tags: string[] | null): SeedFilterBuilder {
+        this._filter.tags = tags as string[];
         return this;
     }
 

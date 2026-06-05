@@ -34,11 +34,11 @@ import {environment} from '../../../environments/environment';
     }
 )
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
-    private _mapService = inject(MapService);
-    private _searchService = inject(SearchService);
-    private _filterService = inject(FilterService);
-    private _layoutService = inject(LayoutService);
-    private _router = inject(Router);
+    private readonly _mapService = inject(MapService);
+    private readonly _searchService = inject(SearchService);
+    private readonly _filterService = inject(FilterService);
+    private readonly _layoutService = inject(LayoutService);
+    private readonly _router = inject(Router);
 
     public static readonly MARKER_FLY_TO_DURATION = 1400;
     public static readonly MARKER_FLY_TO_ZOOM = 16;
@@ -61,18 +61,18 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     };
 
     @ViewChild('mapContainer', {static: true})
-    private readonly _mapContainer: ElementRef;
+    private readonly _mapContainer!: ElementRef;
     @ViewChild('mapOverlay', {static: true})
-    private readonly _mapOverlay: ElementRef;
+    private readonly _mapOverlay!: ElementRef;
 
-    private _map: Map;
+    private _map!: Map;
     private _markers: MarkerContainer[] = [];
     private _mapNavigation = false;
-    private _mapNavigationSubscription: Subscription;
-    private _isSearchFocused: boolean;
-    private _isSearchFocusedSubscription: Subscription;
-    private _isFilterFocused: boolean;
-    private _isFilterFocusedSubscription: Subscription;
+    private _mapNavigationSubscription!: Subscription;
+    private _isSearchFocused!: boolean;
+    private _isSearchFocusedSubscription!: Subscription;
+    private _isFilterFocused!: boolean;
+    private _isFilterFocusedSubscription!: Subscription;
 
     get showSearchOverlay(): boolean {
         return !this._layoutService.isMobile() && this._isSearchFocused;

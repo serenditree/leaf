@@ -12,8 +12,8 @@ import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@
 export class ToggleComponent {
 
     private _isActive = false;
-    private _name: string;
-    private _onToggle = new EventEmitter<boolean>();
+    private _name!: string;
+    private readonly _onToggle = new EventEmitter<boolean>();
 
     get isActive(): boolean {
         return this._isActive;

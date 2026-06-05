@@ -12,10 +12,10 @@ import {Subscription} from 'rxjs';
 
 export abstract class AbstractSeedComponent<T extends AbstractSeed> {
 
-    protected _seed: T;
+    protected _seed!: T;
 
-    private _seedSubscription: Subscription;
-    private _idSubscription: Subscription;
+    private _seedSubscription!: Subscription;
+    private _idSubscription!: Subscription;
 
     protected constructor(protected _route: ActivatedRoute,
                           protected _mapService: MapService,

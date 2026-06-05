@@ -8,17 +8,17 @@ import {MarkerEvent} from '../../../map/model/marker-event';
 export abstract class AbstractList<T extends AbstractSeed> implements OnInit {
 
     protected _layoutService = inject(LayoutService);
-    protected _activeItemId: string;
-    protected _items: T[];
-    protected _itemElements: QueryList<ElementRef>;
+    protected _activeItemId: string | null = null;
+    protected _items!: T[];
+    protected _itemElements!: QueryList<ElementRef>;
 
-    private _offset: number;
+    private _offset!: number;
 
     ngOnInit(): void {
         this._onInitAndWindowResize();
     }
 
-    get activeItemId(): string {
+    get activeItemId(): string | null {
         return this._activeItemId;
     }
 
@@ -46,7 +46,7 @@ export abstract class AbstractList<T extends AbstractSeed> implements OnInit {
                 setTimeout(
                     () => {
                         // set after scroll has ended to make the activation-animation visible
-                        this._activeItemId = marker.id;
+                        this._activeItemId = marker.id ?? null;
                     },
                     SCROLL_TIME + 420
                 );
@@ -67,7 +67,7 @@ export abstract class AbstractList<T extends AbstractSeed> implements OnInit {
             );
             window.scroll(
                 {
-                    top: itemIndex === 0 ? 0 : itemElement.nativeElement.offsetTop + this._offset,
+                    top: itemIndex === 0 ? 0 : itemElement!.nativeElement.offsetTop + this._offset,
                     behavior: 'smooth'
                 }
             );

@@ -13,9 +13,9 @@ import {MenuService} from '../service/menu.service';
     }
 )
 export class MenuFabComponent {
-    private _menuService = inject(MenuService);
-    private _filterService = inject(FilterService);
-    private _location = inject(Location);
+    private readonly _menuService = inject(MenuService);
+    private readonly _filterService = inject(FilterService);
+    private readonly _location = inject(Location);
 
     private _isElevated = true;
     private _action = '';

@@ -17,8 +17,8 @@ import {StUtils} from '../../utils/st-utils';
     }
 )
 export class ChartComponent implements OnInit {
-    private _pollService = inject(PollService);
-    private _fenceService = inject(FenceService);
+    private readonly _pollService = inject(PollService);
+    private readonly _fenceService = inject(FenceService);
 
     private static readonly DEFAULT_FONT = {
         family: 'Quicksand',
@@ -46,15 +46,15 @@ export class ChartComponent implements OnInit {
         'rgba(242, 243, 240, .7)'
     ];
 
-    private _poll: Poll;
-    private _pollOptions: PollOption[];
+    private _poll!: Poll;
+    private _pollOptions!: PollOption[];
     private _selectedIndex = -1;
     private _totalVotes = 0;
     private _isVotingAllowed = false;
 
     @ViewChild('chartCanvas', {static: true})
-    private _chartCanvas: ElementRef;
-    private _chart: Chart;
+    private readonly _chartCanvas!: ElementRef;
+    private _chart!: Chart;
 
     get poll(): Poll {
         return this._poll;
@@ -180,7 +180,7 @@ export class ChartComponent implements OnInit {
         } else {
             this._pollOptions.forEach(
                 (option) => {
-                    this._chart.data.labels.push(option.text);
+                    this._chart.data.labels!.push(option.text);
                     this._chart.data.datasets[0].data.push(option.votes);
                     this._totalVotes += option.votes;
                 }
@@ -190,7 +190,7 @@ export class ChartComponent implements OnInit {
     }
 
     private _setTooltipTitle(data: any): string {
-        const label = this._chart.data.labels[data[0].dataIndex] as string;
+        const label = this._chart.data.labels![data[0].dataIndex] as string;
 
         return StUtils.ellipsis(label, 16);
     }

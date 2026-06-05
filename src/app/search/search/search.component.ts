@@ -20,19 +20,19 @@ import {debounceTime, tap} from 'rxjs/operators';
 export class SearchComponent implements OnInit, OnDestroy {
     private static readonly MAX_TOTAL_RESULTS = 10;
 
-    private _searchService = inject(SearchService);
-    private _layoutService = inject(LayoutService);
-    private _changeDetection = inject(ChangeDetectorRef);
+    private readonly _searchService = inject(SearchService);
+    private readonly _layoutService = inject(LayoutService);
+    private readonly _changeDetection = inject(ChangeDetectorRef);
 
-    private _formControl = new UntypedFormControl();
+    private readonly _formControl = new UntypedFormControl();
     private _term = '';
     private _users: User[] = [];
     private _isUserSearch = false;
     private _tags: string[] = [];
     private _isTagSearch = false;
-    private _searchTermSubscription: Subscription;
-    private _isSearchFocused: boolean;
-    private _isSearchFocusedSubscription: Subscription;
+    private _searchTermSubscription!: Subscription;
+    private _isSearchFocused!: boolean;
+    private _isSearchFocusedSubscription!: Subscription;
 
     get isMobile(): boolean {
         return this._layoutService.isMobile();

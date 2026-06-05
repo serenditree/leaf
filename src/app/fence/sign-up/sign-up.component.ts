@@ -23,11 +23,11 @@ import {finalize, map, switchMap} from 'rxjs/operators';
     }
 )
 export class SignUpComponent extends AbstractFenceComponent implements OnInit {
-    private _fenceService = inject(FenceService);
-    private _userService = inject(UserService);
-    private _formBuilder = inject(UntypedFormBuilder);
-    private _indicator = inject(IndicatorService);
-    private _messageService = inject(MessageService);
+    private readonly _fenceService = inject(FenceService);
+    private readonly _userService = inject(UserService);
+    private readonly _formBuilder = inject(UntypedFormBuilder);
+    private readonly _indicator = inject(IndicatorService);
+    private readonly _messageService = inject(MessageService);
 
     private _turing = false;
     private _agreed = false;

@@ -5,7 +5,7 @@ export abstract class AbstractFenceComponent {
     private static readonly VISIBLE = 'visibility';
     private static readonly INVISIBLE = 'visibility_off';
 
-    protected _formGroup: UntypedFormGroup;
+    protected _formGroup!: UntypedFormGroup;
     protected _submitted = false;
     private _passwordVisible = AbstractFenceComponent.INVISIBLE;
 

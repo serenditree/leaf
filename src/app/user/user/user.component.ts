@@ -11,9 +11,9 @@ import {FenceService} from '../../fence/service/fence.service';
     }
 )
 export class UserComponent {
-    private _fenceService = inject(FenceService);
+    private readonly _fenceService = inject(FenceService);
 
     get username(): string {
-        return this._fenceService.getUsername();
+        return this._fenceService.getUsername() ?? '';
     }
 }

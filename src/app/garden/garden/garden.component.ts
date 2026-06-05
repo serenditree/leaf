@@ -27,7 +27,7 @@ export class GardenComponent extends AbstractSeedComponent<Garden> implements On
     protected _fenceService: FenceService;
     protected _confirmDialog: MatDialog;
     protected _messageService: MessageService;
-    private _childService = inject(SeedService);
+    private readonly _childService = inject(SeedService);
 
     constructor() {
         const _route = inject(ActivatedRoute);

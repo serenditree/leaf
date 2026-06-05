@@ -1,5 +1,5 @@
 export class PollOption {
-    public id: number;
+    public id!: number;
     public text: string;
     public votes: number;
 

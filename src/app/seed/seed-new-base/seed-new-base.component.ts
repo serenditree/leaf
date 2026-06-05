@@ -18,19 +18,19 @@ import {debounceTime} from 'rxjs/operators';
     }
 )
 export class SeedNewBaseComponent implements OnInit, OnDestroy {
-    private _mapService = inject(MapService);
-    private _searchService = inject(SearchService);
-    private _formBuilder = inject(UntypedFormBuilder);
+    private readonly _mapService = inject(MapService);
+    private readonly _searchService = inject(SearchService);
+    private readonly _formBuilder = inject(UntypedFormBuilder);
 
-    private _parentFormGroup: UntypedFormGroup;
-    private _parent: AbstractSeed;
+    private _parentFormGroup!: UntypedFormGroup;
+    private _parent!: AbstractSeed;
     private _term = '';
-    private _tags: Observable<string[]>;
-    private _centerSubscription: Subscription;
-    private _searchTermSubscription: Subscription;
+    private _tags!: Observable<string[]>;
+    private _centerSubscription!: Subscription;
+    private _searchTermSubscription!: Subscription;
     @ViewChild('autosize')
-    private _autosize: CdkTextareaAutosize;
-    private _injector = inject(Injector);
+    private readonly _autosize!: CdkTextareaAutosize;
+    private readonly _injector = inject(Injector);
 
     get formGroup(): UntypedFormGroup {
         return this._parentFormGroup;
@@ -82,7 +82,7 @@ export class SeedNewBaseComponent implements OnInit, OnDestroy {
         this._parentFormGroup.addControl('tags', this._formBuilder.array([]));
         this._parentFormGroup.addControl('tag', this._formBuilder.control('')); // helper
 
-        this._searchTermSubscription = this._parentFormGroup.get('tag').valueChanges
+        this._searchTermSubscription = this._parentFormGroup.get('tag')!.valueChanges
             .pipe(debounceTime(420))
             .subscribe(
                 (term) => {
@@ -95,8 +95,8 @@ export class SeedNewBaseComponent implements OnInit, OnDestroy {
 
         if (this.isLocationMutable()) {
             this._centerSubscription = this._mapService.centerObservable.subscribe((center) => {
-                this._parentFormGroup.get(['location', 'lng']).setValue(center.lng);
-                this._parentFormGroup.get(['location', 'lat']).setValue(center.lat);
+                this._parentFormGroup.get(['location', 'lng'])!.setValue(center.lng);
+                this._parentFormGroup.get(['location', 'lat'])!.setValue(center.lat);
             });
         }
     }
@@ -120,7 +120,7 @@ export class SeedNewBaseComponent implements OnInit, OnDestroy {
     }
 
     public addTag(): void {
-        const tagControl = this.formGroup.get('tag');
+        const tagControl = this.formGroup.get('tag')!;
         const tag = (tagControl.value as string).replace(/[^A-Za-z1-9\-+_]/g, '');
         const tagsArray = this._parentFormGroup.get('tags') as UntypedFormArray;
 
@@ -138,6 +138,6 @@ export class SeedNewBaseComponent implements OnInit, OnDestroy {
     }
 
     public isLocationMutable(): boolean {
-        return typeof this._parent === 'undefined' || this._parent['trail'];
+        return typeof this._parent === 'undefined' || (this._parent as any).trail;
     }
 }

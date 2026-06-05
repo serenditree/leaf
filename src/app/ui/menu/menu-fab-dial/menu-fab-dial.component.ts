@@ -13,10 +13,10 @@ import {Subscription} from 'rxjs';
     }
 )
 export class MenuFabDialComponent implements OnInit, OnDestroy {
-    private _menuService = inject(MenuService);
+    private readonly _menuService = inject(MenuService);
 
     private _fabToggleActive = false;
-    private _fabToggleActiveSubscription: Subscription;
+    private _fabToggleActiveSubscription!: Subscription;
 
     get fabToggleActive(): boolean {
         return this._fabToggleActive;

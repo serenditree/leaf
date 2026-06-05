@@ -6,7 +6,7 @@ export class MenuService {
 
     private _isMainActive = false;
     private _isFilterActive = false;
-    private _isMenuMobileActiveSubject = new BehaviorSubject<boolean>(false);
+    private readonly _isMenuMobileActiveSubject = new BehaviorSubject<boolean>(false);
 
     get isMainActive(): boolean {
         return this._isMainActive;

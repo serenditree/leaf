@@ -7,7 +7,7 @@ export class StUtils {
      */
     public static isChildNode(child: HTMLElement, ...parentIds: string[]): boolean {
         let isChild = false;
-        for (let element = child; !isChild && element; element = element.parentElement) {
+        for (let element: HTMLElement | null = child; !isChild && element; element = element.parentElement) {
             if (parentIds.includes(element.id)) {
                 isChild = true;
             }

@@ -5,13 +5,13 @@ import {MessageComponent} from '../message/message.component';
 
 @Injectable({providedIn: 'root'})
 export class MessageService {
-    private _snackBar = inject(MatSnackBar);
-    private _layoutService = inject(LayoutService);
+    private readonly _snackBar = inject(MatSnackBar);
+    private readonly _layoutService = inject(LayoutService);
 
     public static readonly MESSAGE_DISPLAY_DURATION = 2500;
 
-    private _messages: {message: string, isError: boolean}[] = [];
-    private _snackBarRef: MatSnackBarRef<MessageComponent> = null;
+    private readonly _messages: {message: string, isError: boolean}[] = [];
+    private _snackBarRef: MatSnackBarRef<MessageComponent> | null = null;
 
     public info(message: string): void {
         this.send(message, false);
@@ -21,18 +21,18 @@ export class MessageService {
         this.send(message, true);
     }
 
-    private send(message: string, isError: boolean): void {
+    private send(message: string | null, isError: boolean | null): void {
         if (message !== null) {
-            this._messages.push({message: message, isError: isError});
+            this._messages.push({message: message!, isError: isError!});
         }
         if (this._snackBarRef === null) {
-            const currentMessage = this._messages.shift();
+            const currentMessage = this._messages.shift()!;
             this._snackBarRef = this._snackBar.openFromComponent(
                 MessageComponent,
                 this._getConfig(currentMessage.message, currentMessage.isError)
             );
         }
-        this._snackBarRef.afterDismissed().subscribe(() => {
+        this._snackBarRef!.afterDismissed().subscribe(() => {
             this._snackBarRef = null;
             if (this._messages.length > 0) {
                 this.send(null, null);

@@ -14,13 +14,13 @@ import {Subscription} from 'rxjs';
     }
 )
 export class IndicatorComponent implements OnInit, OnDestroy {
-    private _indicator = inject(IndicatorService);
-    private _router = inject(Router);
+    private readonly _indicator = inject(IndicatorService);
+    private readonly _router = inject(Router);
 
-    private _tooltip: string;
-    private _show: boolean;
+    private _tooltip!: string;
+    private _show!: boolean;
 
-    private _showProgressSubscription: Subscription;
+    private _showProgressSubscription!: Subscription;
     private _progressActive = true;
 
     get show(): boolean {

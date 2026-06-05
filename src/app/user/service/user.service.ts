@@ -10,10 +10,10 @@ import {environment} from '../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
-    private _http = inject(HttpClient);
-    private _fenceService = inject(FenceService);
-    private _router = inject(Router);
-    private _messageService = inject(MessageService);
+    private readonly _http = inject(HttpClient);
+    private readonly _fenceService = inject(FenceService);
+    private readonly _router = inject(Router);
+    private readonly _messageService = inject(MessageService);
 
     private readonly BASE_URL_USER = environment.API_BASE_URL_USER;
 
@@ -29,7 +29,7 @@ export class UserService {
                     },
                     (error) => {
                         console.error(error);
-                        observer.next(null);
+                        observer.next(null as unknown as User);
                         observer.complete();
                     }
                 );
@@ -60,7 +60,7 @@ export class UserService {
 
         this._http
             .delete<void>(
-                StMaple.joinUrl(this.BASE_URL_USER, id, String(includeContributions)),
+                StMaple.joinUrl(this.BASE_URL_USER, id!, String(includeContributions)),
                 {observe: 'response'}
             )
             .subscribe(

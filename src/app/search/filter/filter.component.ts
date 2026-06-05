@@ -18,9 +18,9 @@ import {StUtils} from '../../utils/st-utils';
     }
 )
 export class FilterComponent {
-    private _filterService = inject(FilterService);
-    private _searchService = inject(SearchService);
-    private _fenceService = inject(FenceService);
+    private readonly _filterService = inject(FilterService);
+    private readonly _searchService = inject(SearchService);
+    private readonly _fenceService = inject(FenceService);
 
     private _isInitialClick = true;
 
@@ -49,11 +49,11 @@ export class FilterComponent {
     }
 
     get isOwnerFilterActive(): boolean {
-        return this.filter.userId && this.filter.userId === this._fenceService.getUserId();
+        return !!(this.filter.userId && this.filter.userId === this._fenceService.getUserId());
     }
 
     get showUserFilter(): boolean {
-        return this.filter.userId && this.filter.userId !== this._fenceService.getUserId();
+        return !!(this.filter.userId && this.filter.userId !== this._fenceService.getUserId());
     }
 
     public apply(): void {

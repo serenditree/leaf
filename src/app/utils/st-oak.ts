@@ -1,4 +1,4 @@
-import {AbstractControl, UntypedFormArray, UntypedFormControl, UntypedFormGroup, ValidatorFn} from '@angular/forms';
+import {AbstractControl, UntypedFormArray, UntypedFormControl, UntypedFormGroup, ValidatorFn, ValidationErrors} from '@angular/forms';
 
 /**
  * Collection of validators and other validation concerns. Oak or nut...
@@ -13,7 +13,8 @@ export class StOak {
      */
     public static identical(field1: string | number, field2: string | number): ValidatorFn {
 
-        return (formGroup: UntypedFormGroup): Record<string, any> => {
+        return (control: AbstractControl): ValidationErrors | null => {
+            const formGroup = control as UntypedFormGroup;
             let identical = true;
             if (formGroup.controls[field1].value !== formGroup.controls[field2].value) {
                 formGroup.controls[field2].setErrors({identical: true});
@@ -30,7 +31,7 @@ export class StOak {
      */
     public static entropy(): ValidatorFn {
 
-        return (formControl: AbstractControl): Record<string, any> => {
+        return (formControl: AbstractControl): ValidationErrors | null => {
             const password = formControl.value;
 
             // Check if there is a word-list and count words.
@@ -68,7 +69,7 @@ export class StOak {
      */
     public static html(): ValidatorFn {
 
-        return (formControl: AbstractControl): Record<string, any> => {
+        return (formControl: AbstractControl): ValidationErrors | null => {
             const text = formControl.value;
 
             return /<.+>/.test(text) ? {html: true} : null;
@@ -82,10 +83,11 @@ export class StOak {
     public static touch(control: UntypedFormGroup | UntypedFormArray): void {
         control.markAsTouched();
         for (const i in control.controls) {
-            if (control.controls[i] instanceof UntypedFormControl) {
-                control.controls[i].markAsTouched();
+            const c = (control.controls as any)[i] as AbstractControl;
+            if (c instanceof UntypedFormControl) {
+                c.markAsTouched();
             } else {
-                StOak.touch(control.controls[i]);
+                StOak.touch(c as UntypedFormGroup | UntypedFormArray);
             }
         }
     }
@@ -95,7 +97,7 @@ export class StOak {
      * @param {string} string String to test.
      * @returns {boolean}
      */
-    public static isNotBlank(string: string): boolean {
+    public static isNotBlank(string: string | null): boolean {
         return string != null && string.trim().length > 0;
     }
 
@@ -104,7 +106,7 @@ export class StOak {
      * @param {string} string String to test.
      * @returns {boolean}
      */
-    public static isBlank(string: string): boolean {
+    public static isBlank(string: string | null): boolean {
         return string == null || string.trim().length === 0;
     }
 }

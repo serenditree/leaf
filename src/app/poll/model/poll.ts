@@ -7,7 +7,7 @@ export class Poll {
     public title: string;
     public options: PollOption[];
 
-    constructor(id?: string, owner?: number, seedId?: string, title?: string, options?: PollOption[]) {
+    constructor(id: string, owner: number, seedId: string, title: string, options: PollOption[]) {
         this.id = id;
         this.owner = owner;
         this.seedId = seedId;

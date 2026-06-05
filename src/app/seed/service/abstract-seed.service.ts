@@ -203,7 +203,7 @@ export class AbstractSeedService<T extends AbstractSeed> {
 
         return new Observable((observer) => {
             this._http
-                .get<void>(StMaple.joinUrl(this._api, waterOrPrune, seed.id), {observe: 'response', params: params})
+                .get<void>(StMaple.joinUrl(this._api, waterOrPrune, seed.id), {observe: 'response', params: params ?? undefined})
                 .subscribe(
                     () => {
                         console.log(`Successfully ${waterOrPrune}ed ${this._type} ${seed.id}`);

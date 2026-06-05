@@ -13,9 +13,9 @@ import {LayoutService} from '../../../ui/layout/service/layout.service';
     }
 )
 export class GardenTagPrintComponent {
-    private _layoutService = inject(LayoutService);
-    private _dialogRef = inject<MatDialogRef<GardenTagPrintComponent>>(MatDialogRef);
-    private _garden = inject<Garden>(MAT_DIALOG_DATA);
+    private readonly _layoutService = inject(LayoutService);
+    private readonly _dialogRef = inject<MatDialogRef<GardenTagPrintComponent>>(MatDialogRef);
+    private readonly _garden = inject<Garden>(MAT_DIALOG_DATA);
 
     get garden(): Garden {
         return this._garden;

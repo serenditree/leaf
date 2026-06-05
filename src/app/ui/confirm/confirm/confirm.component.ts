@@ -11,7 +11,7 @@ import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
     }
 )
 export class ConfirmComponent {
-    private _dialogRef = inject<MatDialogRef<ConfirmComponent>>(MatDialogRef);
+    private readonly _dialogRef = inject<MatDialogRef<ConfirmComponent>>(MatDialogRef);
     private readonly _data = inject(MAT_DIALOG_DATA);
 
     get text(): string {

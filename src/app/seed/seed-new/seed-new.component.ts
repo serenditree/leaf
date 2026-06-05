@@ -22,9 +22,9 @@ import {finalize} from 'rxjs/operators';
 export class SeedNewComponent extends AbstractSeedNewComponent<Seed> implements OnInit, OnDestroy {
     protected _location: Location;
     protected _mapService: MapService;
-    private _indicator = inject(IndicatorService);
-    private _formBuilder = inject(UntypedFormBuilder);
-    private _seedService = inject(SeedService);
+    private readonly _indicator = inject(IndicatorService);
+    private readonly _formBuilder = inject(UntypedFormBuilder);
+    private readonly _seedService = inject(SeedService);
 
     private _startsTrail = false;
     private _parentIsGarden = false;
@@ -52,11 +52,11 @@ export class SeedNewComponent extends AbstractSeedNewComponent<Seed> implements 
 
     ngOnInit(): void {
         super._onInit();
-        const state = this._location.getState();
+        const state = this._location.getState() as Record<string, unknown>;
 
         if (this._parent) {
-            this._parentIsGarden = state['isGarden'];
-            this._parentIsTrail = state['isTrail'];
+            this._parentIsGarden = state['isGarden'] as boolean;
+            this._parentIsTrail = state['isTrail'] as boolean;
             if (!this._parentIsTrail) {
                 this._mapService.setCenter(this._parent.location);
                 this._mapService.lock();
@@ -79,7 +79,7 @@ export class SeedNewComponent extends AbstractSeedNewComponent<Seed> implements 
     public onSubmit(): void {
         if (!this._pollsActive) {
             // disable validation but don't remove.
-            this._formGroup.get('polls').disable();
+            this._formGroup.get('polls')!.disable();
         } else {
             this._toggleHelperValidation(false);
         }
@@ -107,7 +107,7 @@ export class SeedNewComponent extends AbstractSeedNewComponent<Seed> implements 
     }
 
     public onPollToggle(arePollsActive: boolean): void {
-        this._formGroup.get('polls').enable();
+        this._formGroup.get('polls')!.enable();
         this._pollsActive = arePollsActive;
     }
 
@@ -159,7 +159,7 @@ export class SeedNewComponent extends AbstractSeedNewComponent<Seed> implements 
             seed.polls = [];
         } else {
             // remove helper-control
-            seed.polls.forEach((poll) => {
+            seed.polls.forEach((poll: any) => {
                 delete poll['optionInput'];
             });
         }
@@ -174,9 +174,9 @@ export class SeedNewComponent extends AbstractSeedNewComponent<Seed> implements 
         const pollsArray = this._formGroup.get('polls') as UntypedFormArray;
         for (let i = 0; i < pollsArray.length; i++) {
             if (enable) {
-                pollsArray.at(i).get('optionInput').enable();
+                pollsArray.at(i).get('optionInput')!.enable();
             } else {
-                pollsArray.at(i).get('optionInput').disable();
+                pollsArray.at(i).get('optionInput')!.disable();
             }
         }
     }

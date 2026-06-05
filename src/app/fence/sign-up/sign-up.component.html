@@ -27,7 +27,7 @@
                        inputmode="email"
                        matInput
                        type="email">
-                @if (formGroup.hasError('email', ['email']) && formGroup.get('email').value !== '') {
+                @if (formGroup.hasError('email', ['email']) && formGroup.get('email')?.value !== '') {
                     <mat-error>
                         invalid email
                     </mat-error>

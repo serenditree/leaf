@@ -5,7 +5,7 @@ import {environment} from '../../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class DevService {
-    private _http = inject(HttpClient);
+    private readonly _http = inject(HttpClient);
 
     public echo(status: number, headerKey: string, headerValue: string): void {
         let headers = new HttpHeaders();

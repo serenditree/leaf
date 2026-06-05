@@ -14,10 +14,10 @@ import {environment} from '../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class FenceService {
-    private _http = inject(HttpClient);
-    private _router = inject(Router);
-    private _route = inject(ActivatedRoute);
-    private _messageService = inject(MessageService);
+    private readonly _http = inject(HttpClient);
+    private readonly _router = inject(Router);
+    private readonly _route = inject(ActivatedRoute);
+    private readonly _messageService = inject(MessageService);
 
     public static readonly ID_KEY = X_HTTP_HEADERS.ID;
     public static readonly USERNAME_KEY = X_HTTP_HEADERS.USERNAME;
@@ -36,7 +36,7 @@ export class FenceService {
 
     private static readonly GREETING = new StGreetingPipe();
 
-    private _principal: Principal = null;
+    private _principal: Principal | null = null;
 
     private static _getEndpoint(fence: FenceType): string {
         let baseUrl;
@@ -69,9 +69,9 @@ export class FenceService {
     }
 
     private static _createAuthHeaders(user: Principal): HttpHeaders {
-        const authInfo = {};
+        const authInfo: Record<string, string> = {};
         authInfo[FenceService.USERNAME_KEY] = user.username;
-        authInfo[FenceService.PASSWORD_KEY] = user.password;
+        authInfo[FenceService.PASSWORD_KEY] = user.password!;
         if (user.email) {
             authInfo[FenceService.EMAIL_KEY] = user.email;
         }
@@ -114,7 +114,7 @@ export class FenceService {
     public signOut(expired = false): void {
         if (this._principal) {
             try {
-                const username = this._principal.username;
+                const username = this._principal!.username;
 
                 // Removes all auth information.
                 this._principal = null;
@@ -123,8 +123,8 @@ export class FenceService {
                 // Redirect from fenced routes if not expired.
                 if (!expired &&
                     this._route.root.children.length &&
-                    (this._route.root.children[0].snapshot.routeConfig.canActivate ||
-                     this._route.root.children[0].snapshot.routeConfig.canActivateChild)) {
+                    (this._route.root.children[0].snapshot.routeConfig?.canActivate ||
+                     this._route.root.children[0].snapshot.routeConfig?.canActivateChild)) {
                     this._signInRedirect();
                 }
 
@@ -143,7 +143,7 @@ export class FenceService {
     }
 
     public verify(oidc: string): void {
-        const verificationInfo = {};
+        const verificationInfo: Record<string, string> = {};
         verificationInfo[FenceService.VERIFICATION_KEY] = oidc;
         const verificationHeader: HttpHeaders = new HttpHeaders(verificationInfo);
         this._http
@@ -158,8 +158,8 @@ export class FenceService {
                         this._messageService.info('Verified!');
                         const token = response.headers.get(FenceService.TOKEN_KEY);
                         const verified = response.headers.get(FenceService.VERIFIED_KEY);
-                        localStorage.setItem(FenceService.TOKEN_KEY, token);
-                        localStorage.setItem(FenceService.VERIFIED_KEY, verified);
+                        localStorage.setItem(FenceService.TOKEN_KEY, token ?? '');
+                        localStorage.setItem(FenceService.VERIFIED_KEY, verified ?? '');
                     }
                 },
                 (error) => {
@@ -188,7 +188,7 @@ export class FenceService {
             const username = localStorage.getItem(FenceService.USERNAME_KEY);
             const token = localStorage.getItem(FenceService.TOKEN_KEY);
             if (StOak.isNotBlank(username) && StOak.isNotBlank(token)) {
-                this._principal = new Principal(+id, username, null, null, token);
+                this._principal = new Principal(+id!, username!, null, null, token);
             }
         }
 
@@ -203,7 +203,7 @@ export class FenceService {
 
             authorizedObservable = new Observable((observer) => {
                 this._http.get<void>(
-                    StMaple.joinUrl(FenceService._getEndpoint(fence), this._principal.id, entityId, action),
+                    StMaple.joinUrl(FenceService._getEndpoint(fence), this._principal!.id, entityId, action),
                     {observe: 'response'}
                 ).subscribe(
                     () => {
@@ -239,19 +239,19 @@ export class FenceService {
                     const token = response.headers.get(FenceService.TOKEN_KEY);
                     const verified = response.headers.get(FenceService.VERIFIED_KEY);
 
-                    localStorage.setItem(FenceService.ID_KEY, id);
-                    localStorage.setItem(FenceService.USERNAME_KEY, username);
-                    localStorage.setItem(FenceService.TOKEN_KEY, token);
-                    localStorage.setItem(FenceService.VERIFIED_KEY, verified);
+                    localStorage.setItem(FenceService.ID_KEY, id ?? '');
+                    localStorage.setItem(FenceService.USERNAME_KEY, username ?? '');
+                    localStorage.setItem(FenceService.TOKEN_KEY, token ?? '');
+                    localStorage.setItem(FenceService.VERIFIED_KEY, verified ?? '');
 
-                    this._principal = new Principal(+id, username, null, null, token);
+                    this._principal = new Principal(+id!, username!, null, null, token);
 
                     if (redirect !== FenceService.USER_GARDEN_LANDING_PATH) {
                         // Landing page already greets...
-                        this._messageService.info(FenceService.GREETING.transform(username));
+                        this._messageService.info(FenceService.GREETING.transform(username ?? ''));
                     }
                     observer.complete();
-                    void this._router.navigate([redirect]);
+                    void this._router.navigate([redirect ?? '/']);
                 },
                 (error) => {
                     FenceService._handleFenceError(observer, error);

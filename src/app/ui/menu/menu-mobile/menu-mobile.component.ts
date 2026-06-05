@@ -14,12 +14,12 @@ import {Subscription} from 'rxjs';
     }
 )
 export class MenuMobileComponent implements OnInit, OnDestroy {
-    private _fenceService = inject(FenceService);
-    private _menuService = inject(MenuService);
-    private _searchService = inject(SearchService);
+    private readonly _fenceService = inject(FenceService);
+    private readonly _menuService = inject(MenuService);
+    private readonly _searchService = inject(SearchService);
 
     private _isSearchFocused = false;
-    private _isSearchFocusedSubscription: Subscription;
+    private _isSearchFocusedSubscription!: Subscription;
 
     get fenceService(): FenceService {
         return this._fenceService;
@@ -50,7 +50,7 @@ export class MenuMobileComponent implements OnInit, OnDestroy {
     public close(event: PointerEvent): void {
         if (this._menuService.isMainActive ||
             !this._isSearchFocused &&
-            event.target['classList'].contains('st-menu-mobile')) {
+            (event.target as Element).classList.contains('st-menu-mobile')) {
             this._menuService.closeMenuMobile();
         }
     }

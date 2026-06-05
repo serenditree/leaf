@@ -3,13 +3,13 @@ import {Pipe, PipeTransform, inject, SecurityContext} from '@angular/core';
 
 @Pipe({name: 'highlight'})
 export class StHighlightPipe implements PipeTransform {
-    private _sanitizer = inject(DomSanitizer);
+    private readonly _sanitizer = inject(DomSanitizer);
 
     transform(text: string, term: string): SafeHtml {
         console.log(text, term);
         if (text) {
-            text = this._sanitizer
-                .sanitize(SecurityContext.HTML, text)
+            text = (this._sanitizer
+                .sanitize(SecurityContext.HTML, text) ?? '')
                 .replace(
                     new RegExp(term, 'gi'),
                     (match) => `<span class="st-match">${match}</span>`

@@ -12,7 +12,7 @@ import {Seed} from '../model/seed';
 )
 export class SeedTrailComponent {
 
-    private _parent: Seed;
+    private _parent!: Seed;
 
     get trailState(): any {
         return {

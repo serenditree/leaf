@@ -14,7 +14,7 @@ import {UntypedFormControl, Validators} from '@angular/forms';
     }
 )
 export class ToolsComponent {
-    private _devService = inject(DevService);
+    private readonly _devService = inject(DevService);
 
     private static readonly STATUS_CODES: Pair<string, number>[] = Object
         .entries(HTTP_STATUS)

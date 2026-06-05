@@ -5,17 +5,10 @@
   ],
   "compileOnSave": false,
   "angularCompilerOptions": {
-    "extendedDiagnostics": {
-      "checks": {
-        "nullishCoalescingNotNullable": "suppress",
-        "optionalChainNotNullable": "suppress"
-      }
-    },
     "strictTemplates": false,
     "typeCheckHostBindings": false
   },
   "compilerOptions": {
-    "baseUrl": "./src",
     "declaration": false,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,

@@ -2,7 +2,7 @@ import {AfterContentChecked, Directive, ElementRef, Input, inject} from '@angula
 
 @Directive({selector: '[stFocus]'})
 export class StFocusDirective implements AfterContentChecked {
-    private _elementRef = inject(ElementRef);
+    private readonly _elementRef = inject(ElementRef);
 
     private _focus = true;
     private _hasFocus = false;

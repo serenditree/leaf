@@ -5,9 +5,9 @@ import {UntypedFormGroup} from '@angular/forms';
 
 export abstract class AbstractSeedNewComponent<T extends AbstractSeed> {
 
-    protected _formGroup: UntypedFormGroup;
+    protected _formGroup!: UntypedFormGroup;
     protected _submitted = false;
-    protected _parent: T;
+    protected _parent!: T;
 
     protected constructor(protected _location: Location,
                           protected _mapService: MapService) {
@@ -30,8 +30,8 @@ export abstract class AbstractSeedNewComponent<T extends AbstractSeed> {
     }
 
     protected _onInit(): void {
-        const state = this._location.getState();
-        this._parent = state['seed'];
+        const state = this._location.getState() as Record<string, unknown>;
+        this._parent = state['seed'] as T;
     }
 
     protected _onDestroy(): void {
