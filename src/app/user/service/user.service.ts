@@ -22,17 +22,17 @@ export class UserService {
         return new Observable((observer) => {
             this._http
                 .get<User>(StMaple.joinUrl(this.BASE_URL_USER, username))
-                .subscribe(
-                    (response) => {
+                .subscribe({
+                    next: (response) => {
                         observer.next(response);
                         observer.complete();
                     },
-                    (error) => {
+                    error: (error) => {
                         console.error(error);
                         observer.next(null as unknown as User);
                         observer.complete();
                     }
-                );
+                });
         });
     }
 
@@ -41,16 +41,16 @@ export class UserService {
         return new Observable((observer) => {
             this._http
                 .get<User[]>(StMaple.joinUrl(this.BASE_URL_USER, 'retrieve', substring))
-                .subscribe(
-                    (response) => {
+                .subscribe({
+                    next: (response) => {
                         observer.next(response);
                         observer.complete();
                     },
-                    (error) => {
+                    error: (error) => {
                         console.error(error);
                         observer.error(error);
                     }
-                );
+                });
         });
     }
 
@@ -63,8 +63,8 @@ export class UserService {
                 StMaple.joinUrl(this.BASE_URL_USER, id!, String(includeContributions)),
                 {observe: 'response'}
             )
-            .subscribe(
-                () => {
+            .subscribe({
+                next: () => {
                     console.log(`Successfully deleted user ${id}`);
                     this._fenceService.signOut();
                     this._router.navigate(['']).then(
@@ -72,9 +72,9 @@ export class UserService {
                     );
 
                 },
-                (error) => {
+                error: (error) => {
                     console.error(`Could not delete user ${id}`, error);
                 }
-            );
+            });
     }
 }

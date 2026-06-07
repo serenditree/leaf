@@ -94,14 +94,14 @@ export class ChartComponent implements OnInit {
 
         if (this._fenceService.isAuthenticated()) {
             this._fenceService.isAuthorized(FenceType.POLL, this._poll.id, 'vote')
-                .subscribe(
-                    (response) => {
+                .subscribe({
+                    next: (response) => {
                         this._isVotingAllowed = response.ok();
                     },
-                    () => {
+                    error: () => {
                         this._isVotingAllowed = false;
                     }
-                );
+                });
         }
 
         this._initChart();
@@ -112,18 +112,18 @@ export class ChartComponent implements OnInit {
         this._isVotingAllowed = false;
 
         this._pollService.vote(this.poll.id, this.pollOptions[this.selectedIndex].id)
-            .subscribe(
-                () => {
+            .subscribe({
+                next: () => {
                     this.pollOptions[this.selectedIndex].votes += 1;
                     this._totalVotes += 1;
                     this._setChartData(true);
                 },
-                (error) => {
+                error: (error) => {
                     // TODO feedback
                     this._isVotingAllowed = true;
                     console.error(error);
                 }
-            );
+            });
     }
 
     public legendColor(index: number): string {

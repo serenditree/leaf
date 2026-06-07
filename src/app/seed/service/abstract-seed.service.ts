@@ -58,8 +58,8 @@ export class AbstractSeedService<T extends AbstractSeed> {
         return new Observable<T>((observer) => {
             this._http
                 .post<T>(StMaple.joinUrl(this._api, 'create'), seed)
-                .subscribe(
-                    (response) => {
+                .subscribe({
+                    next: (response) => {
                         console.log(response);
 
                         observer.next(response);
@@ -69,12 +69,12 @@ export class AbstractSeedService<T extends AbstractSeed> {
                             () => this._messageService.info(this._message)
                         );
                     },
-                    (error) => {
+                    error: (error) => {
                         console.error(`Could not create ${this._type}: `, error);
                         this._messageService.error(`Sorry, could not create ${this._type.toLowerCase()}`);
                         observer.error(error);
                     }
-                );
+                });
         });
 
     }
@@ -87,14 +87,14 @@ export class AbstractSeedService<T extends AbstractSeed> {
         } else {
             this._http
                 .get<T>(StMaple.joinUrl(this._api, id))
-                .subscribe(
-                    (response) => {
+                .subscribe({
+                    next: (response) => {
                         this._seedSubject.next(response);
                     },
-                    (error) => {
+                    error: (error) => {
                         console.error(`Could not retrieve ${this._type} with id ${id}`, error);
                     }
-                );
+                });
         }
     }
 
@@ -127,15 +127,15 @@ export class AbstractSeedService<T extends AbstractSeed> {
                     }
                 )
             )
-            .subscribe(
-                (response) => {
+            .subscribe({
+                next: (response) => {
                     if (inMemory) {
                         this._seeds = response;
                     }
                     this._seedsSubject.next(response);
                     console.debug('Retrieved:', response);
                 },
-                (error) => {
+                error: (error) => {
                     if (error.status === HTTP_STATUS.NOT_FOUND) {
                         console.log(`Nothing ${this._message.toLowerCase()} around here with filter:`);
                         console.log(filter);
@@ -148,21 +148,21 @@ export class AbstractSeedService<T extends AbstractSeed> {
                         console.log(filter);
                     }
                 }
-            );
+            });
     }
 
     public retrieveTags(name: string): Observable<string[]> {
         return new Observable((observer) => {
             this._http
                 .get<string[]>(StMaple.joinUrl(this._api, 'retrieve', 'tags', name))
-                .subscribe(
-                    (response) => {
+                .subscribe({
+                    next: (response) => {
                         observer.next(response);
                     },
-                    (error) => {
+                    error: (error) => {
                         console.error(error);
                     }
-                );
+                });
         });
     }
 
@@ -179,8 +179,8 @@ export class AbstractSeedService<T extends AbstractSeed> {
 
         this._http
             .delete<void>(StMaple.joinUrl(this._api, id), {observe: 'response'})
-            .subscribe(
-                () => {
+            .subscribe({
+                next: () => {
                     this._seeds = this._seeds.filter(seed => seed.id !== id);
                     this._seedsSubject.next(this._seeds);
                     console.log(`Successfully removed ${this._type} ${id}`);
@@ -189,10 +189,10 @@ export class AbstractSeedService<T extends AbstractSeed> {
                     );
 
                 },
-                (error) => {
+                error: (error) => {
                     console.error(`Could not remove ${this._type} ${id}`, error);
                 }
-            );
+            });
     }
 
     private waterOrPrune(seed: Seed, waterOrPrune: 'water' | 'prune'): Observable<boolean> {
@@ -204,18 +204,18 @@ export class AbstractSeedService<T extends AbstractSeed> {
         return new Observable((observer) => {
             this._http
                 .get<void>(StMaple.joinUrl(this._api, waterOrPrune, seed.id), {observe: 'response', params: params ?? undefined})
-                .subscribe(
-                    () => {
+                .subscribe({
+                    next: () => {
                         console.log(`Successfully ${waterOrPrune}ed ${this._type} ${seed.id}`);
                         observer.next(true);
                         observer.complete();
                     },
-                    (error) => {
+                    error: (error) => {
                         console.error(`Could not ${waterOrPrune} ${this._type} ${seed.id}`, error);
                         observer.next(false);
                         observer.complete();
                     }
-                );
+                });
         });
     }
 }

@@ -19,14 +19,14 @@ export class PollService {
     public retrieveBySeed(seedId: string): void {
         this._http
             .get<Poll[]>(StMaple.joinUrl(this.BASE_URL_POLL, 'seed', seedId))
-            .subscribe(
-                (response) => {
+            .subscribe({
+                next: (response) => {
                     this._pollsSubject.next(response);
                 },
-                (error) => {
+                error: (error) => {
                     console.error(`could not retrieve polls of seed ${seedId}`, error);
                 }
-            );
+            });
     }
 
     public vote(pollId: string, optionId: number): Observable<boolean> {
@@ -34,16 +34,16 @@ export class PollService {
         return new Observable((observer) => {
             this._http
                 .get<void>(StMaple.joinUrl(this.BASE_URL_POLL, 'vote', pollId, optionId), {observe: 'response'})
-                .subscribe(
-                    () => {
+                .subscribe({
+                    next: () => {
                         observer.next(true);
                         observer.complete();
                     },
-                    (error) => {
+                    error: (error) => {
                         console.error(`could not vote for option ${optionId} on poll ${pollId}`, error);
                         observer.error(error);
                     }
-                );
+                });
         });
     }
 

@@ -67,7 +67,7 @@ export abstract class AbstractList<T extends AbstractSeed> implements OnInit {
             );
             window.scroll(
                 {
-                    top: itemIndex === 0 ? 0 : itemElement!.nativeElement.offsetTop + this._offset,
+                    top: itemIndex === 0 ? 0 : itemElement?.nativeElement.offsetTop + this._offset,
                     behavior: 'smooth'
                 }
             );

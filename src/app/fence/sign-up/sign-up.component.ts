@@ -49,7 +49,7 @@ export class SignUpComponent extends AbstractFenceComponent implements OnInit {
                 passwordConfirm: ['', [Validators.required]]
             },
             {
-                validator: StOak.identical('password', 'passwordConfirm')
+                validators: StOak.identical('password', 'passwordConfirm')
             }
         );
     }
@@ -76,18 +76,18 @@ export class SignUpComponent extends AbstractFenceComponent implements OnInit {
                         }
                     )
                 )
-                .subscribe(
-                    (uiResponse) => {
+                .subscribe({
+                    next: (uiResponse) => {
                         console.log(uiResponse);
                     },
-                    (uiResponse) => {
+                    error: (uiResponse) => {
                         if (uiResponse.code === HTTP_STATUS.CONFLICT) {
                             this._messageService.error(uiResponse.text);
                         } else {
                             this._messageService.error('Sorry, something went wrong');
                         }
                     }
-                );
+                });
         } else {
             console.log(this._formGroup);
         }

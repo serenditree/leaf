@@ -152,8 +152,8 @@ export class FenceService {
                 null,
                 {observe: 'response', headers: verificationHeader}
             )
-            .subscribe(
-                (response) => {
+            .subscribe({
+                next: (response) => {
                     if (response.ok) {
                         this._messageService.info('Verified!');
                         const token = response.headers.get(FenceService.TOKEN_KEY);
@@ -162,11 +162,11 @@ export class FenceService {
                         localStorage.setItem(FenceService.VERIFIED_KEY, verified ?? '');
                     }
                 },
-                (error) => {
+                error: (error) => {
                     this._messageService.error('Verification failed.');
                     console.log(error);
                 }
-            );
+            });
     }
 
     public verified(): boolean {
@@ -205,15 +205,15 @@ export class FenceService {
                 this._http.get<void>(
                     StMaple.joinUrl(FenceService._getEndpoint(fence), this._principal!.id, entityId, action),
                     {observe: 'response'}
-                ).subscribe(
-                    () => {
+                ).subscribe({
+                    next: () => {
                         observer.next(new UiResponse(HTTP_STATUS.OK, 'ok'));
                         observer.complete();
                     },
-                    (error) => {
+                    error: (error) => {
                         FenceService._handleFenceError(observer, error);
                     }
-                );
+                });
             });
         } else {
             authorizedObservable = new Observable((observer) => {
@@ -232,8 +232,8 @@ export class FenceService {
 
         return new Observable((observer) => {
 
-            this._http.post<void>(url, null, {headers: authHeaders, observe: 'response'}).subscribe(
-                (response) => {
+            this._http.post<void>(url, null, {headers: authHeaders, observe: 'response'}).subscribe({
+                next: (response) => {
                     const id = response.headers.get(FenceService.ID_KEY);
                     const username = response.headers.get(FenceService.USERNAME_KEY);
                     const token = response.headers.get(FenceService.TOKEN_KEY);
@@ -253,10 +253,10 @@ export class FenceService {
                     observer.complete();
                     void this._router.navigate([redirect ?? '/']);
                 },
-                (error) => {
+                error: (error) => {
                     FenceService._handleFenceError(observer, error);
                 }
-            );
+            });
         });
     }
 }

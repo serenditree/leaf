@@ -46,14 +46,14 @@ export class SignInComponent extends AbstractFenceComponent implements OnInit {
                         }
                     )
                 )
-                .subscribe(
-                    (response) => {
+                .subscribe({
+                    next: (response) => {
                         console.log(response);
                     },
-                    (error) => {
+                    error: (error) => {
                         this._messageService.error(error.text);
                     }
-                );
+                });
         }
     }
 }

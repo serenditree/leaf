@@ -59,12 +59,12 @@ export class SeedService extends AbstractSeedService<Seed> {
                     this._indicator.progressEnd();
                 })
             )
-            .subscribe(
-                (response) => {
+            .subscribe({
+                next: (response) => {
                     this._trail = response;
                     this._trailSubject.next(response);
                 },
-                (error) => {
+                error: (error) => {
                     if (error.status === HTTP_STATUS.NOT_FOUND) {
                         console.log(`Trail ${id} seems to be gone...`);
                         this._trail = [];
@@ -73,6 +73,6 @@ export class SeedService extends AbstractSeedService<Seed> {
                         console.error(`Could not retrieve trail with id ${id}.`, error);
                     }
                 }
-            );
+            });
     }
 }
