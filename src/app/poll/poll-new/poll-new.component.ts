@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, inject, ChangeDetectionStrategy} from '@angular/core';
-import {UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import {AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 
 @Component(
     {
@@ -48,15 +48,15 @@ export class PollNewComponent implements OnInit {
         const optionsArray = pollControls.get('options') as UntypedFormArray;
 
         const duplicate = optionsArray.controls.findIndex((item) => {
-            return item.get('text')!.value.trim() === optionInput!.value.trim();
+            return item.get('text')?.value.trim() === optionInput?.value.trim();
         });
 
-        if (duplicate === -1 && optionInput!.value.trim().length > 0) {
-            optionsArray.push(this._initOption(optionInput!.value));
-            optionInput!.setValue('');
+        if (duplicate === -1 && optionInput?.value.trim().length > 0) {
+            optionsArray.push(this._initOption(optionInput?.value));
+            optionInput?.setValue('');
         } else {
-            optionInput!.setErrors({duplicated: true});
-            optionInput!.markAsTouched();
+            optionInput?.setErrors({duplicated: true});
+            optionInput?.markAsTouched();
         }
     }
 
@@ -67,12 +67,16 @@ export class PollNewComponent implements OnInit {
     public optionsInvalid(pollIndex: number): boolean {
         const options = this._pollsArray.at(pollIndex).get('options');
 
-        return options!.hasError('required') || options!.hasError('minlength');
+        return options?.hasError('required') || options?.hasError('minlength') || false;
+    }
+
+    public optionControls(pollIndex: number): AbstractControl[] {
+        return (this._pollsArray.at(pollIndex).get('options') as UntypedFormArray).controls;
     }
 
     public optionInputInvalid(pollIndex: number): boolean {
         // empty options are also duplicates... the empty set is a subset of any set...?!
-        return this._pollsArray.at(pollIndex).get('optionInput')!.hasError('duplicated');
+        return this._pollsArray.at(pollIndex).get('optionInput')?.hasError('duplicated') || false;
     }
 
     private _initPoll(): UntypedFormGroup {

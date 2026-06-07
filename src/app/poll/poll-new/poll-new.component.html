@@ -20,7 +20,8 @@
                     <br>
                     <mat-form-field>
                         <mat-label>Option</mat-label>
-                        <input (keyup.enter)="addOption(pollIndex)"
+                        <input (keydown.enter)="addOption(pollIndex); $event.preventDefault()"
+                               enterkeyhint="done"
                                formControlName="optionInput"
                                matInput>
                         <mat-icon (click)="addOption(pollIndex)"
@@ -39,15 +40,14 @@
                         }
                     </mat-form-field>
                     <ul>
-                        @for (option of pollsArray.at(pollIndex).get('options')['controls']; track option; let
-                            optionIndex = $index) {
-                            <li [@enterSlideVertical]>
+                        @for (option of optionControls(pollIndex); track option; let optionIndex = $index) {
+                            <li>
                                 <a (click)="removeOption(pollIndex, optionIndex)"
                                    matTooltip="remove option"
                                    matTooltipShowDelay="700">
                                     <mat-icon fontIcon="fa-minus-circle" fontSet="fa"></mat-icon>
                                 </a>
-                                &nbsp;{{ option.get('text').value }}
+                                &nbsp;{{ option.get('text')?.value }}
                             </li>
                         }
                     </ul>
