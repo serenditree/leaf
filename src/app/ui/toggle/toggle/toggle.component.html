@@ -3,6 +3,6 @@
         {{ name }}
     </mat-slide-toggle>
 </div>
-<div class="st-slide-vertical" [class.is-active]="isActive" [class.is-inactive]="!isActive">
+<div #slideContent class="st-slide-vertical">
     <ng-content></ng-content>
 </div>

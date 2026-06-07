@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 
 @Component(
     {
@@ -15,9 +15,8 @@ export class ToggleComponent {
     private _name!: string;
     private readonly _onToggle = new EventEmitter<boolean>();
 
-    get isActive(): boolean {
-        return this._isActive;
-    }
+    @ViewChild('slideContent')
+    private readonly _slideContent!: ElementRef<HTMLElement>;
 
     get name(): string {
         return this._name;
@@ -35,6 +34,21 @@ export class ToggleComponent {
 
     public onSlideToggle(): void {
         this._isActive = !this._isActive;
+        const slideElement = this._slideContent.nativeElement;
+
+        if (this._isActive) {
+            slideElement.style.height = slideElement.scrollHeight + 'px';
+            setTimeout(() => slideElement.style.height = 'auto', 400);
+        } else {
+            slideElement.style.height = slideElement.scrollHeight + 'px';
+            requestAnimationFrame(
+                () => requestAnimationFrame(
+                    () => {
+                        slideElement.style.height = '0';
+                    }
+                )
+            );
+        }
 
         this._onToggle.emit(this._isActive);
     }
