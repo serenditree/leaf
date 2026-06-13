@@ -50,9 +50,10 @@
     <br>
     <mat-form-field>
         <mat-label>Tags</mat-label>
-        <input (keyup.enter)="addTag()"
+        <input (keydown.enter)="addTag(); $event.preventDefault()"
                [matAutocomplete]="autocomplete"
                formControlName="tag"
+               enterkeyhint="done"
                inputmode="search"
                matInput>
         <mat-icon (click)="addTag()"
