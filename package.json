@@ -14,14 +14,14 @@
     },
     "dependencies": {
         "@angular/cdk": "^22.0.2",
-        "@angular/common": "^22.0.2",
-        "@angular/compiler": "^22.0.2",
-        "@angular/core": "^22.0.2",
-        "@angular/forms": "^22.0.2",
+        "@angular/common": "^22.0.4",
+        "@angular/compiler": "^22.0.4",
+        "@angular/core": "^22.0.4",
+        "@angular/forms": "^22.0.4",
         "@angular/material": "^22.0.2",
-        "@angular/platform-browser": "^22.0.2",
-        "@angular/router": "^22.0.2",
-        "@angular/service-worker": "^22.0.2",
+        "@angular/platform-browser": "^22.0.4",
+        "@angular/router": "^22.0.4",
+        "@angular/service-worker": "^22.0.4",
         "@maplibre/ngx-maplibre-gl": "^21.0.2",
         "@turf/turf": "^7.3.5",
         "angularx-qrcode": "^21.0.5",
@@ -29,7 +29,7 @@
         "font-awesome": "^4.7.0",
         "maplibre-gl": "^5.24.0",
         "material-icons": "^1.13.14",
-        "material-symbols": "^0.45.2",
+        "material-symbols": "^0.45.4",
         "normalize.css": "^8.0.1",
         "rxjs": "^7.8.2",
         "smoothscroll-polyfill": "^0.4.4",
@@ -38,15 +38,15 @@
         "zone.js": "~0.16.2"
     },
     "devDependencies": {
-        "@angular/build": "^22.0.3",
-        "@angular/cli": "^22.0.3",
-        "@angular/compiler-cli": "^22.0.2",
-        "@angular/language-service": "^22.0.2",
-        "@types/node": "^26.0.0",
+        "@angular/build": "^22.0.4",
+        "@angular/cli": "^22.0.4",
+        "@angular/compiler-cli": "^22.0.4",
+        "@angular/language-service": "^22.0.4",
+        "@types/node": "^26.0.1",
         "angular-eslint": "^22.0.0",
-        "eslint": "^10.5.0",
+        "eslint": "^10.6.0",
         "ts-node": "^10.9.2",
         "typescript": "6.0.3",
-        "typescript-eslint": "~8.61.1"
+        "typescript-eslint": "~8.62.0"
     }
 }
