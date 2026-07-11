@@ -143,12 +143,12 @@ $st-map-control-left: -$st-map-control-size - $st-map-control-margin;
     @include styles.st-transparency(.7);
 }
 
-.st-map-control-icon {
-    line-height: $st-map-control-size;
-}
-
 .st-map-control-icon:hover {
     color: styles.$st-color-green-leaf;
+}
+
+.material-icons.st-map-control-icon {
+    line-height: $st-map-control-size !important;
 }
 
 .st-map-control-info {
