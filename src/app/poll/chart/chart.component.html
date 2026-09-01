@@ -1,0 +1,47 @@
+<div class="st-chart">
+    <h3>{{ poll.title }}</h3>
+    @if (totalVotes === 0) {
+        <div>
+            <p>No data yet. Be the first to vote!</p>
+        </div>
+    }
+    <div [ngClass]="{'no-data': totalVotes === 0}" class="st-chart-canvas">
+        <canvas #chartCanvas></canvas>
+    </div>
+    <div [ngClass]="{'no-data': totalVotes === 0}" class="st-chart-vote">
+        @if (isVotingAllowed) {
+            <div>
+                <mat-radio-group [(ngModel)]="selectedIndex" class="st-radio-group">
+                    @for (option of pollOptions; track option; let i = $index) {
+                        <mat-radio-button
+                            [value]="i"
+                            [disabled]="!isVotingAllowed"
+                            class="st-radio-button">
+                            <em class="material-icons st-radio-label" [style.color]="legendColor(i)">label</em>
+                            {{ option.text }}
+                        </mat-radio-button>
+                    }
+                </mat-radio-group>
+                <br>
+                <br>
+                <button (click)="vote()" [disabled]="selectedIndex < 0 || !isVotingAllowed" color="accent" mat-button>
+                    Vote
+                </button>
+            </div>
+        } @else {
+            <div class="st-chart-legend">
+                @for (option of pollOptions; track option; let i = $index) {
+                    <div>
+                        <em class="material-icons st-chart-label" [style.color]="legendColor(i)">label</em>
+                        {{ option.text }}
+                    </div>
+                }
+            </div>
+            @if (isAuthenticated) {
+                <p>Thank you for your vote.</p>
+            } @else {
+                <p>Please sign in for voting!</p>
+            }
+        }
+    </div>
+</div>

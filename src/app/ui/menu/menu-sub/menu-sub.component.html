@@ -1,0 +1,36 @@
+<st-menu [ngClass]="{'st-menu-sub': true, 'decentralized': decentralized}">
+    @if (!decentralized && isActive('discover')) {
+        <st-nav-container align="left" [responsive]="false">
+            <st-nav-item [routerLinkActiveOptions]="{exact: true}"
+                         routerLink="/seeds"
+                         text="Seeds">
+            </st-nav-item>
+            <st-nav-item [routerLinkActiveOptions]="{exact: true}"
+                         routerLink="/gardens"
+                         text="Gardens">
+            </st-nav-item>
+            @if (!isMobile) {
+                <st-nav-item (click)="toggleFilter()"
+                             [icon]="isFilterFocused ? 'fa-close' : 'fa-filter'"
+                             [ngClass]="{
+                             'st-menu-sub-filter': true,
+                             'st-warning-orange': !isFilterFocused && isFilterModified
+                             }">
+                </st-nav-item>
+            }
+        </st-nav-container>
+    } @else if (!decentralized && isActive('user')) {
+        <st-nav-container align="left" [responsive]="false">
+            <st-nav-item [routerLinkActiveOptions]="{exact: true}"
+                         routerLink="/user/garden"
+                         text="Garden">
+            </st-nav-item>
+            <st-nav-item [routerLinkActiveOptions]="{exact: false}"
+                         routerLink="/user/settings"
+                         text="Settings">
+            </st-nav-item>
+        </st-nav-container>
+    } @else {
+        <ng-content></ng-content>
+    }
+</st-menu>

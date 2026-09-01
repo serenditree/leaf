@@ -1,0 +1,4 @@
+@use "assets/styles/list";
+@use "assets/styles/animations";
+
+@include animations.st-slide-enter(vertical);

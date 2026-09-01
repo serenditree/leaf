@@ -1,0 +1,20 @@
+@use "styles";
+@use "assets/styles/media";
+
+.st-menu {
+    position: relative;
+    width: styles.$st-content-width;
+    margin: auto;
+}
+
+@include media.gt-sm {
+    .st-menu {
+        width: styles.$st-content-width-gt-sm;
+    }
+}
+
+@include media.gt-lg {
+    .st-menu {
+        width: styles.$st-content-width-gt-lg;
+    }
+}

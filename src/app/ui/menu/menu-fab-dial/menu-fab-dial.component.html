@@ -1,0 +1,18 @@
+@if (fabToggleActive) {
+    <div (click)="toggleFab()" class="fab-backdrop" animate.enter="st-fade-enter" animate.leave="st-fade-leave"></div>
+}
+<div class="fab-container" animate.enter="st-fade-enter" animate.leave="st-fade-leave">
+    <button (click)="toggleFab()" class="fab-toggle" mat-mini-fab>
+        @if (!fabToggleActive) {
+            <mat-icon class="st-fab-icon">add</mat-icon>
+        }
+        @if (fabToggleActive) {
+            <mat-icon class="st-fab-icon">close</mat-icon>
+        }
+    </button>
+    <div (click)="toggleFab()">
+        @if (fabToggleActive) {
+            <ng-content></ng-content>
+        }
+    </div>
+</div>

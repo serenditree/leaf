@@ -1,0 +1,15 @@
+@if (seeds.length === 0) {
+    <p>
+        {{ emptyListMessage }}
+    </p>
+} @else {
+    @for (seed of seeds; track seed) {
+        <st-seed-list-item
+            [active]="activeItemId === seed.id"
+            [id]="seed.id"
+            [seed]="seed"
+            class="st-seed-list-item">
+        </st-seed-list-item>
+    }
+}
+

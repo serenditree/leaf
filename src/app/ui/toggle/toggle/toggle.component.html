@@ -1,0 +1,8 @@
+<div>
+    <mat-slide-toggle (change)="onSlideToggle()">
+        {{ name }}
+    </mat-slide-toggle>
+</div>
+<div #slideContent class="st-slide-vertical">
+    <ng-content></ng-content>
+</div>

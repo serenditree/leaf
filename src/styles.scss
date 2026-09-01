@@ -1,0 +1,381 @@
+@use "@angular/material" as mat;
+@use "assets/styles/media";
+@use "assets/styles/utils";
+
+@import "material-icons/iconfont/material-icons.css";
+@import "material-symbols/index.css";
+@import "font-awesome/css/font-awesome.css";
+@import "typeface-quicksand/index.css";
+
+/**********************************************************************************************************************
+ * GLOBAL DEFAULTS
+ **********************************************************************************************************************/
+$st-font-family: 'Quicksand', sans-serif;
+$st-font-size-h1: 20px;
+$st-font-size-h2: 18px;
+$st-font-size-p: 16px;
+
+$st-background-color: #fafafa;
+$st-background-color-button: #fff;
+
+$st-color-gray-primary: #666;
+$st-color-gray-secondary: #999;
+$st-color-gray-light: #ccc;
+$st-color-blue-accent: #343d46;
+$st-color-orange-trail: #cc7832;
+$st-color-blue-tint: #add8e6;
+$st-color-green-leaf: #91aa5d;
+$st-color-yellow-warning: #daa520;
+$st-color-orange-warning: $st-color-orange-trail;
+
+$st-menu-z-index: 1000; // mat-bottom-sheet reference
+
+$st-menu-top-height: 60px;
+$st-menu-top-height-gt-sm: 100px;
+$st-menu-top-z-index: $st-menu-z-index + 20;
+$st-menu-sub-height: 80px;
+$st-menu-sub-height-standalone-delta: 20px;
+$st-menu-sub-height-gt-sm: 40px;
+
+$st-menu-fab-bottom: 20px;
+$st-menu-fab-bottom-standalone: $st-menu-fab-bottom + $st-menu-sub-height-standalone-delta * .5;
+$st-menu-fab-bottom-right: 20px;
+$st-menu-fab-bottom-spacing: 60px;
+$st-menu-fab-size: 36px;
+$st-menu-fab-z-index: $st-menu-z-index + 20;
+
+$st-menu-mobile-z-index: $st-menu-z-index + 15;
+
+$st-map-height: 280px;
+$st-map-search-width: 320px;
+$st-map-z-index: $st-menu-z-index;
+
+$st-content-start: $st-menu-top-height + $st-map-height;
+$st-content-start-gt-sm: $st-menu-top-height-gt-sm + $st-map-height + $st-menu-sub-height-gt-sm;
+
+$st-content-start-sub: $st-content-start;
+$st-content-start-sub-gt-sm: $st-content-start-gt-sm + $st-menu-sub-height-gt-sm;
+
+$st-content-start-no-map: $st-menu-top-height;
+$st-content-start-no-map-gt-sm: $st-menu-top-height-gt-sm + $st-menu-sub-height-gt-sm;
+
+$st-content-width: 100%;
+$st-content-width-gt-sm: 70%;
+$st-content-width-gt-lg: 50%;
+$st-content-margin: 0;
+$st-content-margin-gt-sm: (100% - $st-content-width-gt-sm) * 0.5;
+$st-content-margin-gt-lg: (100% - $st-content-width-gt-lg) * 0.5;
+
+$st-content-bottom-spacer: 10000px; // enable scrolling past bottom of content and always hide map
+
+$st-input-width: 100%;
+$st-input-width-gt-sm: 400px;
+/**********************************************************************************************************************
+ * GLOBAL EFFECTS/DECORATIONS
+ **********************************************************************************************************************/
+@mixin st-shadow($display) {
+    @if $display == top {
+        @include utils.st-polyfill-property(box-shadow, 0 -8px 10px -10px rgba(0, 0, 0, 0.2));
+    } @else if $display == bottom {
+        @include utils.st-polyfill-property(box-shadow, 0 8px 10px -10px rgba(0, 0, 0, 0.2));
+    } @else {
+        @include utils.st-polyfill-property(box-shadow, none);
+    }
+}
+
+@mixin st-transparency($opacity:.9) {
+    background-color: rgba($st-background-color, $opacity) !important;
+}
+
+$st-line: 1px dotted $st-color-gray-light;
+
+.st-underline {
+    border-bottom: 1px dotted $st-color-gray-primary !important;
+}
+
+.st-underline:hover {
+    color: inherit !important;
+    border-bottom: 1px solid $st-color-gray-secondary !important;
+}
+
+.st-text {
+    white-space: pre-wrap;
+}
+
+.st-phonetic {
+    font-size: small;
+    font-weight: normal !important;
+    font-style: italic;
+}
+
+.st-match {
+    color: $st-color-green-leaf;
+    font-weight: bold;
+}
+
+.st-flipped-horizontally {
+    @include utils.st-polyfill-property(transform, scaleX(-1));
+}
+
+.st-flip-vertically {
+    @include utils.st-polyfill-property(transform, scaleY(-1));
+}
+
+/**********************************************************************************************************************
+ * GLOBAL ELEMENTS
+ **********************************************************************************************************************/
+body {
+    overflow-y: scroll;
+    font-family: $st-font-family;
+    font-size: $st-font-size-p;
+    color: $st-color-gray-primary;
+    background-color: $st-background-color;
+    -webkit-tap-highlight-color: transparent; // PWA
+}
+
+h1 {
+    font-size: $st-font-size-h1;
+}
+
+h2 {
+    font-size: $st-font-size-h2;
+}
+
+h3 {
+    font-size: $st-font-size-p;
+    font-weight: bold;
+}
+
+a,
+a:active,
+a:focus,
+a:hover {
+    color: inherit !important;
+    outline: none !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+}
+
+a:hover {
+    color: $st-color-green-leaf !important;
+}
+
+/**********************************************************************************************************************
+ * MATERIAL OVERRIDE
+ **********************************************************************************************************************
+ * INPUT
+ **********************************************************************************************************************/
+mat-form-field mat-icon {
+    font-size: $st-font-size-p;
+    text-align: right;
+    cursor: pointer;
+}
+
+mat-form-field mat-icon:hover {
+    color: $st-color-green-leaf;
+}
+
+.mat-mdc-form-field {
+    width: $st-input-width;
+}
+
+.mat-mdc-form-field:not(.small-except-mobile).small {
+    width: $st-input-width * 0.5 !important;
+}
+
+@include media.gt-xs {
+    .mat-mdc-form-field {
+        width: $st-input-width-gt-sm;
+    }
+
+    .mat-mdc-form-field.small {
+        width: $st-input-width-gt-sm * 0.5 !important;
+    }
+}
+
+.mat-mdc-input-element {
+    color: $st-color-gray-primary !important;
+}
+
+.mdc-text-field--filled {
+    background-color: transparent !important;
+}
+
+.mat-mdc-form-field-focus-overlay {
+    background-color: transparent !important;
+}
+
+.mat-mdc-form-field-error {
+    color: $st-color-yellow-warning !important;
+}
+
+/**********************************************************************************************************************
+ * AUTOCOMPLETE
+ **********************************************************************************************************************/
+.st-menu-top-search-input .mdc-line-ripple {
+    display: none !important;
+}
+
+div.mat-mdc-autocomplete-panel:not(.opaque) {
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
+
+.mat-mdc-optgroup-label {
+    font-size: inherit !important;
+    font-weight: bold;
+    min-height: 26px !important;
+}
+
+.no-label {
+    .mat-mdc-optgroup-label {
+        display: none;
+    }
+
+    .mat-mdc-option.flat:first-of-type {
+        margin-top: 10px;
+    }
+}
+
+.mat-mdc-option {
+    font-size: 14px !important;
+    min-height: 24px !important;
+    color: $st-color-gray-primary !important;
+}
+
+.mat-mdc-option.flat {
+    padding: 0 16px !important;
+}
+
+.mdc-list-item {
+    background: none !important;
+}
+
+.mat-mdc-option-active {
+    font-weight: bold !important;
+}
+
+/**********************************************************************************************************************
+ * BUTTON
+ **********************************************************************************************************************/
+.mat-mdc-button {
+    background-color: $st-background-color-button !important;
+    border: 1px solid $st-color-green-leaf !important;
+}
+
+.mat-mdc-button.mat-mdc-button-disabled {
+    border: 1px solid $st-color-gray-light !important;
+}
+
+.mat-mdc-mini-fab {
+    height: $st-menu-fab-size !important;
+    width: $st-menu-fab-size !important;
+}
+
+.mat-mdc-mini-fab.mat-button-disabled {
+    background-color: rgba(0, 0, 0, .42);
+}
+
+/**********************************************************************************************************************
+ * SLIDE TOGGLE
+ **********************************************************************************************************************/
+mat-slide-toggle {
+    margin-bottom: 10px;
+}
+
+/**********************************************************************************************************************
+ * ICON
+ **********************************************************************************************************************/
+.material-icons:not(.st-fab-icon) {
+    vertical-align: middle !important;
+    font-size: inherit !important;
+}
+
+.mat-icon {
+    overflow: visible !important;
+}
+
+/**********************************************************************************************************************
+ * SNACK BAR
+ **********************************************************************************************************************/
+.mat-snack-bar {
+    @include mat.snack-bar-overrides((
+        container-color: $st-color-green-leaf,
+    ));
+}
+
+.mat-snack-bar-error {
+    @include mat.snack-bar-overrides((
+        container-color: $st-color-orange-warning,
+    ));
+}
+
+/**********************************************************************************************************************
+ * BOTTOM SHEET
+ **********************************************************************************************************************/
+.mat-bottom-sheet-container {
+    padding-top: 16px !important;
+    padding-bottom: $st-menu-sub-height + 40px !important;
+    @include st-transparency();
+    @include utils.st-polyfill-property(border-radius, 20px 20px 0 0);
+}
+
+/**********************************************************************************************************************
+ * FONT COLOR CUSTOMIZATION
+ **********************************************************************************************************************/
+.st-leaf-green,
+.st-tint-green {
+    color: $st-color-green-leaf !important;
+}
+
+.st-tint-blue {
+    color: $st-color-blue-tint !important;
+}
+
+.st-garden-gray,
+.st-prune-gray,
+.st-secondary-gray {
+    color: $st-color-gray-secondary !important;
+}
+
+.st-trail-orange, .st-warning-orange {
+    color: $st-color-orange-trail !important;
+}
+
+.st-light-gray {
+    color: $st-color-gray-light !important;
+}
+
+.st-accent-blue {
+    color: $st-color-blue-accent !important;
+}
+
+/**********************************************************************************************************************
+ * BACKGROUND COLOR CUSTOMIZATION
+ **********************************************************************************************************************/
+.st-bg-leaf-green,
+.st-bg-tint-green {
+    background-color: $st-color-green-leaf !important;
+}
+
+.st-bg-tint-blue {
+    background-color: $st-color-blue-tint !important;
+}
+
+.st-bg-garden-gray,
+.st-bg-prune-gray,
+.st-bg-secondary-gray {
+    background-color: $st-color-gray-secondary !important;
+}
+
+.st-bg-trail-orange {
+    background-color: $st-color-orange-trail !important;
+}
+
+.st-bg-light-gray {
+    background-color: $st-color-gray-light !important;
+}
+
+.st-bg-accent-blue {
+    background-color: $st-color-blue-accent !important;
+}

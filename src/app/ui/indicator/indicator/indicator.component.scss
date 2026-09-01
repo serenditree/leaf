@@ -1,0 +1,28 @@
+@use "styles";
+@use "assets/styles/utils";
+@use "assets/styles/animations";
+
+$st-indicator-size: 50px; // div
+$st-indicator-total-size: $st-indicator-size + 2; // div + border * 2
+$st-indicator-offset: -$st-indicator-total-size * .5;
+$st-indicator-radius: 50%;
+
+.st-indicator {
+    display: block;
+    position: absolute;
+    z-index: styles.$st-menu-z-index + 1;
+    top: 50%;
+    left: 50%;
+    width: $st-indicator-size;
+    height: $st-indicator-size;
+    margin-top: $st-indicator-offset;
+    margin-left: $st-indicator-offset;
+    line-height: $st-indicator-size;
+    text-align: center;
+    font-size: styles.$st-font-size-h1;
+    border: 1px solid rgba(153, 153, 153, .7);
+    @include styles.st-transparency(.3);
+    @include utils.st-polyfill-property(border-radius, $st-indicator-radius)
+}
+
+@include animations.st-pulse(1.4)

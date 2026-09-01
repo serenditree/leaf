@@ -1,0 +1,86 @@
+<form [formGroup]="formGroup">
+    <div formGroupName="location">
+        <mat-form-field class="small">
+            <mat-label>Longitude</mat-label>
+            <input [matTooltip]="isLocationMutable() ?
+                   'please set the location by moving the map' :
+                   'location defined by parent'"
+                   formControlName="lng"
+                   matInput
+                   matTooltipShowDelay="400">
+        </mat-form-field>
+        <mat-form-field class="small">
+            <mat-label>Latitude</mat-label>
+            <input [matTooltip]="isLocationMutable() ?
+                   'please set the location by moving the map' :
+                   'location defined by parent'"
+                   formControlName="lat"
+                   matInput
+                   matTooltipShowDelay="400">
+        </mat-form-field>
+    </div>
+    <br>
+    <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input class="st-input" formControlName="title" matInput>
+        @if (formGroup.hasError('required', ['title'])) {
+            <mat-error>required</mat-error>
+        }
+        @if (formGroup.hasError('html', ['title'])) {
+            <mat-error>contains &lt;tag&gt;</mat-error>
+        }
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Text</mat-label>
+        <textarea #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMaxRows="10"
+                  cdkAutosizeMinRows="1"
+                  cdkTextareaAutosize
+                  formControlName="text"
+                  matInput>
+        </textarea>
+        @if (formGroup.hasError('required', ['text'])) {
+            <mat-error>required</mat-error>
+        }
+        @if (formGroup.hasError('html', ['text'])) {
+            <mat-error>contains &lt;tag&gt;</mat-error>
+        }
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Tags</mat-label>
+        <input (keydown.enter)="addTag(); $event.preventDefault()"
+               [matAutocomplete]="autocomplete"
+               formControlName="tag"
+               enterkeyhint="done"
+               inputmode="search"
+               matInput>
+        <mat-icon (click)="addTag()"
+                  fontIcon="fa-plus-circle"
+                  fontSet="fa"
+                  matSuffix>
+        </mat-icon>
+        <mat-error>duplicated or invalid tag</mat-error>
+    </mat-form-field>
+    <mat-autocomplete #autocomplete class="opaque">
+        @for (result of tags | async; track result) {
+            <mat-option
+                [innerHTML]="result | highlight:term"
+                [value]="result">
+            </mat-option>
+        }
+    </mat-autocomplete>
+    <ul>
+        @for (tag of tagsArray.controls; track tag; let tagIndex = $index) {
+            <li animate.enter="st-slide-vertical-enter" animate.leave="st-slide-vertical-leave">
+                <a (click)="removeTag(tagIndex)"
+                   matTooltip="remove tag"
+                   matTooltipShowDelay="700">
+                    <mat-icon fontIcon="fa-minus-circle" fontSet="fa"></mat-icon>
+                </a>
+                #{{ tag.value }}
+            </li>
+        }
+    </ul>
+</form>

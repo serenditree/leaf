@@ -1,0 +1,49 @@
+@if (!isChild) {
+    <h1>Seed</h1>
+} @else if (isInGarden) {
+    <h1>Seed in garden "{{ parent.title }}"</h1>
+} @else if (!isTrail) {
+    <h1>Branch of "{{ parent.title }}"</h1>
+} @else {
+    <h1>Seed of trail "{{ parent.title }}"</h1>
+}
+
+<form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+    <div class="flex-row">
+        <div>
+            <st-seed-new-base [formGroup]="formGroup" [parent]="parent"></st-seed-new-base>
+            <br>
+            <br>
+            <st-toggle (onToggle)="onPollToggle($event)" name="Add polls">
+                <br>
+                <st-poll-new [formGroup]="formGroup"></st-poll-new>
+                <br>
+            </st-toggle>
+        </div>
+        <div>
+            @if (!isChild) {
+                <div>
+                    <mat-slide-toggle (change)="onWeakLocalAlignmentToggle($event)">
+                        Weak local alignment
+                    </mat-slide-toggle>
+                    <br>
+                    <mat-slide-toggle (change)="onStartsTrailToggle($event)">
+                        Starts trail
+                    </mat-slide-toggle>
+                    <br>
+                    <mat-slide-toggle disabled>
+                        Private
+                    </mat-slide-toggle>
+                    <br>
+                </div>
+            }
+            <mat-slide-toggle (change)="onAnonymousToggle($event)" disabled>
+                Anonymous
+            </mat-slide-toggle>
+        </div>
+    </div>
+    <br>
+    <br>
+    <button [disabled]="submitted" color="accent" mat-button>Seed</button>&nbsp;&nbsp;
+</form>
+

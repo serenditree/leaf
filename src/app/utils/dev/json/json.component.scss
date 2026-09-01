@@ -1,0 +1,7 @@
+@use "assets/styles/animations";
+
+@include animations.st-slide(vertical);
+
+.mat-icon {
+    cursor: pointer;
+}

@@ -1,0 +1,5 @@
+<div (cdkDropListDropped)="drop($event)" cdkDropList cdkDropListOrientation="horizontal" class="st-dnd-list small">
+    @for (word of words; track word) {
+        <div class="st-dnd-list-item" cdkDrag>{{ word }}</div>
+    }
+</div>

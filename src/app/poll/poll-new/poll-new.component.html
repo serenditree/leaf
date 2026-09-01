@@ -1,0 +1,63 @@
+<form [formGroup]="formGroup">
+    <div formArrayName="polls">
+        @for (poll of pollsArray.controls; track poll; let pollIndex = $index) {
+            <div animate.enter="st-slide-enter-vertical" animate.leave="st-slide-leave-vertical">
+                <h2>Poll {{ pollIndex + 1 }} &nbsp;
+                    @if (pollsArray.controls.length > 1) {
+                        <a (click)="removePoll(pollIndex)"
+                           matTooltip="remove poll {{pollIndex + 1}}"
+                           matTooltipShowDelay="700">
+                            <mat-icon fontIcon="fa-minus-circle" fontSet="fa"></mat-icon>
+                        </a>
+                    }
+                </h2>
+                <div [formGroupName]="pollIndex">
+                    <mat-form-field>
+                        <mat-label>Title</mat-label>
+                        <input formControlName="title" matInput>
+                        <mat-error>required</mat-error>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field>
+                        <mat-label>Option</mat-label>
+                        <input (keydown.enter)="addOption(pollIndex); $event.preventDefault()"
+                               enterkeyhint="done"
+                               formControlName="optionInput"
+                               matInput>
+                        <mat-icon (click)="addOption(pollIndex)"
+                                  fontIcon="fa-plus-circle"
+                                  fontSet="fa"
+                                  matSuffix>
+                        </mat-icon>
+                        @if (optionInputInvalid(pollIndex)) {
+                            <mat-error>
+                                option already exists
+                            </mat-error>
+                        } @else if (optionsInvalid(pollIndex)) {
+                            <mat-error>
+                                please add at least two options
+                            </mat-error>
+                        }
+                    </mat-form-field>
+                    <ul>
+                        @for (option of optionControls(pollIndex); track option; let optionIndex = $index) {
+                            <li>
+                                <a (click)="removeOption(pollIndex, optionIndex)"
+                                   matTooltip="remove option"
+                                   matTooltipShowDelay="700">
+                                    <mat-icon fontIcon="fa-minus-circle" fontSet="fa"></mat-icon>
+                                </a>
+                                &nbsp;{{ option.get('text')?.value }}
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+    <br>
+    <a (click)="addPoll()">
+        <mat-icon fontIcon="fa-plus-circle" fontSet="fa"></mat-icon>
+        Add another poll
+    </a>
+</form>

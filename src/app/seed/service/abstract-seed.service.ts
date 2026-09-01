@@ -1,0 +1,221 @@
+import {HTTP_STATUS} from '../../utils/st-const';
+import {AbstractSeed} from '../model/abstract-seed';
+import {FilterService} from '../../search/service/filter.service';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {IndicatorService} from '../../ui/indicator/service/indicator.service';
+import {LngLatBounds} from 'maplibre-gl';
+import {MessageService} from '../../ui/message/service/message.service';
+import {Observable, Subject} from 'rxjs';
+import {Router} from '@angular/router';
+import {SeedFilter} from '../model/seed-filter';
+import {SeedType} from '../model/seed-type.enum';
+import {Seed} from '../model/seed';
+import {StMaple} from '../../utils/st-maple';
+import {environment} from '../../../environments/environment';
+import {finalize} from 'rxjs/operators';
+
+export class AbstractSeedService<T extends AbstractSeed> {
+
+    protected _seeds: T[] = [];
+    protected _seedsSubject = new Subject<T[]>();
+    protected _seedSubject = new Subject<T>();
+
+    protected readonly _api: string;
+    protected readonly _route: string;
+    protected readonly _message: string;
+
+    constructor(protected _type: SeedType,
+                protected _http: HttpClient,
+                protected _router: Router,
+                protected _filterService: FilterService,
+                protected _messageService: MessageService,
+                protected _indicator: IndicatorService) {
+        if (this._type === SeedType.SEED) {
+            this._api = environment.API_BASE_URL_SEED;
+            this._route = 'seeds';
+            this._message = 'Seeded';
+        } else {
+            this._api = environment.API_BASE_URL_GARDEN;
+            this._route = 'gardens';
+            this._message = 'Cultivated';
+        }
+    }
+
+    get seedsObservable(): Observable<T[]> {
+        return this._seedsSubject.asObservable();
+    }
+
+    get seedObservable(): Observable<T> {
+        return this._seedSubject.asObservable();
+    }
+
+    public getInMemory(): T[] {
+        return this._seeds;
+    }
+
+    public create(seed: T): Observable<T> {
+
+        return new Observable<T>((observer) => {
+            this._http
+                .post<T>(StMaple.joinUrl(this._api, 'create'), seed)
+                .subscribe({
+                    next: (response) => {
+                        console.log(response);
+
+                        observer.next(response);
+                        observer.complete();
+
+                        void this._router.navigate([this._route, response.id]).then(
+                            () => this._messageService.info(this._message)
+                        );
+                    },
+                    error: (error) => {
+                        console.error(`Could not create ${this._type}: `, error);
+                        this._messageService.error(`Sorry, could not create ${this._type.toLowerCase()}`);
+                        observer.error(error);
+                    }
+                });
+        });
+
+    }
+
+    public retrieveById(id: string): void {
+        const cachedSeed = this._seeds.find((seed) => seed.id === id);
+
+        if (cachedSeed) {
+            this._seedSubject.next(cachedSeed);
+        } else {
+            this._http
+                .get<T>(StMaple.joinUrl(this._api, id))
+                .subscribe({
+                    next: (response) => {
+                        this._seedSubject.next(response);
+                    },
+                    error: (error) => {
+                        console.error(`Could not retrieve ${this._type} with id ${id}`, error);
+                    }
+                });
+        }
+    }
+
+    public retrieveByGlobalFilter(bounds?: LngLatBounds): void {
+        if (bounds) {
+            this.retrieveByFilter(
+                this._filterService
+                    .createQuery()
+                    .setBounds(bounds)
+                    .build(),
+                true
+            );
+        } else {
+            this.retrieveByFilter(
+                this._filterService.getFilter(),
+                true
+            );
+        }
+    }
+
+    public retrieveByFilter(filter: SeedFilter, inMemory = false): void {
+        this._indicator.progressStart();
+        console.debug('Retrieval with filter:', filter);
+        this._http
+            .post<T[]>(StMaple.joinUrl(this._api, 'retrieve'), filter)
+            .pipe(
+                finalize(
+                    () => {
+                        this._indicator.progressEnd();
+                    }
+                )
+            )
+            .subscribe({
+                next: (response) => {
+                    if (inMemory) {
+                        this._seeds = response;
+                    }
+                    this._seedsSubject.next(response);
+                    console.debug('Retrieved:', response);
+                },
+                error: (error) => {
+                    if (error.status === HTTP_STATUS.NOT_FOUND) {
+                        console.log(`Nothing ${this._message.toLowerCase()} around here with filter:`);
+                        console.log(filter);
+                        if (inMemory) {
+                            this._seeds = [];
+                        }
+                        this._seedsSubject.next([]);
+                    } else {
+                        console.error(`Could not retrieve ${this._route} by filter:`, error);
+                        console.log(filter);
+                    }
+                }
+            });
+    }
+
+    public retrieveTags(name: string): Observable<string[]> {
+        return new Observable((observer) => {
+            this._http
+                .get<string[]>(StMaple.joinUrl(this._api, 'retrieve', 'tags', name))
+                .subscribe({
+                    next: (response) => {
+                        observer.next(response);
+                    },
+                    error: (error) => {
+                        console.error(error);
+                    }
+                });
+        });
+    }
+
+    public water(seed: Seed): Observable<boolean> {
+
+        return this.waterOrPrune(seed, 'water');
+    }
+
+    public prune(seed: Seed): Observable<boolean> {
+        return this.waterOrPrune(seed, 'prune');
+    }
+
+    public delete(id: string): void {
+
+        this._http
+            .delete<void>(StMaple.joinUrl(this._api, id), {observe: 'response'})
+            .subscribe({
+                next: () => {
+                    this._seeds = this._seeds.filter(seed => seed.id !== id);
+                    this._seedsSubject.next(this._seeds);
+                    console.log(`Successfully removed ${this._type} ${id}`);
+                    void this._router.navigate(['']).then(
+                        () => this._messageService.info('Successfully removed')
+                    );
+
+                },
+                error: (error) => {
+                    console.error(`Could not remove ${this._type} ${id}`, error);
+                }
+            });
+    }
+
+    private waterOrPrune(seed: Seed, waterOrPrune: 'water' | 'prune'): Observable<boolean> {
+        let params = null;
+        if (seed.gardenId) {
+            params = new HttpParams().append('garden', seed.gardenId);
+        }
+
+        return new Observable((observer) => {
+            this._http
+                .get<void>(StMaple.joinUrl(this._api, waterOrPrune, seed.id), {observe: 'response', params: params ?? undefined})
+                .subscribe({
+                    next: () => {
+                        console.log(`Successfully ${waterOrPrune}ed ${this._type} ${seed.id}`);
+                        observer.next(true);
+                        observer.complete();
+                    },
+                    error: (error) => {
+                        console.error(`Could not ${waterOrPrune} ${this._type} ${seed.id}`, error);
+                        observer.next(false);
+                        observer.complete();
+                    }
+                });
+        });
+    }
+}

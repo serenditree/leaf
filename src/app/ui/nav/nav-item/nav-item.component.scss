@@ -1,0 +1,52 @@
+@use "styles";
+@use "assets/styles/utils";
+@use "assets/styles/media";
+
+@include media.lt-md {
+    nav {
+        line-height: 55px;
+    }
+}
+
+.st-nav-item-active {
+    font-weight: bold;
+}
+
+.st-nav-item-animated a > em {
+    @include utils.st-polyfill-property(transition, 'all .2s ease-out');
+    vertical-align: middle !important;
+    margin-right: 5px;
+}
+
+.st-nav-item-animated a:hover {
+    color: inherit !important;
+}
+
+.st-nav-item-animated:not(.st-nav-item-disabled) a:hover > em {
+    @include utils.st-polyfill-property(transform, scale(1.5));
+}
+
+.st-nav-item-disabled * {
+    @include utils.st-polyfill-property(opacity, .8);
+    cursor: default !important;
+}
+
+.st-fab-button-container {
+    position: relative;
+}
+
+.st-fab-button-label {
+    position: absolute;
+    right: 50px;
+    top: 0;
+    color: #fff;
+    font-weight: bold;
+}
+
+.st-fab-icon {
+    vertical-align: initial !important;
+
+    .size-adjustment {
+        font-size: 24px;
+    }
+}

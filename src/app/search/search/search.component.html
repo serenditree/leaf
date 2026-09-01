@@ -1,0 +1,37 @@
+<mat-form-field [appearance]="isMobile ? 'outline': 'fill'">
+    <mat-label>Search</mat-label>
+    <input (focus)="onFocus($event)"
+           [formControl]="formControl"
+           [matAutocomplete]="autocomplete"
+           [stFocus]="isSearchFocused"
+           [tabindex]="isMobile ? -1 : 1"
+           id="st-search-input"
+           inputmode="search"
+           matInput>
+    <!-- tabIndex -1 to disable autofocus on mobile-->
+</mat-form-field>
+
+<mat-autocomplete #autocomplete>
+    @if (isUserSearch && users.length > 0) {
+        <mat-optgroup [ngClass]="{'no-label': !isTagSearch}" label="Users">
+            @for (user of users; track user) {
+                <mat-option (onSelectionChange)="onUserSelectionChange($event)"
+                            [innerHTML]="user.username | highlight:term"
+                            [value]="user"
+                            class="flat">
+                </mat-option>
+            }
+        </mat-optgroup>
+    }
+    @if (isTagSearch && tags.length > 0) {
+        <mat-optgroup [ngClass]="{'no-label': !isUserSearch}" label="Tags">
+            @for (tag of tags; track tag) {
+                <mat-option (onSelectionChange)="onTagSelectionChange($event)"
+                            [innerHTML]="tag | highlight:term"
+                            [value]="tag"
+                            class="flat">
+                </mat-option>
+            }
+        </mat-optgroup>
+    }
+</mat-autocomplete>

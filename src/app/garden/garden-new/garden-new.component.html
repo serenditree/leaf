@@ -1,0 +1,17 @@
+<h1>Cultivate</h1>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+    <div class="flex-row">
+        <div>
+            <st-seed-new-base [formGroup]="formGroup" [parent]="parent"></st-seed-new-base>
+        </div>
+        <div>
+            <mat-slide-toggle disabled>
+                Private
+            </mat-slide-toggle>
+        </div>
+    </div>
+    <br>
+    <br>
+    <button [disabled]="submitted" color="accent" mat-button>Cultivate</button>
+</form>

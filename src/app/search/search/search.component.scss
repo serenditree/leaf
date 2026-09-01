@@ -1,0 +1,12 @@
+@use "styles";
+@use "assets/styles/media";
+
+.mat-mdc-form-field {
+    width: 100%;
+}
+
+@include media.gt-sm {
+    .mat-mdc-form-field {
+        width: styles.$st-map-search-width - 20px - 10px;
+    }
+}

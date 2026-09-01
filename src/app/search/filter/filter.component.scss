@@ -1,0 +1,33 @@
+@use "assets/styles/media";
+@use "assets/styles/animations";
+
+@include animations.st-slide-enter(vertical);
+
+.flex-row {
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+}
+
+@include media.lt-sm {
+    .flex-row {
+        gap: 0;
+        flex-grow: 1;
+        flex-direction: column;
+    }
+}
+
+@include media.lt-md {
+    mat-radio-button,
+    mat-slide-toggle {
+        line-height: 35px !important;
+    }
+}
+
+.mat-mdc-button {
+    background-color: #fff !important;
+}
+
+.st-reset {
+    margin-left: 20px;
+}

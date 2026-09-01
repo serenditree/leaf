@@ -1,0 +1,51 @@
+@if (!fab) {
+    <nav>
+        @if (text && routerLink && !icon) {
+            <a
+                [routerLinkActiveOptions]="routerLinkActiveOptions"
+                [routerLink]="routerLink"
+                routerLinkActive="st-nav-item-active">
+                <span [class.st-underline]="textUnderline">{{ text }}</span>
+            </a>
+        } @else if (icon && text) {
+            <span [ngClass]="{'st-nav-item-disabled': disabled, 'st-nav-item-animated': true}">
+                <a>
+                    @if (set === 'fa') {
+                        <em [ngClass]="['fa', icon].concat(iconClassList)"></em>
+                    }
+                    @if (set === 'material') {
+                        <em [ngClass]="['material-icons'].concat(iconClassList)">{{ icon }}</em>
+                    }
+                    &nbsp;<span [class.st-underline]="textUnderline">{{ text }}</span>
+                </a>
+            </span>
+        } @else if (icon) {
+            <a>
+                <mat-icon [fontIcon]="icon" [fontSet]="set"></mat-icon>
+            </a>
+        } @else if (text) {
+            <a [ngClass]="{'st-nav-item-active': active}">
+                <span [class.st-underline]="textUnderline">{{ text }}</span>
+            </a>
+        } @else {
+            <ng-content></ng-content>
+        }
+    </nav>
+} @else {
+    <div class="st-fab-button-container">
+        <div class="st-fab-button-label">{{ text }}</div>
+        <button [disabled]="disabled" color="secondary" mat-mini-fab>
+            @if (set === 'material') {
+                <mat-icon
+                    [ngClass]="['st-fab-icon'].concat(iconClassList)">
+                    {{ icon }}
+                </mat-icon>
+            } @else {
+                <mat-icon [fontIcon]="icon"
+                          [ngClass]="['st-fab-icon', 'size-adjustment'].concat(iconClassList)"
+                          fontSet="fa">
+                </mat-icon>
+            }
+        </button>
+    </div>
+}

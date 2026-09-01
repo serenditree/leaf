@@ -1,0 +1,32 @@
+<article [id]="seed.id" class="st-seed-list-item">
+    <p>
+        @if (active) {
+            <em animate.enter="st-slide-enter-horizontal"
+                animate.leave="st-slide-leave-horizontal"
+                class="fa fa-arrow-right st-seed-list-item-pointer">&nbsp;</em>
+        }
+        <strong>{{ seed.title }}</strong>
+        @if (!seed.anonymous) {
+            <span> by {{ seed.username }}</span>
+        }
+        <span class="st-seed-list-item-badges st-secondary-gray">
+            @if (seed.trail) {
+                <mat-icon matTooltip="trail">gesture</mat-icon>
+            }
+            @if (seed.poll) {
+                <mat-icon matTooltip="has poll">donut_large</mat-icon>
+            }
+            @if (seed.gardenId) {
+                <mat-icon
+                    fontIcon="fa-tag"
+                    fontSet="fa"
+                    matTooltip="in garden">
+                </mat-icon>
+            }
+        </span>
+    </p>
+    <p class="st-text">{{ seed.text | ellipsis:maxWords:maxLines }}</p>
+    @if (!environment.production) {
+        <st-json [object]="seed"></st-json>
+    }
+</article>

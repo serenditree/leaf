@@ -1,0 +1,44 @@
+<h1>Settings</h1>
+
+<h3>Delete Account</h3>
+<div class="section">
+    <button (click)="delete()" color="accent" mat-button>delete</button>&nbsp;&nbsp;
+    <mat-checkbox [(ngModel)]="includeContributions">Check to delete all your contributions, too!</mat-checkbox>
+</div>
+
+<h3>Verify Account</h3>
+
+@if (!isVerified) {
+    <div class="section">
+        This will verify that you are a human being using the ID provider of your country. To avoid multiple
+        verifications
+        using the same ID, the subject (claim &quot;sub&quot;) of the
+        <a href="https://openid.net/specs/openid-connect-core-1_0.html#IDToken" target="_blank" class="st-underline">
+            OpenID Connect ID Token
+        </a>
+        will be stored in a separate database table without date information and no link to your account.
+        <div>
+            <mat-form-field class="countries">
+                <mat-select [formControl]="countryControl" required>
+                    @for (country of countries; track country) {
+                        <mat-option [value]="country.code" [disabled]="!country.enabled">
+                            {{ country.code.toUpperCase() }}
+                        </mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <a [href]="verifyCallback">
+                <button color="accent" [disabled]="isProduction" mat-button>verify</button>
+            </a>
+        </div>
+    </div>
+} @else {
+    <div class="section">
+        Your account is already verified.
+    </div>
+}
+
+
+
+

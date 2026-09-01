@@ -1,0 +1,43 @@
+@use "styles";
+@use "assets/styles/media";
+
+.st-menu-sub {
+    position: fixed;
+    width: 100%;
+    height: styles.$st-menu-sub-height;
+    line-height: styles.$st-menu-sub-height;
+    @include styles.st-transparency();
+}
+
+@include media.gt-sm {
+    .st-menu-sub {
+        z-index: styles.$st-menu-z-index - 1;
+        top: styles.$st-menu-top-height-gt-sm + styles.$st-map-height;
+        height: styles.$st-menu-sub-height-gt-sm;
+        line-height: styles.$st-menu-sub-height-gt-sm;
+    }
+}
+
+.st-menu-sub.decentralized {
+    width: styles.$st-content-width;
+}
+
+.st-menu-sub.decentralized > .st-menu {
+    width: 100% !important;
+}
+
+@include media.gt-sm {
+    .st-menu-sub.decentralized {
+        width: styles.$st-content-width-gt-sm;
+    }
+}
+
+@include media.gt-lg {
+    .st-menu-sub.decentralized {
+        width: styles.$st-content-width-gt-lg;
+    }
+}
+
+.st-menu-sub-filter {
+    margin-right: 5px !important;
+}

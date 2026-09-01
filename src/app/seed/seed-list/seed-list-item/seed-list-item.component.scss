@@ -1,0 +1,30 @@
+@use "styles";
+@use "assets/styles/media";
+@use "assets/styles/animations";
+
+@include animations.st-slide-enter(horizontal);
+
+.st-seed-list-item {
+    margin-top: 40px;
+    cursor: pointer;
+}
+
+@include media.lt-md {
+    .st-seed-list-item:first-of-type {
+        margin-top: 0;
+    }
+}
+
+.st-seed-list-item-pointer {
+    color: styles.$st-color-green-leaf;
+    overflow: hidden;
+    vertical-align: -10%
+}
+
+.st-seed-list-item-badges {
+    float: right;
+}
+
+mat-icon {
+    vertical-align: middle !important;
+}

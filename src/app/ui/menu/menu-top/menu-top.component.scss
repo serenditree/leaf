@@ -1,0 +1,108 @@
+@use "styles";
+@use "assets/styles/media";
+@use "assets/styles/animations";
+
+@include animations.st-fade-enter();
+
+.st-menu-top {
+    position: fixed;
+    z-index: styles.$st-menu-z-index + 20;
+    top: 0;
+    width: 100%;
+    height: styles.$st-menu-top-height;
+    background-color: styles.$st-background-color;
+}
+
+@include media.lt-md() {
+    .st-menu-top {
+        @include styles.st-transparency();
+    }
+
+    .st-menu-top.st-shadow {
+        @include styles.st-shadow(bottom);
+    }
+}
+
+@include media.gt-sm {
+    .st-menu-top {
+        height: styles.$st-menu-top-height-gt-sm;
+    }
+}
+
+$st-menu-top-ref: 30px;
+
+.st-menu-top-home {
+    position: absolute;
+    top: styles.$st-menu-top-height - $st-menu-top-ref;
+    font-size: styles.$st-font-size-h1 + 2px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.st-menu-top-home > a:hover {
+    color: inherit !important;
+}
+
+@include media.gt-sm {
+    .st-menu-top-home {
+        top: styles.$st-menu-top-height-gt-sm - $st-menu-top-ref;
+        margin-left: 0;
+    }
+}
+
+.st-menu-top-nav,
+.st-menu-top-close-btn,
+.st-menu-top-search-input {
+    position: absolute;
+    text-align: right;
+    overflow: hidden;
+    white-space: nowrap
+}
+
+.st-menu-top-nav,
+.st-menu-top-close-btn {
+    top: styles.$st-menu-top-height - $st-menu-top-ref + 3px;
+    right: 0;
+}
+
+.st-menu-top-top {
+    position: absolute;
+    right: 0;
+    top: 10px;
+}
+
+.st-menu-top-top,
+.st-menu-top-nav,
+.st-menu-top-close-btn {
+    display: none;
+}
+
+@include media.gt-sm {
+    .st-menu-top-nav,
+    .st-menu-top-close-btn {
+        top: styles.$st-menu-top-height-gt-sm - $st-menu-top-ref + 3px;
+    }
+
+    .st-menu-top-top,
+    .st-menu-top-nav,
+    .st-menu-top-close-btn {
+        display: block;
+    }
+}
+
+.st-menu-top-search-input {
+    top: styles.$st-menu-top-height - $st-menu-top-ref - 25px;
+    right: 20px;
+}
+
+@include media.gt-sm {
+    .st-menu-top-search-input {
+        top: styles.$st-menu-top-height-gt-sm - $st-menu-top-ref - 25px;
+    }
+}
+
+.st-menu-top-icon-margin {
+    margin-left: 9px !important;
+}
+
+

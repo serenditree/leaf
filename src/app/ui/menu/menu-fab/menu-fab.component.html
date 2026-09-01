@@ -1,0 +1,35 @@
+<button (click)="onClick()"
+        [ngClass]="{
+        'st-fab': true,
+        'filter': action !== 'main' && action !== 'back',
+        'filter-active': filterService.isModified() &&
+            !menuService.isFilterActive &&
+            action !== 'main' &&
+            action !== 'back',
+        'back': action === 'back',
+        'no-shadow': !isElevated
+        }"
+        mat-mini-fab>
+    @if (action === 'main' && !menuService.isMainActive) {
+        <mat-icon class="st-fab-icon">
+            menu
+        </mat-icon>
+    }
+    @if (action === 'filter' && !menuService.isFilterActive) {
+        <mat-icon
+            [ngClass]="{'st-fab-icon': true, 'filter': filterService.isModified()}">
+            search
+        </mat-icon>
+    }
+    @if (action === 'main' && menuService.isMainActive || action === 'filter' && menuService.isFilterActive) {
+        <mat-icon
+            [ngClass]="{'st-fab-icon': true, 'filter': filterService.isModified() && action !== 'main'}">
+            close
+        </mat-icon>
+    }
+    @if (action === 'back') {
+        <mat-icon class="st-fab-icon">
+            arrow_back
+        </mat-icon>
+    }
+</button>

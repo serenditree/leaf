@@ -1,0 +1,14 @@
+@if (gardens.length === 0) {
+    <p>
+        Nothing cultivated around here...
+    </p>
+} @else {
+    @for (garden of gardens; track garden) {
+        <st-garden-list-item
+            [active]="activeItemId === garden.id"
+            [garden]="garden"
+            [id]="garden.id"
+            class="st-seed-list-item">
+        </st-garden-list-item>
+    }
+}
