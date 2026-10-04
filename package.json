@@ -13,12 +13,12 @@
         "lint-fix": "ng lint --fix"
     },
     "dependencies": {
-        "@angular/cdk": "^22.2.0",
+        "@angular/cdk": "^22.2.1",
         "@angular/common": "^22.2.0",
         "@angular/compiler": "^22.2.0",
         "@angular/core": "^22.2.0",
         "@angular/forms": "^22.2.0",
-        "@angular/material": "^22.2.0",
+        "@angular/material": "^22.2.1",
         "@angular/platform-browser": "^22.2.0",
         "@angular/router": "^22.2.0",
         "@angular/service-worker": "^22.2.0",
@@ -42,11 +42,11 @@
         "@angular/cli": "^22.2.0",
         "@angular/compiler-cli": "^22.2.0",
         "@angular/language-service": "^22.2.0",
-        "@types/node": "^24.13.6",
+        "@types/node": "^24.19.0",
         "angular-eslint": "^22.5.0",
         "eslint": "^10.11.0",
         "ts-node": "^10.9.2",
         "typescript": "^6.0.3",
-        "typescript-eslint": "^8.70.1"
+        "typescript-eslint": "^8.71.0"
     }
 }
