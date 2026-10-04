@@ -43,6 +43,11 @@ $st-menu-top-ref: 30px;
     color: inherit !important;
 }
 
+.st-menu-top-leaf {
+    height: 1em;
+    vertical-align: -0.1em;
+}
+
 @include media.gt-sm {
     .st-menu-top-home {
         top: styles.$st-menu-top-height-gt-sm - $st-menu-top-ref;
