@@ -12,7 +12,7 @@
 @include media.gt-sm {
     .st-menu-sub {
         z-index: styles.$st-menu-z-index - 1;
-        top: styles.$st-menu-top-height-gt-sm + styles.$st-map-height;
+        top: styles.$st-menu-top-height-gt-sm + styles.$st-map-height-gt-sm;
         height: styles.$st-menu-sub-height-gt-sm;
         line-height: styles.$st-menu-sub-height-gt-sm;
     }

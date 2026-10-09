@@ -30,11 +30,16 @@
 }
 
 $st-menu-top-ref: 30px;
+$st-menu-top-home-font-size: styles.$st-font-size-h1 + 4px;
+$st-menu-top-home-font-size-gt-sm: styles.$st-font-size-h1 + 8px;
 
 .st-menu-top-home {
     position: absolute;
-    top: styles.$st-menu-top-height - $st-menu-top-ref;
-    font-size: styles.$st-font-size-h1 + 2px;
+    top: 0;
+    display: flex;
+    height: styles.$st-menu-top-height;
+    align-items: center;
+    font-size: $st-menu-top-home-font-size;
     font-weight: bold;
     margin-left: 10px;
 }
@@ -44,13 +49,22 @@ $st-menu-top-ref: 30px;
 }
 
 .st-menu-top-leaf {
-    height: 1em;
-    vertical-align: -0.1em;
+    height: 1.2em;
+    vertical-align: -0.15em;
+    margin-right: 2px;
 }
 
 @include media.gt-sm {
     .st-menu-top-home {
-        top: styles.$st-menu-top-height-gt-sm - $st-menu-top-ref;
+        // share the main menu's baseline (Quicksand's ascent is 1em, so the baseline sits one font-size below the top)
+        top: styles.$st-menu-top-height-gt-sm
+            - $st-menu-top-ref
+            + 3px
+            + styles.$st-font-size-p
+            - $st-menu-top-home-font-size-gt-sm;
+        display: block;
+        font-size: $st-menu-top-home-font-size-gt-sm;
+        height: auto;
         margin-left: 0;
     }
 }

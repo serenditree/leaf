@@ -28,6 +28,7 @@
 @include media.gt-sm {
     .st-map-container {
         top: styles.$st-menu-top-height-gt-sm;
+        height: styles.$st-map-height-gt-sm;
     }
 }
 
@@ -35,7 +36,7 @@
     position: absolute;
     z-index: styles.$st-map-z-index + 1;
     width: styles.$st-content-margin;
-    height: styles.$st-map-height;
+    height: 100%;
     @include styles.st-transparency(.5);
 }
 
@@ -61,7 +62,7 @@
     top: 0;
     right: styles.$st-content-margin;
     width: styles.$st-map-search-width;
-    height: styles.$st-map-height;
+    height: 100%;
     border-top: 1px dotted #ccc;
     @include styles.st-transparency(.8);
 }
@@ -71,7 +72,7 @@
     z-index: styles.$st-map-z-index + 1;
     top: 0;
     left: styles.$st-content-margin;
-    height: styles.$st-map-height;
+    height: 100%;
     padding: 0 14px;
     @include styles.st-transparency(.8);
 }
@@ -128,7 +129,7 @@ $st-map-control-left: -$st-map-control-size - $st-map-control-margin;
 .st-map-control {
     position: absolute;
     z-index: styles.$st-map-z-index + 1;
-    top: styles.$st-map-height - $st-map-control-size - $st-map-control-margin;
+    bottom: $st-map-control-margin;
     left: $st-map-control-left;
     width: $st-map-control-size;
     height: $st-map-control-size;

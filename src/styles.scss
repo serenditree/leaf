@@ -46,12 +46,13 @@ $st-menu-fab-z-index: $st-menu-z-index + 20;
 
 $st-menu-mobile-z-index: $st-menu-z-index + 15;
 
-$st-map-height: 280px;
+$st-map-height: 50svh;
+$st-map-height-gt-sm: 280px;
 $st-map-search-width: 320px;
 $st-map-z-index: $st-menu-z-index;
 
-$st-content-start: $st-menu-top-height + $st-map-height;
-$st-content-start-gt-sm: $st-menu-top-height-gt-sm + $st-map-height + $st-menu-sub-height-gt-sm;
+$st-content-start: calc($st-menu-top-height + $st-map-height);
+$st-content-start-gt-sm: $st-menu-top-height-gt-sm + $st-map-height-gt-sm + $st-menu-sub-height-gt-sm;
 
 $st-content-start-sub: $st-content-start;
 $st-content-start-sub-gt-sm: $st-content-start-gt-sm + $st-menu-sub-height-gt-sm;

@@ -1,7 +1,7 @@
 @use "styles";
 @use "assets/styles/animations";
 
-@include animations.st-fade-enter(animations.$st-animation-duration-enter);
+@include animations.st-fade-enter();
 
 .st-menu-mobile-container {
     position: relative;
