@@ -1,7 +1,7 @@
 import {AbstractSeed} from '../../seed/model/abstract-seed';
 import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
 import {GardenService} from '../../garden/service/garden.service';
-import {Injectable, OnDestroy, inject} from '@angular/core';
+import {Injectable, NgZone, OnDestroy, inject} from '@angular/core';
 import {ListEventService} from '../../ui/list/service/list-event.service';
 import {LngLat, Marker} from 'maplibre-gl';
 import {MapComponent} from '../map/map.component';
@@ -15,6 +15,7 @@ import {SeedService} from '../../seed/service/seed.service';
 
 @Injectable({providedIn: 'root'})
 export class MapService implements OnDestroy {
+    private readonly _ngZone = inject(NgZone);
     private readonly _router = inject(Router);
     private readonly _seedService = inject(SeedService);
     private readonly _gardenService = inject(GardenService);
@@ -506,9 +507,12 @@ export class MapService implements OnDestroy {
 
     private _addMarkerEventListeners(id: string, markerElement: HTMLElement, markerIcon: HTMLElement): void {
         markerIcon.addEventListener('click', () => {
-            const navigate = markerElement.getAttribute(this.MARKER_ATTR_ACTIVE_KEY) === this.MARKER_ATTR_ACTIVE_VAL;
-            this._mapNavigationSubject.next(true);
-            this._onItemEvent(id, !navigate, navigate);
+            // Markers are created by maplibre outside angular's zone: enter it, so that change detection runs.
+            this._ngZone.run(() => {
+                const navigate = markerElement.getAttribute(this.MARKER_ATTR_ACTIVE_KEY) === this.MARKER_ATTR_ACTIVE_VAL;
+                this._mapNavigationSubject.next(true);
+                this._onItemEvent(id, !navigate, navigate);
+            });
         });
         markerIcon.addEventListener('mouseover', () => {
             if (markerElement.getAttribute(this.MARKER_ATTR_ACTIVE_KEY) !== this.MARKER_ATTR_ACTIVE_VAL) {
