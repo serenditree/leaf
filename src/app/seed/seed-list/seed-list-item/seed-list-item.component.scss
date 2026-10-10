@@ -9,12 +9,6 @@
     cursor: pointer;
 }
 
-@include media.lt-md {
-    .st-seed-list-item:first-of-type {
-        margin-top: 0;
-    }
-}
-
 .st-seed-list-item-pointer {
     color: styles.$st-color-green-leaf;
     overflow: hidden;

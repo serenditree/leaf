@@ -79,7 +79,7 @@ export abstract class AbstractList<T extends AbstractSeed> implements OnInit {
         if (this._layoutService.isMobile()) {
             this._offset = 0;
         } else {
-            this._offset = 60;
+            this._offset = 40;
         }
     }
 }

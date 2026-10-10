@@ -26,7 +26,4 @@
         </span>
     </p>
     <p class="st-text">{{ seed.text | ellipsis:maxWords:maxLines }}</p>
-    @if (!environment.production) {
-        <st-json [object]="seed"></st-json>
-    }
 </article>
