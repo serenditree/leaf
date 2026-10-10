@@ -46,7 +46,7 @@ $st-menu-fab-z-index: $st-menu-z-index + 20;
 
 $st-menu-mobile-z-index: $st-menu-z-index + 15;
 
-$st-map-height: 50svh;
+$st-map-height: var(--st-map-height, 50svh); // fixed to the initial viewport
 $st-map-height-gt-sm: 280px;
 $st-map-search-width: 320px;
 $st-map-z-index: $st-menu-z-index;

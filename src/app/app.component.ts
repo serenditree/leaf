@@ -29,12 +29,14 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     private readonly _mapService = inject(MapService);
     private _mapNavigation = false;
     private _mapNavigationSubject!: BehaviorSubject<boolean>;
+    private _viewportWidth = 0;
 
     private _routerEventSubscription!: Subscription;
     private _mapNavigationSubscription!: Subscription;
 
     constructor() {
         this._matIconRegistry.registerFontClassAlias('fa');
+        this._fixMapHeight();
     }
 
     get isProduction(): boolean {
@@ -110,6 +112,22 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         if (offset <= 0) {
             this._mapNavigationSubject.next(false);
         }
+    }
+
+    @HostListener('window:resize', [])
+    private _onWindowResize(): void {
+        // Ignore height-only changes caused by the mobile browser's toolbars showing or hiding while scrolling.
+        if (window.innerWidth !== this._viewportWidth) {
+            this._fixMapHeight();
+        }
+    }
+
+    private _fixMapHeight(): void {
+        this._viewportWidth = window.innerWidth;
+        document.documentElement.style.setProperty(
+            '--st-map-height',
+            `${Math.round(window.innerHeight * .5)}px`
+        );
     }
 
     @HostListener('window:keydown', ['$event'])
