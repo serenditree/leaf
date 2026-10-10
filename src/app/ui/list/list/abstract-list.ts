@@ -77,7 +77,7 @@ export abstract class AbstractList<T extends AbstractSeed> implements OnInit {
     @HostListener('window:resize', [])
     private _onInitAndWindowResize(): void {
         if (this._layoutService.isMobile()) {
-            this._offset = -30;
+            this._offset = 0;
         } else {
             this._offset = 60;
         }
