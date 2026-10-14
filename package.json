@@ -22,12 +22,12 @@
         "@angular/platform-browser": "^22.2.2",
         "@angular/router": "^22.2.2",
         "@angular/service-worker": "^22.2.2",
-        "@maplibre/ngx-maplibre-gl": "^22.1.0",
+        "@maplibre/ngx-maplibre-gl": "^22.2.0",
         "@turf/turf": "^7.4.0",
         "angularx-qrcode": "^22.0.1",
         "chart.js": "^4.5.1",
         "font-awesome": "^4.7.0",
-        "maplibre-gl": "^6.13.0",
+        "maplibre-gl": "^6.14.0",
         "material-icons": "^1.13.14",
         "material-symbols": "^0.47.6",
         "normalize.css": "^8.0.1",
@@ -43,10 +43,10 @@
         "@angular/compiler-cli": "^22.2.2",
         "@angular/language-service": "^22.2.2",
         "@types/node": "^24.19.2",
-        "angular-eslint": "^22.5.0",
+        "angular-eslint": "^22.6.0",
         "eslint": "^10.12.0",
         "ts-node": "^10.9.2",
         "typescript": "^6.0.3",
-        "typescript-eslint": "^8.71.1"
+        "typescript-eslint": "^8.71.2"
     }
 }
