@@ -27,7 +27,7 @@
         "angularx-qrcode": "^22.0.1",
         "chart.js": "^4.5.1",
         "font-awesome": "^4.7.0",
-        "maplibre-gl": "^6.14.0",
+        "maplibre-gl": "^6.15.0",
         "material-icons": "^1.13.14",
         "material-symbols": "^0.47.6",
         "normalize.css": "^8.0.1",
@@ -47,6 +47,6 @@
         "eslint": "^10.13.0",
         "ts-node": "^10.9.2",
         "typescript": "^6.0.3",
-        "typescript-eslint": "^8.71.2"
+        "typescript-eslint": "^8.72.0"
     }
 }
