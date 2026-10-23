@@ -1,5 +1,5 @@
 import {AbstractSeed} from '../../../seed/model/abstract-seed';
-import {Directive, HostListener, Input} from '@angular/core';
+import {Directive, HostListener, Input, inject} from '@angular/core';
 import {LayoutService} from '../../layout/service/layout.service';
 import {ListEventService} from '../service/list-event.service';
 import {ListItemEvent} from '../model/list-item-event';
@@ -11,10 +11,12 @@ export abstract class AbstractListItem<T extends AbstractSeed> {
     private readonly _maxLines = 4;
     private _maxWords = 128;
 
+    protected readonly _layoutService = inject(LayoutService);
+    protected readonly _listEventService = inject(ListEventService);
+
     protected _seed!: T;
 
-    protected constructor(protected _layoutService: LayoutService,
-                          protected _listEventService: ListEventService) {
+    constructor() {
         if (this._layoutService.isMobile()) {
             this._maxWords = 64;
         }

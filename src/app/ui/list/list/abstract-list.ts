@@ -7,7 +7,7 @@ import {MarkerEvent} from '../../../map/model/marker-event';
 @Directive()
 export abstract class AbstractList<T extends AbstractSeed> implements OnInit {
 
-    protected _layoutService = inject(LayoutService);
+    protected readonly _layoutService = inject(LayoutService);
     protected _activeItemId: string | null = null;
     protected _items!: T[];
     protected _itemElements!: QueryList<ElementRef>;

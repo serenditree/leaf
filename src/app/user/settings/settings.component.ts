@@ -1,4 +1,4 @@
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnDestroy, OnInit, inject, ChangeDetectionStrategy} from '@angular/core';
 import {ConfirmComponent} from '../../ui/confirm/confirm/confirm.component';
 import {FenceService} from '../../fence/service/fence.service';
@@ -19,8 +19,9 @@ import {environment} from '../../../environments/environment';
     }
 )
 export class SettingsComponent implements OnInit, OnDestroy {
-    protected _route = inject(ActivatedRoute);
-    protected _confirmDialog = inject(MatDialog);
+    private readonly _route = inject(ActivatedRoute);
+    private readonly _router = inject(Router);
+    private readonly _confirmDialog = inject(MatDialog);
     private readonly _userService = inject(UserService);
     private readonly _fenceService = inject(FenceService);
 
@@ -46,6 +47,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this._queryParamsSubscription = this._route.queryParams.subscribe((params) => {
             if (params.oidc) {
+                void this._router.navigate([], {
+                    relativeTo: this._route,
+                    queryParams: {oidc: null},
+                    queryParamsHandling: 'merge',
+                    replaceUrl: true
+                });
                 this._fenceService.verify(params.oidc);
             }
         });
